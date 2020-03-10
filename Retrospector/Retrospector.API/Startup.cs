@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Retrospector.Data;
+using Retrospector.Data.DomainModels;
 
 namespace Retrospector.API
 {
@@ -18,6 +22,21 @@ namespace Retrospector.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<RetrospectorContext>(o => 
+            {
+                o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            services.AddIdentity<RetrospectorUser, IdentityRole>()
+                    .AddEntityFrameworkStores<RetrospectorContext>();
+
+
+            services.AddAuthentication();
+
+            services.AddCors();
+
+            services.AddRouting();
+
             services.AddControllers();
         }
 
@@ -29,10 +48,18 @@ namespace Retrospector.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(o =>
+            {
+                o.WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
