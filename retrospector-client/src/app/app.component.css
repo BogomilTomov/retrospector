@@ -1,0 +1,5 @@
+.greeting {
+    vertical-align: middle;
+    display: table-cell;
+    line-height: 33px;
+}
