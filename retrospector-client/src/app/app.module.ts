@@ -14,12 +14,14 @@ function provideConfig() {
 
 import { LoginPageComponent } from './component/login/login-page.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { CreateTeamComponent } from './component/create-team/create-team.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    DashboardComponent
+    DashboardComponent,
+    CreateTeamComponent
   ],
   imports: [
     BrowserModule,
