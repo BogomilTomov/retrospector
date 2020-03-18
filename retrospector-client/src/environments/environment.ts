@@ -2,10 +2,18 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { GoogleLoginProvider, AuthServiceConfig } from 'angularx-social-login';
+
 export const environment = {
   production: false
 };
 
+export const authServiceConfig = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('385337585654-qr5vnh01a0lno0o6e41jh6t5fodsfseq.apps.googleusercontent.com')
+  }
+]);
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

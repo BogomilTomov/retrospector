@@ -1,14 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isLoggedIn$ | async">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isLoggedIn">
   <div class="collapse navbar-collapse justify-content-around">
     <ul class="navbar-nav">
       <div class="container">
         <div class="row">
+          <div class="col">
+            <li class="greeting" class="nav-item active">
+              <p class="greeting font-sz-sm">
+                Hello, {{userFirstName}}!
+              </p>
+            </li>
+          </div>
+          <div class="col-md-4">
+            <li class="nav-item active">
+              <button class="btn btn-primary btn-small"(click)="logout()">Logout</button>
+            </li>
+          </div>
         </div>
       </div>
-      
     </ul>
   </div>
 </nav>
 <div>
-  <router-outlet></router-outlet>
+  <section *ngIf="!isLoggedIn">
+    <ret-login-page></ret-login-page>
+  </section>
+  <section *ngIf="isLoggedIn">
+    <ret-dashboard></ret-dashboard>
+  </section>
 </div>
