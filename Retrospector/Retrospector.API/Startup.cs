@@ -7,8 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Retrospector.Data;
 using Retrospector.Data.DomainModels;
+using Retrospector.Data.Repositories;
+using Retrospector.Services;
 
-namespace Retrospector.API
+namespace Retrospector.Api
 {
     public class Startup
     {
@@ -19,7 +21,6 @@ namespace Retrospector.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<RetrospectorContext>(o => 
@@ -28,19 +29,32 @@ namespace Retrospector.API
             });
 
             services.AddIdentity<RetrospectorUser, IdentityRole>()
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<RetrospectorContext>();
 
 
-            services.AddAuthentication();
+            services.AddAuthentication()
+            .AddGoogle(o => 
+            {
+                IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
+
+                o.ClientId = googleAuthNSection["ClientId"];
+                o.ClientSecret = googleAuthNSection["ClientSecret"];
+            });
 
             services.AddCors();
 
             services.AddRouting();
 
             services.AddControllers();
+
+            //Repositories
+            services.AddScoped<AccountsRepository>();
+
+            //Services
+            services.AddScoped<AccountsService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

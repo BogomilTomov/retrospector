@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Retrospector.API
+namespace Retrospector.Api
 {
     public class Program
     {

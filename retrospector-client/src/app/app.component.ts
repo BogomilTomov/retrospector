@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { AuthService } from './auth/auth.service';
-import { Observable } from 'rxjs';
+import { AccountsService } from './services/accounts.service';
+import { AuthService } from 'angularx-social-login';
+import { take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +12,38 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css'],
   providers: [AuthService]
 })
-export class AppComponent implements OnInit{
-  title = 'Retrospector';
-  userFirstName = 'Placeholder';
-  isLoggedIn$: Observable<boolean>;
+export class AppComponent implements OnInit, OnDestroy {
+  private loggedInSubs: Subscription;
 
-  constructor(private readonly _router: Router, private readonly _authService: AuthService) { }
+  constructor(private readonly _accountsService: AccountsService, private readonly _router: Router) {}
 
   ngOnInit(): void {
-    this.isLoggedIn$ = this._authService.isLoggedIn;
+    this.loggedInSubs = this._accountsService.loggedIn$.subscribe(
+      (loggedIn: boolean) => {
+        this.isLoggedIn = loggedIn;
+        this.userFirstName = this._accountsService.getLoggedInUserFirstName();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.loggedInSubs.unsubscribe();
+  }
+
+  public title: string = 'Retrospector';
+
+  public isLoggedIn: boolean;
+
+  public userFirstName: string;
+
+  public logout(): void {
+    this._accountsService.logOut().pipe(take(1)).subscribe(
+      () => {
+        this._accountsService.removeLocalStorageInfo();
+        this._router.navigateByUrl('/login');
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }
