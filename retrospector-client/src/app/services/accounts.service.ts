@@ -29,6 +29,7 @@ export class AccountsService {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('firstname');
     localStorage.removeItem('role');
+    localStorage.removeItem('userId');
     this.loggedIn.next(this.authTokenExists());
   }
 
@@ -36,10 +37,11 @@ export class AccountsService {
     return localStorage.getItem('firstname');
   }
 
-  public setLocalStorageInfo(firstName: string, authToken: string, role: string): void {
+  public setLocalStorageInfo(firstName: string, authToken: string, role: string, userId: string): void {
     localStorage.setItem('firstname', firstName);
     localStorage.setItem('auth_token', authToken);
     localStorage.setItem('role', role);
+    localStorage.setItem('userId', userId);
     this.loggedIn.next(this.authTokenExists());
   }
 
