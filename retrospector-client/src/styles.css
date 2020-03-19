@@ -1,4 +1,4 @@
-
+@import "~font-awesome/css/font-awesome.css";
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
@@ -78,4 +78,8 @@ body { margin: 0; font-family: "Quicksand"; }
 
 .font-sz-sm {
     font-size: 14px;
+}
+
+.errorMessage {
+    border: 1px solid #F6492F;
 }
