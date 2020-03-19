@@ -51,11 +51,11 @@ namespace Retrospector.Api
 
             //Repositories
             services.AddScoped<AccountsRepository>();
-            services.AddScoped<TeamRepository>();
+            services.AddScoped<TeamsRepository>();
 
             //Services
             services.AddScoped<AccountsService>();
-            services.AddScoped<TeamService>();
+            services.AddScoped<TeamsService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

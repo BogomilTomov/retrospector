@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule, NgForm }   from '@angular/forms';
 import { Team } from '../../models/team';
 import * as moment from 'moment';
-import { TeamService } from '../../services/team.service';
+import { TeamsService } from '../../services/teams.service';
 import { AccountsService } from '../../services/accounts.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { AccountsService } from '../../services/accounts.service';
 export class CreateTeamComponent implements OnInit {
   @ViewChild('nameInput') private inputField : ElementRef;
   public name: string = '';
-  constructor(private _teamService: TeamService,
+  constructor(private _teamService: TeamsService,
               private _accountService: AccountsService) { }
 
   ngOnInit(): void {

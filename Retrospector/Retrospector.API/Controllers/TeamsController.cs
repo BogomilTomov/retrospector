@@ -12,11 +12,11 @@ namespace Retrospector.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TeamController : ControllerBase
+    public class TeamsController : ControllerBase
     {
-        private readonly TeamService _teamService;
+        private readonly TeamsService _teamService;
 
-        public TeamController(TeamService teamService)
+        public TeamsController(TeamsService teamService)
         {
             _teamService = teamService;
         }

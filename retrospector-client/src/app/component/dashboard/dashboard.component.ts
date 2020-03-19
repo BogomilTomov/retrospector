@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Team } from '../../models/team';
-import { TeamService } from '../../services/team.service';
+import { TeamsService } from '../../services/teams.service';
 
 @Component({
   selector: 'ret-dashboard',
@@ -9,7 +9,7 @@ import { TeamService } from '../../services/team.service';
 })
 export class DashboardComponent implements OnInit {
   public teams: Team[];
-  constructor(private _teamService: TeamService) { }
+  constructor(private _teamService: TeamsService) { }
 
   ngOnInit(): void {
     this.teams = this._teamService.getTeams();

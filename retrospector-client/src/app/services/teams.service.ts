@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class TeamService {
+export class TeamsService {
   teams: Team[] = [];
   constructor(private _http: HttpClient) { 
   }
@@ -26,7 +26,7 @@ export class TeamService {
   }
 
   createTeam(team: Team): Observable<Team> {
-    return this._http.post<Team>('https://localhost:44372/api/team',
+    return this._http.post<Team>('https://localhost:44372/api/teams',
     team);
   }
 

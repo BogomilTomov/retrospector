@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Retrospector.Services
 {
-    public class TeamService
+    public class TeamsService
     {
         private const string TeamNullMessage = "Team cannot be null or empty!";
         private const string OwnerIdNullMessage = "OwnerId cannot be null or empty!";
@@ -17,9 +17,9 @@ namespace Retrospector.Services
         private const string TeamNameExistsMessage = "Team with name {0} already exists!";
         private const string OwnerDoesntExist = "User with id {0} doesnt't exist!";
 
-        private readonly TeamRepository _teamRepository;
+        private readonly TeamsRepository _teamRepository;
 
-        public TeamService(TeamRepository teamRepository)
+        public TeamsService(TeamsRepository teamRepository)
         {
             _teamRepository = teamRepository;
         }

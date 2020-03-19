@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Retrospector.Data.Repositories
 {
-    public class TeamRepository
+    public class TeamsRepository
     {
         private readonly RetrospectorContext _context;
 
-        public TeamRepository(RetrospectorContext context)
+        public TeamsRepository(RetrospectorContext context)
         {
             _context = context;
         }
