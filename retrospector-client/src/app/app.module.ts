@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
@@ -28,8 +28,7 @@ import { CreateTeamComponent } from './component/create-team/create-team.compone
     AppRoutingModule,
     HttpClientModule,
     SocialLoginModule.initialize(authServiceConfig),
-    FormsModule,
-    ReactiveFormsModule  
+    FormsModule 
   ],
   providers: [
     {

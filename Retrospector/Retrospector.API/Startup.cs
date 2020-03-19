@@ -46,13 +46,16 @@ namespace Retrospector.Api
 
             services.AddRouting();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(o =>
+                o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             //Repositories
             services.AddScoped<AccountsRepository>();
+            services.AddScoped<TeamRepository>();
 
             //Services
             services.AddScoped<AccountsService>();
+            services.AddScoped<TeamService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

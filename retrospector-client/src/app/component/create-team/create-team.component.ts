@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormsModule, NgForm }   from '@angular/forms';
 import { Team } from '../../models/team';
 import * as moment from 'moment';
 import { TeamService } from '../../services/team.service';
@@ -11,6 +11,7 @@ import { AccountsService } from '../../services/accounts.service';
   styleUrls: ['./create-team.component.css']
 })
 export class CreateTeamComponent implements OnInit {
+  @ViewChild('nameInput') private inputField : ElementRef;
   public name: string = '';
   constructor(private _teamService: TeamService,
               private _accountService: AccountsService) { }
