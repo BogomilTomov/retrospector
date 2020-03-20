@@ -79,3 +79,7 @@ body { margin: 0; font-family: "Quicksand"; }
 .font-sz-sm {
     font-size: 14px;
 }
+
+h1 {
+    font-size: 35px;
+}

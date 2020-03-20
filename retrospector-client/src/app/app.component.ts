@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { AccountsService } from './services/accounts.service';
-import { AuthService } from 'angularx-social-login';
-import { take } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { AuthService } from 'angularx-social-login';
+import { AccountsService } from './services/accounts.service';
 
 @Component({
   selector: 'app-root',

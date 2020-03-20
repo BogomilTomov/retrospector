@@ -14,12 +14,15 @@ function provideConfig() {
 
 import { LoginPageComponent } from './component/login/login-page.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { TimelineComponent } from './component/timeline/timeline.component';
+import { RetroGamesService } from './services/retro-games.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    DashboardComponent
+    DashboardComponent,
+    TimelineComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,7 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig
-    }, AccountsService],
+    }, AccountsService, RetroGamesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
