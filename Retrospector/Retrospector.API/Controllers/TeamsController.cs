@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Retrospector.Services;
 using Retrospector.Services.Results;
 using Retrospector.Api.ViewModels.Teams;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Retrospector.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TeamsController : ControllerBase

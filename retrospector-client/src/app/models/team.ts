@@ -1,7 +1,5 @@
-export class Team {
-    public name: string;
-    public creationDate: Date;
-    public ownerId: string;
-    constructor() {
-    }
+export interface Team {
+    name: string;
+    creationDate: Date;
+    ownerId: string;
 }

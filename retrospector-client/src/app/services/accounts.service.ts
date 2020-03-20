@@ -37,6 +37,14 @@ export class AccountsService {
     return localStorage.getItem('firstname');
   }
 
+  public getLoggedInUserId(): string {
+    return localStorage.getItem('userId');
+  }
+
+  public static getLoggedInUserToken(): string {
+    return localStorage.getItem('auth_token');
+  }
+
   public setLocalStorageInfo(firstName: string, authToken: string, role: string, userId: string): void {
     localStorage.setItem('firstname', firstName);
     localStorage.setItem('auth_token', authToken);

@@ -19,8 +19,6 @@ namespace Retrospector.Data
 
         public DbSet<TeamUser> TeamUsers { get; set; }
 
-        public DbSet<RetroGameUser> RetroGameUsers { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -55,18 +53,6 @@ namespace Retrospector.Data
                 .HasForeignKey("UserId")
                 .IsRequired();
 
-            modelBuilder.Entity<RetroGameUser>()
-              .HasOne(rgu => rgu.RetroGame)
-              .WithMany(rg => rg.RetroGameUsers)
-              .HasForeignKey("RetroGameId")
-              .IsRequired();
-
-            modelBuilder.Entity<RetroGameUser>()
-              .HasOne(rgu => rgu.User)
-              .WithMany(u => u.RetroGameUsers)
-              .HasForeignKey("UserId")
-              .IsRequired();
-
             modelBuilder.Entity<Team>()
                 .HasOne(t => t.Owner)
                 .WithMany(o => o.OwnedTeams)
@@ -77,9 +63,6 @@ namespace Retrospector.Data
             modelBuilder.Entity<TeamUser>()
                 .HasKey(tu => new { tu.TeamId, tu.UserId });
             
-            modelBuilder.Entity<RetroGameUser>()
-                .HasKey(rgu => new { rgu.RetroGameId, rgu.UserId });
-
             modelBuilder.Entity<RetroGame>()
                 .Property(rg => rg.Name)
                 .IsRequired();

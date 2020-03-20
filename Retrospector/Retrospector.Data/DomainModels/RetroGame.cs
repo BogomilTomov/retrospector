@@ -20,11 +20,7 @@ namespace Retrospector.Data.DomainModels
 
         public Team Team { get; set; }
 
-        public IList<RetrospectorUser> Participants { get; set; }
-
-        public IList<RetroGameUser> RetroGameUsers { get; set; }
-
-        public IList<Note> Notes { get; set; }
+        public IEnumerable<Note> Notes { get; set; }
 
     }
 }

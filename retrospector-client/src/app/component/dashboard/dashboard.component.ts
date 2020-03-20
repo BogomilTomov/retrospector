@@ -12,6 +12,5 @@ export class DashboardComponent implements OnInit {
   constructor(private _teamService: TeamsService) { }
 
   ngOnInit(): void {
-    this.teams = this._teamService.getTeams();
   }
 }

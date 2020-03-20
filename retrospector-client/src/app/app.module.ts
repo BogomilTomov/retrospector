@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +15,7 @@ function provideConfig() {
 import { LoginPageComponent } from './component/login/login-page.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { CreateTeamComponent } from './component/create-team/create-team.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,9 +32,13 @@ import { CreateTeamComponent } from './component/create-team/create-team.compone
     FormsModule 
   ],
   providers: [
+    {  provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor ,
+      multi: true
+   },
     {
       provide: AuthServiceConfig,
-      useFactory: provideConfig
+      useFactory: provideConfig,
     }, AccountsService],
   bootstrap: [AppComponent]
 })

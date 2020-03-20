@@ -14,9 +14,9 @@ namespace Retrospector.Data.DomainModels
 
         public RetrospectorUser Owner { get; set; }
 
-        public IList<RetroGame> RetroGames { get; set; }
+        public IEnumerable<RetroGame> RetroGames { get; set; }
 
-        public List<TeamUser> TeamUsers { get; set; }
+        public IEnumerable<TeamUser> TeamUsers { get; set; }
 
         public DateTime CreationDate { get; set; }
     }

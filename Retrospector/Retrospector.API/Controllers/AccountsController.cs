@@ -49,6 +49,9 @@ namespace Retrospector.Api.Controllers
 
             string role = rolesResult.Data[0];
 
+            //await _signInManager.ExternalLoginSignInAsync("Google", model.AuthToken, isPersistent: true);
+
+
             UserModel viewModel = new UserModel
             {
                 Email = result.Data.Email,

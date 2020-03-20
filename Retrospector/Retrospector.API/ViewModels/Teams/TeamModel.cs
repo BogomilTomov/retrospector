@@ -16,9 +16,9 @@ namespace Retrospector.Api.ViewModels.Teams
 
         public RetrospectorUser Owner { get; set; }
 
-        public IList<RetroGame> RetroGames { get; set; }
+        public IEnumerable<RetroGame> RetroGames { get; set; }
 
-        public List<RetrospectorUser> Users { get; set; }
+        public IEnumerable<RetrospectorUser> Users { get; set; }
 
         public DateTime CreationDate { get; set; }
     }
