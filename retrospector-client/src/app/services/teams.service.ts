@@ -17,12 +17,5 @@ export class TeamsService {
   createTeam(team: Team): Observable<Team> {
     return this._http.post<Team>(variables.url + 'api/teams',
     team);
-  }
-
-  // createTeam(team: Team): void {
-  //   this._http.post<Team>(variables.url + 'api/teams',
-  //   team);
-  //   console.log(resp);
-  // }
-  
+  }  
 }
