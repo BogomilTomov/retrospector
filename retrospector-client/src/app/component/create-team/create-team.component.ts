@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormsModule, NgForm }   from '@angular/forms';
 import { Team } from '../../models/team';
 import * as moment from 'moment';
@@ -13,13 +13,14 @@ import { take } from 'rxjs/operators';
   templateUrl: './create-team.component.html',
   styleUrls: ['./create-team.component.css']
 })
-export class CreateTeamComponent {
-  @ViewChild('closeModal') closeModal: ElementRef
+export class CreateTeamComponent implements OnDestroy {
+  @ViewChild('closeModal') public closeModal: ElementRef;
   public name: string = '';
   public validationErrorExists: boolean = false;
   public validationErrorMessage: string = '';
   public teamChanges: Subscription;
-  constructor (private readonly _teamService: TeamsService, private readonly _accountService: AccountsService) { }
+
+  constructor(private readonly _teamService: TeamsService, private readonly _accountService: AccountsService) { }
 
   onSubmit(): void {
     const newTeam: Team = { 
@@ -28,8 +29,7 @@ export class CreateTeamComponent {
       ownerId: this._accountService.getLoggedInUserId()
     }; 
 
-    this._teamService.createTeam(newTeam)
-      .pipe(take(1))
+    this.teamChanges = this._teamService.createTeam(newTeam)
       .subscribe(
         res => {
           this.closeModal.nativeElement.click();
@@ -41,5 +41,11 @@ export class CreateTeamComponent {
             this.validationErrorExists = false;
           }, 3000)
         });
+  }
+
+  ngOnDestroy(){
+    if (this.teamChanges){
+      this.teamChanges.unsubscribe();
+    }
   }
 }

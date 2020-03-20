@@ -39,6 +39,5 @@ export class LoginPageComponent {
                 console.log(error);
             }
         );
-
     }
 }

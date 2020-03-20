@@ -3,7 +3,7 @@ import { Team } from '../models/team';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { variables } from 'src/environments/variables';
+import { baseUrl } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class TeamsService {
   }
 
   createTeam(team: Team): Observable<Team> {
-    return this._http.post<Team>(variables.url + 'api/teams',
+    return this._http.post<Team>(baseUrl + '/teams',
     team);
   }  
 }
