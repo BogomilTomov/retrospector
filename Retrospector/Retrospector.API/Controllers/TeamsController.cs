@@ -32,7 +32,6 @@ namespace Retrospector.Api.Controllers
             }
 
             ResultData<Team> result = await _teamService.CreateTeamAsync(team.Name, team.OwnerId, team.CreationDate);
-
             if (!result.Success)
             {
                 return BadRequest(new { message = result.Message });

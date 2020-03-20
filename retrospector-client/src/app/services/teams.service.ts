@@ -11,6 +11,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class TeamsService {
   public teams: Team[] = [];
+  
   constructor(private readonly _http: HttpClient) { 
   }
 

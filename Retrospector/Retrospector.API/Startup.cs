@@ -44,10 +44,9 @@ namespace Retrospector.Api
                     .AddJwtBearer(jwt => jwt.UseGoogle(
                         clientId: Configuration.GetSection("ClientId").Value
                         ));
-            
+
             services.AddCors();
             services.AddRouting();
-
             services.AddControllers().AddNewtonsoftJson(o =>
                 o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
@@ -75,12 +74,9 @@ namespace Retrospector.Api
             });
 
             app.UseHttpsRedirection();
-
             app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization();
-
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

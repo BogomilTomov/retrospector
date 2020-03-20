@@ -9,6 +9,7 @@ import { TeamsService } from '../../services/teams.service';
 })
 export class DashboardComponent implements OnInit {
   public teams: Team[];
+  
   constructor(private _teamService: TeamsService) { }
 
   ngOnInit(): void {
