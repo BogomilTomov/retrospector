@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SocialUser } from 'angularx-social-login';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { SocialUser } from 'angularx-social-login';
+import { baseUrl } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountsService {
-  private readonly _baseUrl = 'https://localhost:44372/api/Accounts';
+  private readonly _url = `${baseUrl}/Accounts`;
 
   private readonly loggedIn = new BehaviorSubject<boolean>(this.authTokenExists());
 
@@ -18,11 +19,11 @@ export class AccountsService {
   constructor(private readonly _http: HttpClient) { }
 
   public login(user: SocialUser): Observable<SocialUser> {
-    return this._http.post<SocialUser>(this._baseUrl + '/login', user);
+    return this._http.post<SocialUser>(this._url + '/login', user);
   }
 
   public logOut() {
-    return this._http.post(this._baseUrl + '/logout', '');
+    return this._http.post(this._url + '/logout', '');
   }
 
   public removeLocalStorageInfo(): void {

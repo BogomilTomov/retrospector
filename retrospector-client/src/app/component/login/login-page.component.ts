@@ -1,11 +1,10 @@
-import { Component, NgZone } from '@angular/core';
-
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { AuthService, SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { AccountsService } from 'src/app/services/accounts.service';
 import { UserViewModel } from 'src/app/models/userViewModel.model';
-import { take } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'ret-login-page',

@@ -16,13 +16,16 @@ import { LoginPageComponent } from './component/login/login-page.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { CreateTeamComponent } from './component/create-team/create-team.component';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { TimelineComponent } from './component/timeline/timeline.component';
+import { RetroGamesService } from './services/retro-games.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
     DashboardComponent,
-    CreateTeamComponent
+    CreateTeamComponent,
+    TimelineComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +41,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
    },
     {
       provide: AuthServiceConfig,
-      useFactory: provideConfig,
-    }, AccountsService],
+      useFactory: provideConfig
+    }, AccountsService, RetroGamesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

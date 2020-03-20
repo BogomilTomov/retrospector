@@ -4,9 +4,10 @@ import { Team } from '../../models/team';
 import * as moment from 'moment';
 import { TeamsService } from '../../services/teams.service';
 import { AccountsService } from '../../services/accounts.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { take } from 'rxjs/operators';
+import { take, first, takeUntil } from 'rxjs/operators';
+import { ActivationEnd } from '@angular/router';
 
 @Component({
   selector: 'ret-create-team',
@@ -18,7 +19,7 @@ export class CreateTeamComponent implements OnDestroy {
   public name: string = '';
   public validationErrorExists: boolean = false;
   public validationErrorMessage: string = '';
-  public teamChanges: Subscription;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private readonly _teamService: TeamsService, private readonly _accountService: AccountsService) { }
 
@@ -29,7 +30,7 @@ export class CreateTeamComponent implements OnDestroy {
       ownerId: this._accountService.getLoggedInUserId()
     }; 
 
-    this.teamChanges = this._teamService.createTeam(newTeam)
+    this._teamService.createTeam(newTeam).pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         res => {
           this.closeModal.nativeElement.click();
@@ -44,8 +45,7 @@ export class CreateTeamComponent implements OnDestroy {
   }
 
   ngOnDestroy(){
-    if (this.teamChanges){
-      this.teamChanges.unsubscribe();
-    }
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

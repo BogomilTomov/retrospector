@@ -83,3 +83,6 @@ body { margin: 0; font-family: "Quicksand"; }
 .errorMessage {
     border: 1px solid #F6492F;
 }
+h1 {
+    font-size: 35px;
+}
