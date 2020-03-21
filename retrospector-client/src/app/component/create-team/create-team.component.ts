@@ -21,7 +21,8 @@ export class CreateTeamComponent implements OnDestroy {
   public validationErrorMessage: string = '';
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private readonly _teamService: TeamsService, private readonly _accountService: AccountsService) { }
+  constructor(private readonly _teamService: TeamsService, 
+              private readonly _accountService: AccountsService) { }
 
   onSubmit(): void {
     const newTeam: Team = { 

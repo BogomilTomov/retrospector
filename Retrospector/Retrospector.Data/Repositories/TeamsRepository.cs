@@ -1,4 +1,5 @@
-﻿using Retrospector.Data.DomainModels;
+﻿using Microsoft.EntityFrameworkCore;
+using Retrospector.Data.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,15 @@ namespace Retrospector.Data.Repositories
         public bool OwnerExists(string userId)
         {
             return _context.Users.Any(u => u.Id == userId);
+        }
+
+        public async Task<List<Team>> GetTeamsAsync(string userId)
+        {
+            return await _context.Teams
+                .Where(t => t.OwnerId == userId || t.TeamUsers.Any(tu => tu.UserId == userId))
+                .Include(t => t.RetroGames)
+                .OrderBy(t => t.Name)
+                .ToListAsync();
         }
     }
 }

@@ -16,7 +16,8 @@ namespace Retrospector.Services
         private const string TeamCreateSuccessMessage = "Team with email {0} created successfully!";
         private const string TeamNameExistsMessage = "Team with name {0} already exists!";
         private const string OwnerDoesntExist = "User with id {0} doesnt't exist!";
-
+        private const string GetTeamsSuccessMessage = "{0}'s teams successfully retrieved!";
+        
         private readonly TeamsRepository _teamRepository;
 
         public TeamsService(TeamsRepository teamRepository)
@@ -63,6 +64,18 @@ namespace Retrospector.Services
             Team team = await _teamRepository.CreateTeamAsync(newTeam);
             string successMessage = string.Format(TeamCreateSuccessMessage, team.Id);
             return new ResultData<Team>(successMessage, true, team);
+        }
+
+        public async Task<ResultData<IList<Team>>> GetTeamsAsync(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new ResultData<IList<Team>>(OwnerIdNullMessage, false);
+            }
+
+            IList<Team> Teams = await _teamRepository.GetTeamsAsync(userId);
+            string successMessage = string.Format(GetTeamsSuccessMessage, userId);
+            return new ResultData<IList<Team>>(successMessage, true, Teams);
         }
     }
 }

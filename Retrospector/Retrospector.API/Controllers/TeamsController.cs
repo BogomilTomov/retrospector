@@ -47,5 +47,37 @@ namespace Retrospector.Api.Controllers
 
             return Ok(viewModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTeams(string userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ResultData<IList<Team>> result = await _teamService.GetTeamsAsync(userId);
+            if (!result.Success)
+            {
+                return BadRequest(new { message = result.Message });
+            }
+
+            List<TeamModel> teamModels = new List<TeamModel>();
+            foreach (Team team in result.Data)
+            {
+                TeamModel teamModel = new TeamModel()
+                {
+                    Id = team.Id,
+                    Name = team.Name,
+                    OwnerId = team.OwnerId,
+                    RetroGames = team.RetroGames,
+                    CreationDate = team.CreationDate,
+                };
+
+                teamModels.Add(teamModel);
+            }
+
+            return Ok(teamModels);
+        }
     }
 }
