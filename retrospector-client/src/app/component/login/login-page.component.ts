@@ -26,7 +26,7 @@ export class LoginPageComponent {
                 this.user = success;
                 this._accountsService.login(this.user).pipe(take(1)).subscribe(
                     (result: UserViewModel) => {
-                        this._accountsService.setLocalStorageInfo(success.firstName, success.authToken, result.role);
+                        this._accountsService.setLocalStorageInfo(success.firstName, success.idToken, result.role, result.id);
                         this._router.navigateByUrl('/');
                     },
                     error => {
@@ -38,6 +38,5 @@ export class LoginPageComponent {
                 console.log(error);
             }
         );
-
     }
 }

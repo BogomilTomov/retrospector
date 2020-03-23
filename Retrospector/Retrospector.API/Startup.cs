@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +11,8 @@ using Retrospector.Data;
 using Retrospector.Data.DomainModels;
 using Retrospector.Data.Repositories;
 using Retrospector.Services;
+using System;
+using System.Text;
 
 namespace Retrospector.Api
 {
@@ -23,7 +27,7 @@ namespace Retrospector.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<RetrospectorContext>(o => 
+            services.AddDbContext<RetrospectorContext>(o =>
             {
                 o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -32,27 +36,27 @@ namespace Retrospector.Api
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<RetrospectorContext>();
 
-
-            services.AddAuthentication()
-            .AddGoogle(o => 
+            services.AddAuthentication(auth =>
             {
-                IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
-
-                o.ClientId = googleAuthNSection["ClientId"];
-                o.ClientSecret = googleAuthNSection["ClientSecret"];
-            });
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                    .AddJwtBearer(jwt => jwt.UseGoogle(
+                        clientId: Configuration.GetSection("ClientId").Value
+                        ));
 
             services.AddCors();
-
             services.AddRouting();
-
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(o =>
+                o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             //Repositories
             services.AddScoped<AccountsRepository>();
+            services.AddScoped<TeamsRepository>();
 
             //Services
             services.AddScoped<AccountsService>();
+            services.AddScoped<TeamsService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -70,12 +74,9 @@ namespace Retrospector.Api
             });
 
             app.UseHttpsRedirection();
-
-            app.UseRouting();
-
             app.UseAuthentication();
+            app.UseRouting();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
