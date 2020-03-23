@@ -1,0 +1,48 @@
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#createTeamModal">Create a team</button>
+
+<div class="modal" id="createTeamModal" data-backdrop="static">
+    <form #form ="ngForm">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Create new team</h5>
+              <button class="close" data-dismiss="modal" #closeModal (click)="form.reset();">&times;</button>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Name of the team</label>
+                        <input type="text" placeholder="Name of the team" #nameInput="ngModel" required class="form-control" maxlength="100" [(ngModel)]="name" name="name">
+                        <div [hidden]="nameInput.valid || nameInput.pristine" class="mt-2 alert container errorMessage">
+                            <div class="row">
+                                <div class="col-2 d-flex align-items-center">
+                                    <i class="fa fa-exclamation-triangle fa-lg "></i>
+                                </div>
+                                <div class="col-8">
+                                    <div><strong>Error</strong></div>
+                                    <div>Team name is required!</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div *ngIf="validationErrorExists" class="mt-2 alert container errorMessage">
+                            <div class="row">
+                                <div class="col-2 d-flex align-items-center">
+                                    <i class="fa fa-exclamation-triangle fa-lg "></i>
+                                </div>
+                                <div class="col-8">
+                                    <div><strong>Error</strong></div>
+                                    <div>{{validationErrorMessage}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" (click)="form.reset();">Cancel</button>
+                    <button class="btn btn-primary" type="submit" [disabled]="!form.form.valid" (click)="onSubmit(); form.reset();">Create</button>
+                </div>
+            </div>
+        </div>     
+    </form>
+</div>

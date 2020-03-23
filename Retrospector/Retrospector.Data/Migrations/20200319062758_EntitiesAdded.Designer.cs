@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Retrospector.Data;
 
 namespace Retrospector.Data.Migrations
 {
     [DbContext(typeof(RetrospectorContext))]
-    partial class RetrospectorContextModelSnapshot : ModelSnapshot
+    [Migration("20200319062758_EntitiesAdded")]
+    partial class EntitiesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,6 +213,21 @@ namespace Retrospector.Data.Migrations
                     b.ToTable("RetroGames");
                 });
 
+            modelBuilder.Entity("Retrospector.Data.DomainModels.RetroGameUser", b =>
+                {
+                    b.Property<int>("RetroGameId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RetroGameId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RetroGameUsers");
+                });
+
             modelBuilder.Entity("Retrospector.Data.DomainModels.RetrospectorUser", b =>
                 {
                     b.Property<string>("Id")
@@ -253,6 +270,9 @@ namespace Retrospector.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("RetroGameId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -272,6 +292,8 @@ namespace Retrospector.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("RetroGameId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -389,6 +411,28 @@ namespace Retrospector.Data.Migrations
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Retrospector.Data.DomainModels.RetroGameUser", b =>
+                {
+                    b.HasOne("Retrospector.Data.DomainModels.RetroGame", "RetroGame")
+                        .WithMany("RetroGameUsers")
+                        .HasForeignKey("RetroGameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Retrospector.Data.DomainModels.RetrospectorUser", "User")
+                        .WithMany("RetroGameUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Retrospector.Data.DomainModels.RetrospectorUser", b =>
+                {
+                    b.HasOne("Retrospector.Data.DomainModels.RetroGame", null)
+                        .WithMany("Participants")
+                        .HasForeignKey("RetroGameId");
                 });
 
             modelBuilder.Entity("Retrospector.Data.DomainModels.Team", b =>

@@ -48,7 +48,6 @@ namespace Retrospector.Api.Controllers
             }
 
             string role = rolesResult.Data[0];
-
             UserModel viewModel = new UserModel
             {
                 Email = result.Data.Email,
