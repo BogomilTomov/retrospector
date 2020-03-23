@@ -18,6 +18,7 @@ import { CreateTeamComponent } from './component/create-team/create-team.compone
 import { AuthInterceptor } from './services/auth.interceptor';
 import { TimelineComponent } from './component/timeline/timeline.component';
 import { RetroGamesService } from './services/retro-games.service';
+import { SelectTeamComponent } from './component/select-team/select-team.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { RetroGamesService } from './services/retro-games.service';
     LoginPageComponent,
     DashboardComponent,
     CreateTeamComponent,
-    TimelineComponent
+    TimelineComponent,
+    SelectTeamComponent
   ],
   imports: [
     BrowserModule,

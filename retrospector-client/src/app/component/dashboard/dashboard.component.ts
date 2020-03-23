@@ -12,7 +12,6 @@ export class DashboardComponent implements OnInit {
   public teams: Team[] = [];
   public sharedTeams: Team[] = [];
   public ownedTeams: Team[] = [];
-  public selectedTeam;
 
   constructor(private _teamService: TeamsService,
               private _accountService: AccountsService) { }
@@ -29,9 +28,5 @@ export class DashboardComponent implements OnInit {
         }
       });
     });
-  }
-
-  selected(value) {
-    console.log(value);
   }
 }

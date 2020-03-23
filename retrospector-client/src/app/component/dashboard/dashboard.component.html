@@ -1,12 +1,5 @@
 <h3>Dashboard</h3>
 <hr>
 <ret-create-team></ret-create-team>
-<select id="teamOptions" class="custom-select mt-3" [(ngModel)]="selectedTeam" (ngModelChange)="selected($event)">
-    <optgroup label="Owned teams">
-      <option *ngFor="let ownedTeam of ownedTeams" value="{{ownedTeam.name}}">{{ownedTeam.name}}</option>
-    </optgroup>
-    <optgroup label="Shared Teams">
-        <option *ngFor="let sharedTeam of sharedTeams" value="{{sharedTeam.name}}">{{sharedTeam.name}}</option>
-    </optgroup>
-  </select>
+<ret-select-team [sharedTeams]="sharedTeams" [ownedTeams]="ownedTeams"></ret-select-team>
 <ret-timeline></ret-timeline>
