@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { baseUrl } from 'src/environments/environment';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { ITeamDetails } from '../models/team-details.model';
+import { ITeamData } from '../models/teams-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +21,14 @@ export class TeamsService {
     team);
   }
 
-  getTeams(userId: string): Observable<Team[]> {
+  getTeamData(userId: string): Observable<ITeamData> {
     let params = new HttpParams();
     params = params.append('userId', userId);
-    return this._http.get<Team[]>(baseUrl + '/teams', {params: params});
-  } 
+    return this._http.get<ITeamData>(baseUrl + '/teams', {params: params})
+    .pipe(
+      map((data: ITeamData) => {
+          return data;
+      })
+    );
+  }
 }

@@ -60,6 +60,11 @@ namespace Retrospector.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<RetrospectorUser>()
+                .HasOne(ru => ru.SelectedTeam)
+                .WithOne(st => st.User)
+                .HasForeignKey<UserSelectedTeam>(st => st.UserId);
+
             modelBuilder.Entity<TeamUser>()
                 .HasKey(tu => new { tu.TeamId, tu.UserId });
             
@@ -68,6 +73,10 @@ namespace Retrospector.Data
                 .IsRequired();
             modelBuilder.Entity<RetroGame>()
                 .Property(rg => rg.Url)
+                .IsRequired();
+
+            modelBuilder.Entity<UserSelectedTeam>()
+                .Property(ust => ust.UserId)
                 .IsRequired();
 
             modelBuilder.Entity<Team>()

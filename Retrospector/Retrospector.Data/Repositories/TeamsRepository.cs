@@ -43,5 +43,13 @@ namespace Retrospector.Data.Repositories
                 .OrderBy(t => t.Name)
                 .ToListAsync();
         }
+
+        public async Task<int> GetDefaultTeamAsync(string userId)
+        {
+            RetrospectorUser user = await _context.Users
+                .Include(u => u.SelectedTeam)
+                .FirstOrDefaultAsync(u => u.SelectedTeam.UserId == userId);
+            return user.SelectedTeam.TeamId;
+        }
     }
 }

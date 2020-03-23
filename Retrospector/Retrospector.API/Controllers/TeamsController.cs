@@ -8,6 +8,8 @@ using Retrospector.Services;
 using Retrospector.Services.Results;
 using Retrospector.Api.ViewModels.Teams;
 using Microsoft.AspNetCore.Authorization;
+using Retrospector.Api.ViewModels.RetroGames;
+using Retrospector.Api.ViewModels.Shared;
 
 namespace Retrospector.Api.Controllers
 {
@@ -24,7 +26,7 @@ namespace Retrospector.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTeam([FromBody] TeamModel team)
+        public async Task<IActionResult> CreateTeam([FromBody] CreateTeamModel team)
         {
             if (!ModelState.IsValid)
             {
@@ -37,7 +39,7 @@ namespace Retrospector.Api.Controllers
                 return BadRequest(new { message = result.Message });
             }
 
-            TeamModel viewModel = new TeamModel
+            CreateTeamModel viewModel = new CreateTeamModel
             {
                 Id = result.Data.Id,
                 Name = result.Data.Name,
@@ -56,28 +58,49 @@ namespace Retrospector.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            ResultData<IList<Team>> result = await _teamService.GetTeamsAsync(userId);
-            if (!result.Success)
+            ResultData<IList<Team>> teams = await _teamService.GetTeamsAsync(userId);
+            if (!teams.Success)
             {
-                return BadRequest(new { message = result.Message });
+                return BadRequest(new { message = teams.Message });
             }
 
-            List<TeamModel> teamModels = new List<TeamModel>();
-            foreach (Team team in result.Data)
+            ResultData<int> defaultTeam = await _teamService.GetDefaultTeamAsync(userId);
+            if (!defaultTeam.Success)
             {
-                TeamModel teamModel = new TeamModel()
+                return BadRequest(new { message = defaultTeam.Message });
+            }
+
+            TeamsAndDefaultTeamModel viewModel = new TeamsAndDefaultTeamModel();
+            viewModel.DefaultTeam= defaultTeam.Data;
+            viewModel.Teams = new List<TeamDetailsModel>();
+            foreach (Team team in teams.Data)
+            {
+                TeamDetailsModel teamModel = new TeamDetailsModel
                 {
                     Id = team.Id,
                     Name = team.Name,
-                    OwnerId = team.OwnerId,
-                    RetroGames = team.RetroGames,
                     CreationDate = team.CreationDate,
+                    OwnerId = team.OwnerId
                 };
 
-                teamModels.Add(teamModel);
+                foreach (RetroGame game in team.RetroGames)
+                {
+                    RetroGameDetailsModel gameModel = new RetroGameDetailsModel
+                    {
+                        Id = game.Id,
+                        Name = game.Name,
+                        LastModified = game.LastModified,
+                        CreationDate = game.CreationDate,
+                        Url = game.Url
+                    };
+
+                    teamModel.RetroGames.Add(gameModel);
+                }
+
+                viewModel.Teams.Add(teamModel);
             }
 
-            return Ok(teamModels);
+            return Ok(viewModel);
         }
     }
 }

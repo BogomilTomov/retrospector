@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Team } from 'src/app/models/team';
+import { ITeamDetails } from 'src/app/models/team-details.model';
 
 @Component({
   selector: 'ret-select-team',
@@ -7,12 +8,14 @@ import { Team } from 'src/app/models/team';
   styleUrls: ['./select-team.component.css']
 })
 export class SelectTeamComponent implements OnInit {
-  public selectedTeam;
-  @Input() public sharedTeams: Team[] = [];
-  @Input() public ownedTeams: Team[] = [];
+  @Input() public selectedTeamId: number;
+  @Input() public sharedTeams: ITeamDetails[];
+  @Input() public ownedTeams: ITeamDetails[];
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.selectedTeamId)
+
   }
 
   selected(value) {

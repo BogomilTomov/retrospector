@@ -6,17 +6,13 @@ using System.Threading.Tasks;
 
 namespace Retrospector.Api.ViewModels.Teams
 {
-    public class TeamModel
+    public class CreateTeamModel
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
 
         public string OwnerId { get; set; }
-
-        public IEnumerable<RetroGame> RetroGames { get; set; }
-
-        public IEnumerable<RetrospectorUser> Users { get; set; }
 
         public DateTime CreationDate { get; set; }
     }

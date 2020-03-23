@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Retrospector.Data.DomainModels
+namespace Retrospector.Api.ViewModels.RetroGames
 {
-    public class RetroGame
+    public class RetroGameDetailsModel
     {
         public int Id { get; set; }
 
@@ -15,11 +16,5 @@ namespace Retrospector.Data.DomainModels
         public DateTime LastModified { get; set; }
 
         public string Url { get; set; }
-
-        public int TeamId { get; set; }
-
-        public Team Team { get; set; }
-
-        public IEnumerable<Note> Notes { get; set; }
     }
 }
