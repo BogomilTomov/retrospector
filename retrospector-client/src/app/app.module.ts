@@ -19,6 +19,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { TimelineComponent } from './component/timeline/timeline.component';
 import { RetroGamesService } from './services/retro-games.service';
 import { SelectTeamComponent } from './component/select-team/select-team.component';
+import { LayoutComponent } from './component/layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SelectTeamComponent } from './component/select-team/select-team.compone
     DashboardComponent,
     CreateTeamComponent,
     TimelineComponent,
-    SelectTeamComponent
+    SelectTeamComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,

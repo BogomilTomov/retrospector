@@ -1,5 +1,5 @@
 <h3>Dashboard</h3>
 <hr>
-<ret-create-team></ret-create-team>
-<ret-select-team [sharedTeams]="sharedTeams" [ownedTeams]="ownedTeams" [selectedTeamId]="selectedTeamId"></ret-select-team>
+<ret-create-team (teamCreated)='teamCreated($event)'></ret-create-team>
+<!-- <ret-select-team [sharedTeams]="sharedTeams" [ownedTeams]="ownedTeams" [selectedTeamId]="selectedTeamId"></ret-select-team> -->
 <ret-timeline></ret-timeline>

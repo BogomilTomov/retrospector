@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormsModule, NgForm }   from '@angular/forms';
 import { Team } from '../../models/team';
 import * as moment from 'moment';
@@ -6,6 +6,7 @@ import { TeamsService } from '../../services/teams.service';
 import { AccountsService } from '../../services/accounts.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ITeamDetails } from 'src/app/models/team-details.model';
 
 @Component({
   selector: 'ret-create-team',
@@ -17,6 +18,8 @@ export class CreateTeamComponent implements OnDestroy {
   public name: string = '';
   public validationErrorExists: boolean = false;
   public validationErrorMessage: string = '';
+  @Output() public teamCreated = new EventEmitter<ITeamDetails>();
+
   private unsubscribe$ = new Subject<void>();
 
   constructor(private readonly _teamService: TeamsService, 
@@ -34,6 +37,7 @@ export class CreateTeamComponent implements OnDestroy {
       .subscribe(
         res => {
           this.closeModal.nativeElement.click();
+          this.teamCreated.emit(res);
         },
         err => {
           this.validationErrorExists = true;
