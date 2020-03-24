@@ -19,6 +19,8 @@ namespace Retrospector.Data
 
         public DbSet<TeamUser> TeamUsers { get; set; }
 
+        public DbSet<UserSelectedTeam> UserSelectedTeams{ get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

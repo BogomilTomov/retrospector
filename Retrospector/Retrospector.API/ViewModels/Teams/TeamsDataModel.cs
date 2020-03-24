@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Retrospector.Api.ViewModels.Shared
 {
-    public class TeamsAndDefaultTeamModel
+    public class TeamsDataModel
     {
         public List<TeamDetailsModel> Teams{ get; set; }
 

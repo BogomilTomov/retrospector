@@ -335,7 +335,7 @@ namespace Retrospector.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserSelectedTeam");
+                    b.ToTable("UserSelectedTeams");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

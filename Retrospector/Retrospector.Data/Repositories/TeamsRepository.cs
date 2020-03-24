@@ -46,10 +46,11 @@ namespace Retrospector.Data.Repositories
 
         public async Task<int> GetDefaultTeamAsync(string userId)
         {
-            RetrospectorUser user = await _context.Users
+            return await _context.Users
+                .Where(u => u.Id == userId)
                 .Include(u => u.SelectedTeam)
-                .FirstOrDefaultAsync(u => u.SelectedTeam.UserId == userId);
-            return user.SelectedTeam.TeamId;
+                .Select(u => u.SelectedTeam.TeamId)
+                .SingleOrDefaultAsync();
         }
     }
 }

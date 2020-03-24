@@ -11,7 +11,6 @@ import { TeamsService } from 'src/app/services/teams.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  public teams: ITeamDetails[] = [];
   public sharedTeams: ITeamDetails[] = [];
   public ownedTeams: ITeamDetails[] = [];
   public selectedTeamId: number; 
@@ -23,9 +22,12 @@ export class DashboardComponent implements OnInit {
     const userId = this._accountService.getLoggedInUserId();
     this._teamService.getTeamData(userId)
       .subscribe(res => {
-        this.teams = res.teams;
+        const teams = res.teams;
         this.selectedTeamId = res.defaultTeam;
-        this.teams.forEach(team => {
+        if (this.selectedTeamId === 0 && teams.length > 0) {
+          this.selectedTeamId = teams[0].id;
+        }
+        teams.forEach(team => {
           if (team.ownerId === userId) {
             this.ownedTeams.push(team);
           } else {

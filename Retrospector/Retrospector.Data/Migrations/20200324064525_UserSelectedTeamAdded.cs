@@ -7,7 +7,7 @@ namespace Retrospector.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UserSelectedTeam",
+                name: "UserSelectedTeams",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -17,9 +17,9 @@ namespace Retrospector.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserSelectedTeam", x => x.Id);
+                    table.PrimaryKey("PK_UserSelectedTeams", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserSelectedTeam_AspNetUsers_UserId",
+                        name: "FK_UserSelectedTeams_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -27,8 +27,8 @@ namespace Retrospector.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserSelectedTeam_UserId",
-                table: "UserSelectedTeam",
+                name: "IX_UserSelectedTeams_UserId",
+                table: "UserSelectedTeams",
                 column: "UserId",
                 unique: true);
         }
@@ -36,7 +36,7 @@ namespace Retrospector.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserSelectedTeam");
+                name: "UserSelectedTeams");
         }
     }
 }

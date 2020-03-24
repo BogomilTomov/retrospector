@@ -70,8 +70,8 @@ namespace Retrospector.Api.Controllers
                 return BadRequest(new { message = defaultTeam.Message });
             }
 
-            TeamsAndDefaultTeamModel viewModel = new TeamsAndDefaultTeamModel();
-            viewModel.DefaultTeam= defaultTeam.Data;
+            TeamsDataModel viewModel = new TeamsDataModel();
+            viewModel.DefaultTeam = defaultTeam.Data;
             viewModel.Teams = new List<TeamDetailsModel>();
             foreach (Team team in teams.Data)
             {

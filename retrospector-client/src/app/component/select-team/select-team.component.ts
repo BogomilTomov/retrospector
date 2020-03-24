@@ -11,11 +11,10 @@ export class SelectTeamComponent implements OnInit {
   @Input() public selectedTeamId: number;
   @Input() public sharedTeams: ITeamDetails[];
   @Input() public ownedTeams: ITeamDetails[];
+
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.selectedTeamId)
-
   }
 
   selected(value) {

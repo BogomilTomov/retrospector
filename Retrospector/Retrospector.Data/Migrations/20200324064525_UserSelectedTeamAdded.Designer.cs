@@ -10,7 +10,7 @@ using Retrospector.Data;
 namespace Retrospector.Data.Migrations
 {
     [DbContext(typeof(RetrospectorContext))]
-    [Migration("20200323141357_UserSelectedTeamAdded")]
+    [Migration("20200324064525_UserSelectedTeamAdded")]
     partial class UserSelectedTeamAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -337,7 +337,7 @@ namespace Retrospector.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserSelectedTeam");
+                    b.ToTable("UserSelectedTeams");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
