@@ -10,6 +10,7 @@ using Retrospector.Api.ViewModels.Teams;
 using Microsoft.AspNetCore.Authorization;
 using Retrospector.Api.ViewModels.RetroGames;
 using Retrospector.Api.ViewModels.Shared;
+using Newtonsoft.Json.Linq;
 
 namespace Retrospector.Api.Controllers
 {
@@ -25,7 +26,7 @@ namespace Retrospector.Api.Controllers
             _teamService = teamService;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateTeam([FromBody] CreateTeamModel team)
         {
             if (!ModelState.IsValid)

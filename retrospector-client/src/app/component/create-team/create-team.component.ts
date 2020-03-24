@@ -4,10 +4,8 @@ import { Team } from '../../models/team';
 import * as moment from 'moment';
 import { TeamsService } from '../../services/teams.service';
 import { AccountsService } from '../../services/accounts.service';
-import { Observable, Subscription, Subject } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { take, first, takeUntil } from 'rxjs/operators';
-import { ActivationEnd } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'ret-create-team',
@@ -31,7 +29,8 @@ export class CreateTeamComponent implements OnDestroy {
       ownerId: this._accountService.getLoggedInUserId()
     }; 
 
-    this._teamService.createTeam(newTeam).pipe(takeUntil(this.unsubscribe$))
+    this._teamService.createTeam(newTeam)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         res => {
           this.closeModal.nativeElement.click();

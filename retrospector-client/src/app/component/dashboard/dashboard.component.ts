@@ -3,6 +3,8 @@ import { Team } from '../../models/team';
 import { AccountsService } from 'src/app/services/accounts.service';
 import { ITeamDetails } from 'src/app/models/team-details.model';
 import { TeamsService } from 'src/app/services/teams.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -13,7 +15,8 @@ import { TeamsService } from 'src/app/services/teams.service';
 export class DashboardComponent implements OnInit {
   public sharedTeams: ITeamDetails[] = [];
   public ownedTeams: ITeamDetails[] = [];
-  public selectedTeamId: number; 
+  public selectedTeamId: number;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private _teamService: TeamsService,
               private _accountService: AccountsService) { }
@@ -21,12 +24,14 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     const userId = this._accountService.getLoggedInUserId();
     this._teamService.getTeamData(userId)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(res => {
         const teams = res.teams;
         this.selectedTeamId = res.defaultTeam;
         if (this.selectedTeamId === 0 && teams.length > 0) {
           this.selectedTeamId = teams[0].id;
         }
+
         teams.forEach(team => {
           if (team.ownerId === userId) {
             this.ownedTeams.push(team);
@@ -35,5 +40,10 @@ export class DashboardComponent implements OnInit {
           }
         });
       });
+  }
+
+  ngOnDestroy(){
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

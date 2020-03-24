@@ -30,11 +30,6 @@ namespace Retrospector.Data.Repositories
             return _context.Teams.Any(t => t.Name == name);
         }
 
-        public bool OwnerExists(string userId)
-        {
-            return _context.Users.Any(u => u.Id == userId);
-        }
-
         public async Task<List<Team>> GetTeamsAsync(string userId)
         {
             return await _context.Teams
@@ -51,6 +46,11 @@ namespace Retrospector.Data.Repositories
                 .Include(u => u.SelectedTeam)
                 .Select(u => u.SelectedTeam.TeamId)
                 .SingleOrDefaultAsync();
+        }
+
+        public bool TeamExists(int teamId)
+        {
+            return _context.Teams.Any(t => t.Id == teamId);
         }
     }
 }

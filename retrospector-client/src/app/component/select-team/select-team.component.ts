@@ -1,23 +1,33 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Team } from 'src/app/models/team';
+import { Component, Input} from '@angular/core';
 import { ITeamDetails } from 'src/app/models/team-details.model';
+import { AccountsService } from 'src/app/services/accounts.service';
+import { UsersService } from 'src/app/services/users.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'ret-select-team',
   templateUrl: './select-team.component.html',
   styleUrls: ['./select-team.component.css']
 })
-export class SelectTeamComponent implements OnInit {
+export class SelectTeamComponent {
   @Input() public selectedTeamId: number;
   @Input() public sharedTeams: ITeamDetails[];
   @Input() public ownedTeams: ITeamDetails[];
+  private unsubscribe$ = new Subject<void>();
 
-  constructor() { }
+  constructor(private _usersService: UsersService,
+              private _accountsService: AccountsService) { }
 
-  ngOnInit(): void {
+  selected(teamId) {
+    const userId = this._accountsService.getLoggedInUserId();
+    this._usersService.setSelectedTeam(userId, teamId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
   }
 
-  selected(value) {
-    console.log(value);
+  ngOnDestroy(){
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

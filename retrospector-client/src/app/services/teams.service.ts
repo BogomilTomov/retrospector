@@ -10,19 +10,20 @@ import { ITeamData } from '../models/teams-data.model';
   providedIn: 'root'
 })
 export class TeamsService {
+  private readonly _url = `${baseUrl}/teams`;
 
   constructor(private readonly _http: HttpClient) { 
   }
 
   createTeam(team: Team): Observable<Team> {
-    return this._http.post<Team>(baseUrl + '/teams',
+    return this._http.post<Team>(this._url + '/create',
     team);
   }
 
   getTeamData(userId: string): Observable<ITeamData> {
     let params = new HttpParams();
     params = params.append('userId', userId);
-    return this._http.get<ITeamData>(baseUrl + '/teams', {params: params})
+    return this._http.get<ITeamData>(this._url, {params: params})
       .pipe(map((data: ITeamData) => {
           return data;
       })
