@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { RetroGamesService } from 'src/app/services/retro-games.service';
 import { IRetroGame } from 'src/app/models/retro-game.model';
@@ -8,17 +8,10 @@ import { IRetroGame } from 'src/app/models/retro-game.model';
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.css']
 })
-export class TimelineComponent implements OnInit {
-  public games: IRetroGame[] = [];
+export class TimelineComponent{
+  @Input() public games: IRetroGame[] = [];
 
   constructor(private readonly _gameService: RetroGamesService) { }
-
-  ngOnInit(): void {
-    this._gameService.getGames().toPromise().then(result => {
-      this.games = result.data;
-      this.calculateGamesNotesCount();
-    }).catch(err => console.log(err));
-  }
 
   trackByFn(index: number, game: IRetroGame): number {
     return game.id;

@@ -60,4 +60,8 @@ export class LayoutComponent implements OnInit {
   newTeamSelected(selectedTeamId) {
     this.selectedTeamId = selectedTeamId;
   }
+
+  trackByFn(index: number, team: ITeamDetails): number {
+    return team.id;
+  }
 }

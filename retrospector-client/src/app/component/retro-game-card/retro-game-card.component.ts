@@ -7,6 +7,5 @@ import { IRetroGame } from 'src/app/models/retro-game.model';
   styleUrls: ['./retro-game-card.component.css']
 })
 export class RetroGameCardComponent {
-  @Input()
-  public game: IRetroGame;
+  @Input() public game: IRetroGame;
 }

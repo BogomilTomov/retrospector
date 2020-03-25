@@ -1,4 +1,4 @@
 <h3>Dashboard</h3>
 <hr>
 <ret-create-team (teamCreated)='teamCreated($event)'></ret-create-team>
-<ret-timeline></ret-timeline>
+<ret-timeline *ngIf="selectedTeam !== undefined" [games]="selectedTeam.retroGames"></ret-timeline>

@@ -37,7 +37,8 @@ export class DashboardComponent implements OnInit {
         if (selectedTeamId === 0 && this.teams.length > 0) {
           selectedTeamId = this.teams[0].id;
         }
-               
+        
+        this.selectedTeam = this.teams.find(t => t.id == this.selectedTeamId);       
         this.teams.forEach(team => {
           if (team.ownerId === this.userId) {
             this.ownedTeams.push(team);
@@ -63,9 +64,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnChanges(teamSelectChanges: SimpleChanges) {
-    if(!teamSelectChanges.selectedTeamId.isFirstChange() && 
-        teamSelectChanges.selectedTeamId.previousValue !== 0) {
-      console.log(teamSelectChanges.selectedTeamId.currentValue)
+    if(!teamSelectChanges.selectedTeamId.isFirstChange()) {
       this.selectedTeamId = teamSelectChanges.selectedTeamId.currentValue;
       this.selectedTeam = this.teams.find(t => t.id == this.selectedTeamId);
       this._userService.setSelectedTeam(this.userId, this.selectedTeamId)
