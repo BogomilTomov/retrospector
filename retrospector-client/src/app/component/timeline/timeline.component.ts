@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+
 import { RetroGamesService } from 'src/app/services/retro-games.service';
 import { IRetroGame } from 'src/app/models/retro-game.model';
 
@@ -9,16 +9,23 @@ import { IRetroGame } from 'src/app/models/retro-game.model';
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-  public games$: Observable<IRetroGame[]>;
   public games: IRetroGame[] = [];
 
   constructor(private readonly _gameService: RetroGamesService) { }
 
   ngOnInit(): void {
-    this.games$ = this._gameService.getGames();
+    this._gameService.getGames().toPromise().then(result => {
+      this.games = result.data;
+    }).catch(err => console.log(err));
   }
 
   trackByFn(index: number, game: IRetroGame): number {
     return game.id;
+  }
+  
+  addRetrospective(newGame: IRetroGame): void { 
+    this._gameService.createGame(newGame).toPromise().then(res => {
+      this.games = [res, ...this.games].slice(0, 20);
+    }).catch(err => console.log(err))
   }
 }

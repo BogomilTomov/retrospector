@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormsModule, NgForm }   from '@angular/forms';
-import { Team } from '../../models/team';
+import { ITeam } from '../../models/team.model';
 import * as moment from 'moment';
 import { TeamsService } from '../../services/teams.service';
 import { AccountsService } from '../../services/accounts.service';
@@ -24,7 +24,7 @@ export class CreateTeamComponent implements OnDestroy {
   constructor(private readonly _teamService: TeamsService, private readonly _accountService: AccountsService) { }
 
   onSubmit(): void {
-    const newTeam: Team = { 
+    const newTeam: ITeam = { 
       name: this.name,
       creationDate: moment().add(2, 'h').toDate(),
       ownerId: this._accountService.getLoggedInUserId()

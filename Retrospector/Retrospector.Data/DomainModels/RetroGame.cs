@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Retrospector.Data.DomainModels
 {
@@ -9,6 +8,8 @@ namespace Retrospector.Data.DomainModels
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public string? Template { get; set; }
 
         public DateTime CreationDate { get; set; }
 
@@ -21,6 +22,5 @@ namespace Retrospector.Data.DomainModels
         public Team Team { get; set; }
 
         public IEnumerable<Note> Notes { get; set; }
-
     }
 }

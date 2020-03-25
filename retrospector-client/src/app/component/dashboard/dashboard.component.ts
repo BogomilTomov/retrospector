@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Team } from '../../models/team';
+import { ITeam } from '../../models/team.model';
 import { TeamsService } from '../../services/teams.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { TeamsService } from '../../services/teams.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  public teams: Team[];
+  public teams: ITeam[];
   
   constructor(private _teamService: TeamsService) { }
 
