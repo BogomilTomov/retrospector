@@ -450,7 +450,7 @@ namespace Retrospector.Data.Migrations
                     b.HasOne("Retrospector.Data.DomainModels.RetrospectorUser", "User")
                         .WithOne("SelectedTeam")
                         .HasForeignKey("Retrospector.Data.DomainModels.UserSelectedTeam", "UserId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
