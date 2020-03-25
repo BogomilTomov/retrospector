@@ -28,7 +28,7 @@ namespace Retrospector.Services
             return await _retroGameRepository.GetRetroGameByIdAsync(id);
         }
 
-        public async Task<ResultData<RetroGame>> CreateRetroGameAsync(string name, string template)
+        public async Task<ResultData<RetroGame>> CreateRetroGameAsync(string name, string template, int teamId)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -40,7 +40,7 @@ namespace Retrospector.Services
                 return new ResultData<RetroGame>(InvalidRetroGameTemplateMessage, false);
             }
 
-            RetroGame game = await _retroGameRepository.CreateRetroGameAsync(name, template);
+            RetroGame game = await _retroGameRepository.CreateRetroGameAsync(name, template, teamId);
 
             if (game == null)
             {

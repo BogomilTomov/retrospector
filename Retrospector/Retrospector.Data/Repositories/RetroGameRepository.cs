@@ -21,7 +21,7 @@ namespace Retrospector.Data.Repositories
             return await _context.RetroGames.FirstOrDefaultAsync(rg => rg.Name == name);
         }
 
-        public async Task<RetroGame> CreateRetroGameAsync(string name, string template)
+        public async Task<RetroGame> CreateRetroGameAsync(string name, string template, int teamId)
         {
             var game = await _context.RetroGames.FirstOrDefaultAsync(rg => rg.Name == name);
 
@@ -37,19 +37,7 @@ namespace Retrospector.Data.Repositories
                 CreationDate = DateTime.Now,
                 LastModified = DateTime.Now,
                 Notes = new List<Note>(),
-                Team = new Team()
-                {
-                    Name = "Test Team",
-                    Owner = new RetrospectorUser()
-                    {
-                        Notes = new List<Note>(),
-                        TeamUsers = new List<TeamUser>(),
-                        OwnedTeams = new List<Team>()
-                    },
-                    RetroGames = new List<RetroGame>(),
-                    TeamUsers = new List<TeamUser>(),
-                    CreationDate = DateTime.Now
-                },
+                TeamId = teamId,
                 Url = string.Empty
             };
 

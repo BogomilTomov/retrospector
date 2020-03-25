@@ -5,6 +5,8 @@ import { TeamsService } from 'src/app/services/teams.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { UsersService } from 'src/app/services/users.service';
+import { RetroGamesService } from 'src/app/services/retro-games.service';
+import { IRetroGame } from 'src/app/models/retro-game.model';
 
 @Component({
   selector: 'ret-dashboard',
@@ -25,7 +27,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(private readonly _teamService: TeamsService,
               private readonly _accountService: AccountsService,
-              private readonly _userService: UsersService) { }
+              private readonly _userService: UsersService,
+              private readonly _gameService: RetroGamesService) { }
 
   ngOnInit(): void {
     this.userId = this._accountService.getLoggedInUserId();
@@ -71,6 +74,13 @@ export class DashboardComponent implements OnInit {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe();
     }
+  }
+
+  addRetrospective(newGame: IRetroGame): void { 
+    newGame.teamId = this.selectedTeamId;
+    this._gameService.createGame(newGame).toPromise().then(res => {
+      this.selectedTeam.retroGames = [res, ...this.selectedTeam.retroGames].slice(0, 20);
+    }).catch(err => console.log(err))
   }
 
   ngOnDestroy(){

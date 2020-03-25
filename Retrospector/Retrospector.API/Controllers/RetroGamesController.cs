@@ -24,7 +24,7 @@ namespace Retrospector.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<RetroGame>> PostRetroGameAsync(RetroGameInputModel game)
         {
-            ResultData<RetroGame> result = await _retroGameService.CreateRetroGameAsync(game.Name, game.Template);
+            ResultData<RetroGame> result = await _retroGameService.CreateRetroGameAsync(game.Name, game.Template, game.TeamId);
 
             if (!result.Success)
             {

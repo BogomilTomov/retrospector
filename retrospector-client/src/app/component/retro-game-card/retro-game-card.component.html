@@ -5,14 +5,14 @@
                 <h4 class="card-title">{{game.name}}</h4>
                 <p class="card-text">{{game.notesCount}} notes, last modified {{game.lastModified  | date:'MM/dd' }}</p>
             </div>
-            <div class="col-auto retro-card-play">
-                <button class="btn btn-primary mt-2">Play</button>
+            <div class="col-auto retro-card-play my-auto">
+                <button class="btn btn-primary">Play</button>
             </div>
-            <div class="col-auto retro-card-options dropright">
+            <div class="col-auto retro-card-options dropright my-auto">
                 <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="verticalElipsis">
                     &#8942;
                 </button>
-                  <div class="dropdown-menu ml-2">
+                  <div class="dropdown-menu">
                       <a class="dropdown-item">Get URL</a>
                       <a class="dropdown-item">Export to PDF</a>
                       <a class="dropdown-item">Edit Name</a>
