@@ -35,6 +35,20 @@
     <Compile Remove="Migrations\20200325120228_OnDeleteSelectedTeamDeleted2.Designer.cs" />
     <Compile Remove="Migrations\20200325152541_UserSelectedAdded.cs" />
     <Compile Remove="Migrations\20200325152541_UserSelectedAdded.Designer.cs" />
+    <Compile Remove="Migrations\20200320162132_CreateRetroGameTable.cs" />
+    <Compile Remove="Migrations\20200320162132_CreateRetroGameTable.Designer.cs" />
+    <Compile Remove="Migrations\20200320162436_CreateRetroGameTable.cs" />
+    <Compile Remove="Migrations\20200320162436_CreateRetroGameTable.Designer.cs" />
+    <Compile Remove="Migrations\20200323154249_RetroGameNullableProps.cs" />
+    <Compile Remove="Migrations\20200323154249_RetroGameNullableProps.Designer.cs" />
+    <Compile Remove="Migrations\20200323155829_RetoGameNullableProps.cs" />
+    <Compile Remove="Migrations\20200323155829_RetoGameNullableProps.Designer.cs" />
+    <Compile Remove="Migrations\20200323161521_DisableBreakingProps.cs" />
+    <Compile Remove="Migrations\20200323161521_DisableBreakingProps.Designer.cs" />
+    <Compile Remove="Migrations\20200323185233_AddTemplateProp.cs" />
+    <Compile Remove="Migrations\20200323185233_AddTemplateProp.Designer.cs" />
+    <Compile Remove="Migrations\20200323185808_AddTemplateProp.cs" />
+    <Compile Remove="Migrations\20200323185808_AddTemplateProp.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

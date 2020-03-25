@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
-import { Team } from '../../models/team';
 import { AccountsService } from 'src/app/services/accounts.service';
 import { ITeamDetails } from 'src/app/models/team-details.model';
 import { TeamsService } from 'src/app/services/teams.service';

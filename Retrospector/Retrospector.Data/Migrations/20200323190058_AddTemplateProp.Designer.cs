@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Retrospector.Data;
 
 namespace Retrospector.Data.Migrations
 {
     [DbContext(typeof(RetrospectorContext))]
-    partial class RetrospectorContextModelSnapshot : ModelSnapshot
+    [Migration("20200323190058_AddTemplateProp")]
+    partial class AddTemplateProp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -319,30 +321,6 @@ namespace Retrospector.Data.Migrations
                     b.ToTable("TeamUsers");
                 });
 
-            modelBuilder.Entity("Retrospector.Data.DomainModels.UserSelectedTeam", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeamId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("UserSelectedTeams");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -438,21 +416,6 @@ namespace Retrospector.Data.Migrations
                     b.HasOne("Retrospector.Data.DomainModels.RetrospectorUser", "User")
                         .WithMany("TeamUsers")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Retrospector.Data.DomainModels.UserSelectedTeam", b =>
-                {
-                    b.HasOne("Retrospector.Data.DomainModels.Team", "Team")
-                        .WithMany("UserSelectedTeams")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Retrospector.Data.DomainModels.RetrospectorUser", "User")
-                        .WithOne("SelectedTeam")
-                        .HasForeignKey("Retrospector.Data.DomainModels.UserSelectedTeam", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

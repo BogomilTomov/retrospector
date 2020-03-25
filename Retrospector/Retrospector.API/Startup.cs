@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -54,11 +53,15 @@ namespace Retrospector.Api
             services.AddScoped<AccountsRepository>();
             services.AddScoped<TeamsRepository>();
             services.AddScoped<UsersRepository>();
+            services.AddScoped<RetroGameRepository>();
 
             //Services
-            services.AddScoped<AccountsService>();
-            services.AddScoped<TeamsService>();
             services.AddScoped<UsersService>();
+            services.AddScoped<AccountsService>();
+            services.AddScoped<RetroGameService>();
+            services.AddScoped<TeamsService>();
+
+            //Services
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

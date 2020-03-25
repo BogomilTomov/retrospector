@@ -1,0 +1,60 @@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewRetrospective" (click)="resetFields()">
+    Create a New Retrospective
+</button>
+    
+    <!-- Create New Retrospective modal -->
+    <div class="modal fade" id="createNewRetrospective" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="createNewRetrospectiveLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="createNewRetrospectiveLabel">Create a New Retrospective</h2>
+            <button type="button" class="close" data-dismiss="modal" #closeModal aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form class="needs-validation" novalidate autocomplete="off">
+                  <div class="form-row mg-top-30">
+                    <div class="col-md-12 mb-3">
+                      <input type="text" class="form-control input-text" name="newRetrospectiveName" #name="ngModel"
+                             ngModel maxlength="100" [(ngModel)]="newRetrospectiveName" [ngModelOptions]="{standalone: true}"
+                             required value="newRetrospectiveName">
+                      <label class="floating-label">Retrospective name</label>
+                      <div class="error-msg mt-2 ml-2" > 
+                          <div >
+                              {{this.nameWarning}}
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row mg-top-30">
+                    <div class="col-md-7">
+                      <div class="dropdown">
+                        <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="resetTemplate()" [style.color]="newRetrospectiveTemplate ? '#000' : '#636E85'">
+                          {{dropdownText}}
+                        </button>
+                        <label class="caret"></label>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" *ngFor="let option of retroGameOptions" #optionRefVariable (click)="chooseTemplate(optionRefVariable.textContent)">{{option}}</a>
+                          <a class="dropdown-item" >Custom</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-1 align-self-center text-align-center">Or</div>
+                    <div class="col-md-4 align-self-center text-align-center">
+                      <button class="btn btn-primary btn-small">Wheel of Fate</button>
+                    </div>
+                  </div>
+                  <div class="form-row justify-content-center" >
+                    <div class="col error-msg mt-2 ml-2" >
+                      {{this.templateWarning}}
+                    </div>
+                  </div>
+                </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" (click)="createNewRetrospective()">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>

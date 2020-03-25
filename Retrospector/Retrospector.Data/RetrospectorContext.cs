@@ -8,7 +8,6 @@ namespace Retrospector.Data
     {
         public RetrospectorContext(DbContextOptions options) : base(options)
         {
-
         }
 
         public DbSet<Note> Notes { get; set; }

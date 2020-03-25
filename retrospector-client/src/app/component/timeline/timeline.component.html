@@ -1,25 +1,28 @@
-<ng-container *ngIf="games$ | async as games">
-    <div class="row" *ngFor="let game of games; let i = index;trackBy: trackByFn">
-        <div class="col-auto my-auto">
-            {{game.creationDate | date:'dd/MM'}}
-        </div>
-        <div class="col-auto text-center flex-column d-none d-sm-flex">
-            <div class="row h-50">
-                <div class="col border-right" *ngIf="i != 0">&nbsp;</div>
-                <div class="col" *ngIf="i == 0">&nbsp;</div>
-                <div class="col">&nbsp;</div>
+<ret-create-new-retrospective (newRetrospective)="addRetrospective($event)"></ret-create-new-retrospective>
+<ng-container *ngIf="games.length">
+    <div class="container pad-l-35 pad-r-35">
+        <div class="row" *ngFor="let game of games; let i = index;trackBy: trackByFn">
+            <div class="col-auto my-auto">
+                {{game.creationDate | date:'MM/dd'}}
             </div>
-            <h5 class="m-2">
-                <span class="badge badge-pill bg-light border">&nbsp;</span>
-            </h5>
-            <div class="row h-50">
-                <div class="col border-right" *ngIf="i != games.length - 1">&nbsp;</div>
-                <div class="col" *ngIf="i == games.length - 1">&nbsp;</div>
-                <div class="col">&nbsp;</div>
+            <div class="col-auto text-center flex-column d-none d-sm-flex">
+                <div class="row h-50">
+                    <div class="col border-right" *ngIf="i != 0">&nbsp;</div>
+                    <div class="col" *ngIf="i == 0">&nbsp;</div>
+                    <div class="col">&nbsp;</div>
+                </div>
+                <h5 class="m-2">
+                    <span class="badge badge-pill bg-light border">&nbsp;</span>
+                </h5>
+                <div class="row h-50">
+                    <div class="col border-right" *ngIf="i != games.length - 1">&nbsp;</div>
+                    <div class="col" *ngIf="i == games.length - 1">&nbsp;</div>
+                    <div class="col">&nbsp;</div>
+                </div>
             </div>
-        </div>
-        <div class="col py-2">
-            <!-- <ret-retrogame-card [game]="game"></ret-retrogame-card> -->
+            <div class="col py-2">
+                <ret-retro-game-card [game]="game"></ret-retro-game-card>
+            </div>
         </div>
     </div>
 </ng-container>

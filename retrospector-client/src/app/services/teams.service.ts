@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Team } from '../models/team';
+import { ITeam } from '../models/team.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { baseUrl } from 'src/environments/environment';
@@ -16,7 +16,7 @@ export class TeamsService {
   constructor(private readonly _http: HttpClient) { 
   }
 
-  createTeam(team: Team): Observable<ITeamDetails> {
+  createTeam(team: ITeam): Observable<ITeamDetails> {
     return this._http.post<ITeamDetails>(this._url + '/create',
     team);
   }
