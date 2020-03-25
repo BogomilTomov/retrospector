@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { FormsModule, NgForm }   from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ITeam } from '../../models/team.model';

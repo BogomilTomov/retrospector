@@ -21,10 +21,5 @@
   </div>
 </nav>
 <div class="container">
-  <section *ngIf="!isLoggedIn">
-    <ret-login-page></ret-login-page>
-  </section>
-  <section *ngIf="isLoggedIn">
-    <ret-dashboard></ret-dashboard>
-  </section>
+    <router-outlet></router-outlet>
 </div>

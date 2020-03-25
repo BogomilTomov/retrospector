@@ -1,0 +1,30 @@
+<div class="modal fade show" data-keyboard="false" #nicknameModal id="nicknameModal" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="nicknameModalLabel" aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="nicknameModalLabel">Please enter your name to play.</h2>
+        <button type="button" [hidden]="true" class="close" data-dismiss="modal" #closeModal aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form class="needs-validation" novalidate autocomplete="off">
+              <div class="form-row">
+                <div class="col-md-12 mb-3">
+                  <input type="text" class="form-control input-text" name="name"
+                          ngModel maxlength="100" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"
+                          required value="name" #nameInput>
+                  <label class="floating-label">Display name</label>
+                  <div class="error-msg mt-2 ml-2">
+                      {{this.nameWarning}}
+                  </div>
+                </div>
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" (click)="play()">Play</button>
+      </div>
+    </div>
+  </div>
+</div>

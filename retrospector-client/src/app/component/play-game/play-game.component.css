@@ -1,0 +1,25 @@
+.modal {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+    height: 280px;
+    margin-bottom: 0px;
+}
+
+.modal-title {
+    margin-top: 0px;
+}
+
+.modal-body {
+    height: 50px;
+}
+
+.modal-footer {
+    border-bottom-width: 14px;
+}
+
+.modal.fade.show {
+    display: block;
+}

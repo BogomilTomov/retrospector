@@ -52,7 +52,7 @@ export class CreateNewRetrospectiveComponent {
         let isValid = true;
 
         if (!this.newRetrospectiveName) {
-            this.nameWarning = warningMessages.name;
+            this.nameWarning = warningMessages.retrospectiveName;
             isValid = false;
         }
 
