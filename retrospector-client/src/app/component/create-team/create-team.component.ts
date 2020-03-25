@@ -1,13 +1,11 @@
 import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { FormsModule, NgForm }   from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ITeam } from '../../models/team.model';
 import * as moment from 'moment';
 import { TeamsService } from '../../services/teams.service';
 import { AccountsService } from '../../services/accounts.service';
-import { Observable, Subscription, Subject } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { take, first, takeUntil } from 'rxjs/operators';
-import { ActivationEnd } from '@angular/router';
+
 
 @Component({
   selector: 'ret-create-team',
@@ -32,7 +30,7 @@ export class CreateTeamComponent implements OnDestroy {
 
     this._teamService.createTeam(newTeam).pipe(takeUntil(this.unsubscribe$))
       .subscribe(
-        res => {
+        (res: ITeam) => {
           this.closeModal.nativeElement.click();
         },
         err => {

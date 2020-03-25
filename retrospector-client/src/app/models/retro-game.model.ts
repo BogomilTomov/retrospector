@@ -2,7 +2,7 @@ import { ITeam } from './team.model';
 import { INote } from './note.model';
 
 export interface IRetroGame {
-    id: number | null
+    id: number | null;
     notesCount: number | null;
     creationDate: Date | null;
     lastModified: Date | null;
