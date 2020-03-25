@@ -6,17 +6,7 @@
               <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dropdown</a>
-                  <div class="dropdown-menu">
-                      <a href="#" class="dropdown-item disabled font-weight-bold">Link 1</a>
-                      <a href="#" class="dropdown-item">Link 2</a>
-                      <a href="#" class="dropdown-item">Link 3</a>
-                  </div>
-              </li>
-              </ul>
-              <select id="teamOptions" class="custom-select mt-3"  [(ngModel)]="selectedTeamId" (ngModelChange)="selectedTeam($event)">
+              <select id="teamOptions" class="custom-select w-auto" [(ngModel)]="selectedTeamId" (ngModelChange)="newTeamSelected($event)">
                 <optgroup label="Owned teams">
                   <option *ngFor="let ownedTeam of ownedTeams" value="{{ownedTeam.id}}">{{ownedTeam.name}}</option>
                 </optgroup>
@@ -25,7 +15,7 @@
                 </optgroup>
               </select>
               <ul class="nav navbar-nav ml-auto">
-                <li class="greeting" class="nav-item active">
+                <li class="greeting" class="nav-item active mt-1">
                   <span class="greeting font-sz-sm">
                     Hello, {{userFirstName}}! &nbsp;&nbsp;
                   </span>
@@ -38,12 +28,10 @@
       </div>
     </nav>
     
-      <div class="container">
         <section *ngIf="!isLoggedIn">
           <ret-login-page></ret-login-page>
         </section>
         <section *ngIf="isLoggedIn">
-    <ret-dashboard (ownedTeamsChange)="ownedTeamsChange($event)" (sharedTeamsChange)="sharedTeamsChange($event)" (selectedTeamChange)="selectedTeamChange($event)" [selectedTeam]="selectedTeamId"></ret-dashboard>
+    <ret-dashboard (ownedTeamsChange)="ownedTeamsChange($event)" (sharedTeamsChange)="sharedTeamsChange($event)" (selectedTeamIdChange)="selectedTeamChange($event)" [selectedTeamId]="selectedTeamId"></ret-dashboard>
         </section>
-      </div>
     </div>

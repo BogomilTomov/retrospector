@@ -13,8 +13,11 @@ import { ITeamDetails } from 'src/app/models/team-details.model';
 export class LayoutComponent implements OnInit {
   public sharedTeams: ITeamDetails[] = [];
   public ownedTeams: ITeamDetails[] = [];
-  public selectedTeamId: number;
+  public selectedTeamId: number = 0;
   private loggedInSubs: Subscription;
+  public title: string = 'Retrospector';
+  public isLoggedIn: boolean;
+  public userFirstName: string;
 
   constructor(private readonly _accountsService: AccountsService, private readonly _router: Router) {}
 
@@ -30,12 +33,6 @@ export class LayoutComponent implements OnInit {
     this.loggedInSubs.unsubscribe();
   }
 
-  public title: string = 'Retrospector';
-
-  public isLoggedIn: boolean;
-
-  public userFirstName: string;
-
   public logout(): void {
     this._accountsService.logOut().pipe(take(1)).subscribe(
       () => {
@@ -49,22 +46,18 @@ export class LayoutComponent implements OnInit {
   }
 
   ownedTeamsChange(ownedTeams) {
-    console.log(ownedTeams)
     this.ownedTeams = ownedTeams;
   }
 
   sharedTeamsChange(sharedTeams) {
-    console.log(sharedTeams)
     this.sharedTeams = sharedTeams;
-  }
-  
-  selectedTeam(selectedTeamId) {
-    this.selectedTeamId = selectedTeamId;
-    console.log(1)
   }
 
   selectedTeamChange(teamId) {
-    console.log(2)
     this.selectedTeamId = teamId;
+  }
+  
+  newTeamSelected(selectedTeamId) {
+    this.selectedTeamId = selectedTeamId;
   }
 }
