@@ -13,5 +13,7 @@ namespace Retrospector.Data.DomainModels
         public string UserId { get; set; }
 
         public int TeamId { get; set; }
+
+        public Team Team { get; set; }
     }
 }

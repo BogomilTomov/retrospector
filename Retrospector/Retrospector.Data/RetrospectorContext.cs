@@ -65,7 +65,13 @@ namespace Retrospector.Data
             modelBuilder.Entity<RetrospectorUser>()
                 .HasOne(ru => ru.SelectedTeam)
                 .WithOne(st => st.User)
-                .HasForeignKey<UserSelectedTeam>(st => st.UserId);
+                .HasForeignKey<UserSelectedTeam>(ru => ru.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserSelectedTeam>()
+                .HasOne(usr => usr.Team)
+                .WithMany(t => t.UserSelectedTeams)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<TeamUser>()
                 .HasKey(tu => new { tu.TeamId, tu.UserId });

@@ -16,10 +16,11 @@ export class DashboardComponent implements OnInit {
   public teams: ITeamDetails[] = [];
   public sharedTeams: ITeamDetails[] = [];
   public ownedTeams: ITeamDetails[] = [];
+  public selectedTeam: ITeamDetails;
   @Output() public sharedTeamsChange = new EventEmitter<ITeamDetails[]>();
   @Output() public ownedTeamsChange = new EventEmitter<ITeamDetails[]>();
   @Output() public selectedTeamIdChange = new EventEmitter<number>();
-  @Input() public selectedTeamId;
+  @Input() public selectedTeamId: number;
   private userId: string;
   private unsubscribe$ = new Subject<void>();
 
@@ -53,6 +54,7 @@ export class DashboardComponent implements OnInit {
   }
 
   teamCreated(newTeam): void {
+    this.teams.push(newTeam);
     this.ownedTeams.push(newTeam);
     this.ownedTeams.sort((a, b) => a.name.localeCompare(b.name));
     this.selectedTeamIdChange.emit(newTeam.id);
@@ -62,9 +64,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnChanges(teamSelectChanges: SimpleChanges) {
-    if(!teamSelectChanges.selectedTeamId.isFirstChange()) {
+    if(!teamSelectChanges.selectedTeamId.isFirstChange() && 
+        teamSelectChanges.selectedTeamId.previousValue !== 0) {
+      console.log(teamSelectChanges.selectedTeamId.currentValue)
       this.selectedTeamId = teamSelectChanges.selectedTeamId.currentValue;
-      console.log(this.selectedTeamId)
+      this.selectedTeam = this.teams.find(t => t.id == this.selectedTeamId);
       this._userService.setSelectedTeam(this.userId, this.selectedTeamId)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe();

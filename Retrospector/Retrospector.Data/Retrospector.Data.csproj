@@ -11,6 +11,24 @@
     <Compile Remove="Migrations\20200316172852_addedTeamEntity.Designer.cs" />
     <Compile Remove="Migrations\20200323141357_UserSelectedTeamAdded.cs" />
     <Compile Remove="Migrations\20200323141357_UserSelectedTeamAdded.Designer.cs" />
+    <Compile Remove="Migrations\20200325103014_OnDeleteSelectedTeamDeleted.cs" />
+    <Compile Remove="Migrations\20200325103014_OnDeleteSelectedTeamDeleted.Designer.cs" />
+    <Compile Remove="Migrations\20200325104126_OnDeleteSelectedTeamDeleted2.cs" />
+    <Compile Remove="Migrations\20200325104126_OnDeleteSelectedTeamDeleted2.Designer.cs" />
+    <Compile Remove="Migrations\20200325104354_OnDeleteSelectedTeamDeleted.cs" />
+    <Compile Remove="Migrations\20200325104354_OnDeleteSelectedTeamDeleted.Designer.cs" />
+    <Compile Remove="Migrations\20200325112425_OnDeleteSelectedTeamDeleted2.cs" />
+    <Compile Remove="Migrations\20200325112425_OnDeleteSelectedTeamDeleted2.Designer.cs" />
+    <Compile Remove="Migrations\20200325113148_OnDeleteSelectedTeamDeleted2.cs" />
+    <Compile Remove="Migrations\20200325113148_OnDeleteSelectedTeamDeleted2.Designer.cs" />
+    <Compile Remove="Migrations\20200325113706_OnDeleteSelectedTeamDeleted2.cs" />
+    <Compile Remove="Migrations\20200325113706_OnDeleteSelectedTeamDeleted2.Designer.cs" />
+    <Compile Remove="Migrations\20200325114607_OnDeleteSelectedTeamDeleted.cs" />
+    <Compile Remove="Migrations\20200325114607_OnDeleteSelectedTeamDeleted.Designer.cs" />
+    <Compile Remove="Migrations\20200325114813_OnDeleteSelectedTeamDeleted.cs" />
+    <Compile Remove="Migrations\20200325114813_OnDeleteSelectedTeamDeleted.Designer.cs" />
+    <Compile Remove="Migrations\20200325120228_OnDeleteSelectedTeamDeleted2.cs" />
+    <Compile Remove="Migrations\20200325120228_OnDeleteSelectedTeamDeleted2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

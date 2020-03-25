@@ -18,6 +18,8 @@ namespace Retrospector.Data.DomainModels
 
         public IEnumerable<TeamUser> TeamUsers { get; set; }
 
+        public IEnumerable<UserSelectedTeam> UserSelectedTeams{ get; set; }
+
         public DateTime CreationDate { get; set; }
     }
 }
