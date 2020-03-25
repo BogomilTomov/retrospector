@@ -1,0 +1,281 @@
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "Quicksand", Helvetica; }
+
+.btn {
+    border-radius: .37rem;
+    line-height: 20px;
+    text-transform: uppercase;
+    font-family: 'Quicksand';
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: #18223B;
+    border-color: #18223B;
+    color: #fff;
+}
+
+.btn-secondary {
+    border-color: #18223B;
+    color: #18223B;
+    background-color: #fff;
+    border-width: 1.5px;
+    font-weight: 600;
+}
+
+.btn-big {
+    height: 50px;
+    min-width: 186px;
+}
+
+.btn-small {
+    height: 33px;
+    min-width: 74px;
+}
+
+.btn-primary:active, 
+.btn-primary:active:focus:not(:disabled):not(.disabled) {
+    background-color: #fff;
+    color: #18223B;
+    border-width: 1.5px;
+    border-color: #18223B;
+    box-shadow: none;
+    outline: 0;
+}
+
+.btn-primary:hover,.btn-primary:focus,.btn-primary:active, 
+.btn:focus, .btn:active, .btn:hover{
+    box-shadow: none;
+    outline: 0;
+    background-color: #18223B;   
+    border-color: #18223B;
+}
+
+.btn-secondary:active, 
+.btn-secondary:active:focus:not(:disabled):not(.disabled) {
+    background-color: #18223B;
+    color: #fff;
+    border-width: 1.5px;
+    border-color: #18223B;
+    box-shadow: none;
+    outline: 0;
+}
+
+.btn-secondary:hover,.btn-secondary:focus,.btn-secondary:active {
+    box-shadow: none;
+    outline: 0;
+    background-color: #fff;   
+    border-color: #18223B;
+    color: #18223B;
+}
+
+.font-sz-md {
+    font-size: 15px;
+}
+
+.font-sz-sm {
+    font-size: 14px;
+}
+
+.dropdown-toggle,.dropdown-toggle:hover,.dropdown-toggle:active,.dropdown-toggle:focus,.dropdown-toggle:active:focus:not(:disabled):not(.disabled) {
+    border: 1.49px solid #c0c6d2;
+    box-shadow: none;
+    outline: 0;
+    height: 57px;
+    width: 100%;
+    text-align: left;
+    border: 1.49px solid #c0c6d2;
+    border-radius: .15rem;
+    font-size: 14px;
+    font-weight: 700;
+    padding: .375rem 1.75rem .375rem .75rem;
+    background-color: #fff;
+    color: #000;
+}
+
+
+.dropdown-toggle::after {
+    display: none; /* Remove the default dropdown arrow. */
+}
+
+.caret {
+    position: absolute;
+    pointer-events: none;
+    left: 19.0px;
+    top: 50%;
+    margin-left: 80%;    
+    border-top: .3em solid #636E85;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+    transform: translateY(-50%);
+}
+
+.dropdown.show > .caret {
+    position: absolute;
+    pointer-events: none;
+    left: 19.0px;
+    top: 50%;
+    margin-left: 80%;
+    border-bottom: .3em solid #636E85;
+    border-right: .3em solid transparent;
+    border-top: 0;
+    border-left: .3em solid transparent;
+    transform: translateY(-50%);
+}
+
+.dropdown-menu,.dropdown-menu:focus,.dropdown-menu:active,.drop-dwn:active:focus:not(:disabled):not(.disabled) {
+    border: 1.49px solid #c0c6d2;
+    width: 100%;
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: 800;
+    padding: .375rem 1.75rem .375rem .75rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    outline: 0;
+    margin-top: -3px;
+    border-radius: 0.15rem;
+}
+
+.dropdown-menu.show[x-placement="bottom-start"] {
+    border-top-color: #fff;
+}
+
+.dropdown-menu, .dropdown-menu:active {
+    padding: 0px;
+}
+
+.dropdown-item, .dropdown-item:not([href]) {
+    height: 57px;
+    padding: 1rem 1.75rem .375rem 1rem;
+    font-weight: 700;
+    color: #636E85;
+}
+
+.dropdown-item:hover:not([href]) { 
+    width: 100%;
+    text-decoration: none;
+    background-color: #DEE2EE;
+    color: #636E85;
+}
+
+.dropdown-menu > .active {
+    font-weight: 800;
+    background-color: #fff;
+}
+
+h2 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.error-msg {
+    color: #F6492F;
+    font-size: 14px;
+    font-weight: 700;
+    height: 21px;
+}
+
+.input-error {
+    border-color: #F6492F;
+}
+
+.input-text {
+    border-radius: 0rem;
+    height: 57px;
+    padding-left: 13.5px;
+    border-width: 1.49px;
+    padding-top: 14px;
+    padding-bottom: 0px;
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.floating-label {
+    position: absolute;
+    pointer-events: none;
+    left: 19.0px;
+    top: 16.9px;
+    transition: all;
+    color: #636E85;
+    font-weight: 600;
+}
+
+.input-text:focus ~ .floating-label,
+.input-text:not(:focus):valid ~ .floating-label{
+  top: 8px;
+  bottom: 10px;
+  left: 20px;
+  font-size: 12px;
+  opacity: 1;
+  font-weight: 700;
+  color: #636E85;
+}
+
+.input-text:focus,.input-text:active{
+    border-color: #c0c6d2;
+    border-left: 4px solid #000;
+    color: #000;
+    background-color: #fff;
+    box-shadow: none;
+    outline: 0;
+    padding-left: 11px;
+}
+
+.modal-dialog {
+    height: 580px;
+}
+
+.modal-content {
+    height: 100%;
+}
+
+.modal-footer {
+    border-top: none;
+    border-right: 20px solid #fff;
+    border-bottom: 35px solid #fff;
+}
+
+.modal-title {
+    margin-top: 70px;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.mg-top-30 {
+    margin-top: 30px;
+}
+
+.pad-top-30 {
+    padding-top: 30px;
+}
+
+.pad-l-35 {
+    padding-left: 35px;
+}
+
+.pad-r-35 {
+    padding-right: 35px;
+}
+
+/* Bogy's */
+
+.errorMessage {
+    border: 1px solid #F6492F;
+}
+h1 {
+    font-size: 35px;
+}

@@ -8,7 +8,6 @@ namespace Retrospector.Data
     {
         public RetrospectorContext(DbContextOptions options) : base(options)
         {
-
         }
 
         public DbSet<Note> Notes { get; set; }
@@ -66,6 +65,7 @@ namespace Retrospector.Data
             modelBuilder.Entity<RetroGame>()
                 .Property(rg => rg.Name)
                 .IsRequired();
+
             modelBuilder.Entity<RetroGame>()
                 .Property(rg => rg.Url)
                 .IsRequired();

@@ -1,9 +1,4 @@
-﻿using Retrospector.Data.DomainModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Retrospector.Data.DomainModels
+﻿namespace Retrospector.Data.DomainModels
 {
     public class Note
     {

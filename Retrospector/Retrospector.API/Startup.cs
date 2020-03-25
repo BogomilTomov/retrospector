@@ -11,8 +11,6 @@ using Retrospector.Data;
 using Retrospector.Data.DomainModels;
 using Retrospector.Data.Repositories;
 using Retrospector.Services;
-using System;
-using System.Text;
 
 namespace Retrospector.Api
 {
@@ -52,10 +50,12 @@ namespace Retrospector.Api
 
             //Repositories
             services.AddScoped<AccountsRepository>();
+            services.AddScoped<RetroGameRepository>();
             services.AddScoped<TeamsRepository>();
 
             //Services
             services.AddScoped<AccountsService>();
+            services.AddScoped<RetroGameService>();
             services.AddScoped<TeamsService>();
         }
 
