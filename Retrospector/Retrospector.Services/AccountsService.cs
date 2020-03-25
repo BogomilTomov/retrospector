@@ -74,7 +74,10 @@ namespace Retrospector.Services
             user = new RetrospectorUser
             {
                 Email = email,
-                UserName = email
+                UserName = email,
+                Notes = new List<Note>(),
+                TeamUsers = new List<TeamUser>(),
+                OwnedTeams = new List<Team>()
             };
 
             IdentityResult identityResult = await _accountsRepository.AddUserAsync(user);

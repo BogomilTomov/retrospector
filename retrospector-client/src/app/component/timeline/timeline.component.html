@@ -1,12 +1,9 @@
-<div class="container">
-    <ret-create-new-retrospective (newRetrospective)="addRetrospective($event)"></ret-create-new-retrospective>
-</div>
-
+<ret-create-new-retrospective (newRetrospective)="addRetrospective($event)"></ret-create-new-retrospective>
 <ng-container *ngIf="games.length">
     <div class="container pad-l-35 pad-r-35">
         <div class="row" *ngFor="let game of games; let i = index;trackBy: trackByFn">
             <div class="col-auto my-auto">
-                {{game.creationDate | date:'dd/MM'}}
+                {{game.creationDate | date:'MM/dd'}}
             </div>
             <div class="col-auto text-center flex-column d-none d-sm-flex">
                 <div class="row h-50">
@@ -23,8 +20,8 @@
                     <div class="col">&nbsp;</div>
                 </div>
             </div>
-            <div class="col-auto my-auto">
-                {{game.name}}
+            <div class="col py-2">
+                <ret-retro-game-card [game]="game"></ret-retro-game-card>
             </div>
         </div>
     </div>

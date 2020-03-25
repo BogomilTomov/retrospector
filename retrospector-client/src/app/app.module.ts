@@ -15,6 +15,7 @@ import { CreateTeamComponent } from './component/create-team/create-team.compone
 import { AuthInterceptor } from './services/auth.interceptor';
 import { TimelineComponent } from './component/timeline/timeline.component';
 import { RetroGamesService } from './services/retro-games.service';
+import { RetroGameCardComponent } from './component/retro-game-card/retro-game-card.component';
 
 function provideConfig() {
   return authServiceConfig;
@@ -25,8 +26,9 @@ function provideConfig() {
     AppComponent,
     LoginPageComponent,
     DashboardComponent,
-    CreateNewRetrospectiveComponent,
+    RetroGameCardComponent,
     CreateTeamComponent,
+    CreateNewRetrospectiveComponent,
     TimelineComponent
   ],
   imports: [

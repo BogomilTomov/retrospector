@@ -16,6 +16,7 @@ export class TimelineComponent implements OnInit {
   ngOnInit(): void {
     this._gameService.getGames().toPromise().then(result => {
       this.games = result.data;
+      this.calculateGamesNotesCount();
     }).catch(err => console.log(err));
   }
 
@@ -27,5 +28,15 @@ export class TimelineComponent implements OnInit {
     this._gameService.createGame(newGame).toPromise().then(res => {
       this.games = [res, ...this.games].slice(0, 20);
     }).catch(err => console.log(err))
+  }
+
+  private calculateGamesNotesCount(): void {
+    for (const game of this.games) {
+      if (game.notes == null || game.notes?.length == 0) {
+        game.notesCount = 0;
+      } else {
+        game.notesCount = game.notes.length;
+      }
+    }
   }
 }

@@ -10,6 +10,7 @@ body { margin: 0; font-family: "Quicksand", Helvetica; }
     text-transform: uppercase;
     font-family: 'Quicksand';
     font-size: 14px;
+    margin: 1px;
 }
 
 .btn-primary {
