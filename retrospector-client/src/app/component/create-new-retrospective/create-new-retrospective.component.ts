@@ -5,7 +5,8 @@ import { warningMessages } from '../../../environments/literals';
 
 @Component({
     selector: 'ret-create-new-retrospective',
-    templateUrl: 'create-new-retrospective.component.html'
+    templateUrl: 'create-new-retrospective.component.html',
+    styleUrls: ['create-new-retrospective.component.css']
 })
 export class CreateNewRetrospectiveComponent {
     public templateWarning: string = '';
