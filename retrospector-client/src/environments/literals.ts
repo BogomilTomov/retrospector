@@ -1,4 +1,5 @@
 export const warningMessages = {
     template: 'Please select a template.',
-    name: 'Please specify a retrospective name.'
+    retrospectiveName: 'Please specify a retrospective name.',
+    name: 'Please specify a display name.'
 };
