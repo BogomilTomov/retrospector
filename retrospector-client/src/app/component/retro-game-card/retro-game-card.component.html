@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col retro-card-content">
                 <h4 class="card-title">{{game.name}}</h4>
-                <p class="card-text">{{game.notesCount}} notes, last modified {{game.lastModified  | date:'MM/dd' }}</p>
+                <p class="card-text">{{game.notes.length}} notes, last modified {{game.lastModified  | date:'MM/dd' }}</p>
             </div>
             <div class="col-auto retro-card-play my-auto">
                 <button class="btn btn-primary">Play</button>

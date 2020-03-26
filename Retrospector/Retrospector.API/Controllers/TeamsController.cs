@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Retrospector.Api.ViewModels.RetroGames;
 using Retrospector.Api.ViewModels.Shared;
 using Newtonsoft.Json.Linq;
+using Retrospector.Api.ViewModels.Notes;
 
 namespace Retrospector.Api.Controllers
 {
@@ -94,6 +95,20 @@ namespace Retrospector.Api.Controllers
                         CreationDate = game.CreationDate,
                         Url = game.Url
                     };
+
+                    foreach(Note note in game.Notes)
+                    {
+                        NoteModel noteModel = new NoteModel
+                        {
+                            Id = note.Id,
+                            Rating = note.Rating,
+                            UserId = note.UserId,
+                            RetroGameId = note.RetroGameId,
+                            Text = note.Text
+                        };
+
+                        gameModel.Notes.Add(noteModel);
+                    }
 
                     teamModel.RetroGames.Add(gameModel);
                 }

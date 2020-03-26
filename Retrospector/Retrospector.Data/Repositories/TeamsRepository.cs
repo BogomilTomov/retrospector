@@ -35,6 +35,7 @@ namespace Retrospector.Data.Repositories
             return await _context.Teams
                 .Where(t => t.OwnerId == userId || t.TeamUsers.Any(tu => tu.UserId == userId))
                 .Include(t => t.RetroGames)
+                .ThenInclude(rg => rg.Notes)
                 .OrderBy(t => t.Name)
                 .ToListAsync();
         }
