@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { AccountsService } from 'src/app/services/accounts.service';
 import { ITeamDetails } from 'src/app/models/team-details.model';
 import { TeamsService } from 'src/app/services/teams.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { UsersService } from 'src/app/services/users.service';
 import { RetroGamesService } from 'src/app/services/retro-games.service';
 import { IRetroGame } from 'src/app/models/retro-game.model';

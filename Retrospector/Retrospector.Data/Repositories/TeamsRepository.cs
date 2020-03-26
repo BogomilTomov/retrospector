@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Retrospector.Data.DomainModels;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Retrospector.Data.DomainModels;
 
 
 namespace Retrospector.Data.Repositories
@@ -44,7 +42,6 @@ namespace Retrospector.Data.Repositories
         {
             return await _context.Users
                 .Where(u => u.Id == userId)
-                .Include(u => u.SelectedTeam)
                 .Select(u => u.SelectedTeam.TeamId)
                 .SingleOrDefaultAsync();
         }

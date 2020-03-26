@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ITeam } from '../models/team.model';
-import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { ITeam } from '../models/team.model';
 import { baseUrl } from 'src/environments/environment';
-import { catchError, map } from 'rxjs/operators';
 import { ITeamData } from '../models/teams-data.model';
 import { ITeamDetails } from '../models/team-details.model';
 
@@ -17,7 +17,7 @@ export class TeamsService {
   }
 
   createTeam(team: ITeam): Observable<ITeamDetails> {
-    return this._http.post<ITeamDetails>(this._url + '/create',
+    return this._http.post<ITeamDetails>(this._url,
     team);
   }
 

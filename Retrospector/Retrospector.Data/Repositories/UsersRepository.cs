@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Retrospector.Data.DomainModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Retrospector.Data.DomainModels;
 
 namespace Retrospector.Data.Repositories
 {

@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Retrospector.Data.DomainModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Retrospector.Data.DomainModels;
 using Retrospector.Services;
 using Retrospector.Services.Results;
 using Retrospector.Api.ViewModels.Teams;
-using Microsoft.AspNetCore.Authorization;
 using Retrospector.Api.ViewModels.RetroGames;
 using Retrospector.Api.ViewModels.Shared;
-using Newtonsoft.Json.Linq;
 using Retrospector.Api.ViewModels.Notes;
 
 namespace Retrospector.Api.Controllers
@@ -27,8 +24,8 @@ namespace Retrospector.Api.Controllers
             _teamService = teamService;
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateTeam([FromBody] CreateTeamModel team)
+        [HttpPost]
+        public async Task<IActionResult> CreateTeamAsync([FromBody] CreateTeamModel team)
         {
             if (!ModelState.IsValid)
             {
@@ -53,7 +50,7 @@ namespace Retrospector.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTeams(string userId)
+        public async Task<IActionResult> GetTeamsAsync(string userId)
         {
             if (!ModelState.IsValid)
             {

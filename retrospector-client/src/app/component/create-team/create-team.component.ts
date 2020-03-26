@@ -1,11 +1,11 @@
 import { Component, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormsModule, NgForm }   from '@angular/forms';
-import { ITeam } from '../../models/team.model';
-import * as moment from 'moment';
-import { TeamsService } from '../../services/teams.service';
-import { AccountsService } from '../../services/accounts.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import * as moment from 'moment';
+import { ITeam } from '../../models/team.model';
+import { TeamsService } from '../../services/teams.service';
+import { AccountsService } from '../../services/accounts.service';
 import { ITeamDetails } from 'src/app/models/team-details.model';
 
 @Component({
@@ -25,7 +25,7 @@ export class CreateTeamComponent implements OnDestroy {
   constructor(private readonly _teamService: TeamsService, 
               private readonly _accountService: AccountsService) { }
 
-  onSubmit(): void {
+  onSubmit(form): void {
     const newTeam: ITeam = { 
       name: this.name,
       creationDate: moment().add(2, 'h').toDate(),
@@ -36,6 +36,7 @@ export class CreateTeamComponent implements OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         res => {
+          form.reset();
           this.closeModal.nativeElement.click();
           this.teamCreated.emit(res);
         },

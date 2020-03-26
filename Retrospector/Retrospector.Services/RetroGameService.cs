@@ -1,8 +1,8 @@
-﻿using Retrospector.Data.DomainModels;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Retrospector.Data.DomainModels;
 using Retrospector.Data.Repositories;
 using Retrospector.Services.Results;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Retrospector.Services
 {

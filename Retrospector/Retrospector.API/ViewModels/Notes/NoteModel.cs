@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Retrospector.Api.ViewModels.Notes
+﻿namespace Retrospector.Api.ViewModels.Notes
 {
     public class NoteModel
     {

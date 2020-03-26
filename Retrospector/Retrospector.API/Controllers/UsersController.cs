@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Retrospector.Services;
 using Retrospector.Services.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Retrospector.Api.Controllers
 {
@@ -22,16 +19,13 @@ namespace Retrospector.Api.Controllers
             _usersService = usersService;
         }
 
-        [HttpPost("setSelected")]
-        public async Task<IActionResult> SetSelectedTeam([FromBody] JObject data)
+        [HttpPost("{userId}/select-team/{teamId}")]
+        public async Task<IActionResult> SetSelectedTeamAsync([FromRoute] string userId, [FromRoute] int teamId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            string userId = data["userId"].ToObject<string>();
-            int teamId = data["teamId"].ToObject<int>();
 
             ResultData<string> result = await _usersService.SetSelectedTeamAsync(userId, teamId);
             if (!result.Success)

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountsService } from 'src/app/services/accounts.service';
-import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { AccountsService } from 'src/app/services/accounts.service';
 import { ITeamDetails } from 'src/app/models/team-details.model';
 
 @Component({

@@ -12,6 +12,6 @@ export class UsersService {
   constructor(private readonly _http: HttpClient) { }
   
   setSelectedTeam(userId: string, teamId: number): Observable<string> {
-    return this._http.post<string>(this._url + '/setSelected', {userId, teamId});
+    return this._http.post<string>(`${this._url}/${userId}/select-team/${teamId}`, {});
   }
 }

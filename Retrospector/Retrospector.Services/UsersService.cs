@@ -1,10 +1,7 @@
-﻿using Retrospector.Data.DomainModels;
+﻿using System.Threading.Tasks;
+using Retrospector.Data.DomainModels;
 using Retrospector.Data.Repositories;
 using Retrospector.Services.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Retrospector.Services
 {
@@ -14,7 +11,6 @@ namespace Retrospector.Services
         private const string TeamDoesntExistMessage = "Team with id {0} doesnt't exist!";
         private const string UserDoesntExistMessage = "User with id {0} doesnt't exist!";
         private const string OwnerIdNullMessage = "OwnerId cannot be null or empty!";
-
 
         private readonly UsersRepository _userRepository;
         private readonly TeamsRepository _teamsRepository;
@@ -44,7 +40,7 @@ namespace Retrospector.Services
                 return new ResultData<string>(errorMessage, false, userId);
             }
 
-            if (!await UserHasDefaultTeamSet(userId))
+            if (!await UserHasDefaultTeamSetAsync(userId))
             {
                 RetrospectorUser user = await _userRepository.GetUserById(userId);
                 user.SelectedTeam = new UserSelectedTeam();
@@ -55,7 +51,7 @@ namespace Retrospector.Services
             return new ResultData<string>(successMessage, true, userId);
         }
 
-        public async Task<bool> UserHasDefaultTeamSet(string userId)
+        public async Task<bool> UserHasDefaultTeamSetAsync(string userId)
         {
             return await _teamsRepository.GetDefaultTeamAsync(userId) != 0;
         }

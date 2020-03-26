@@ -1,8 +1,5 @@
-﻿using Retrospector.Api.ViewModels.Teams;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Retrospector.Api.ViewModels.Teams;
 
 namespace Retrospector.Api.ViewModels.Shared
 {
