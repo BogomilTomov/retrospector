@@ -50,7 +50,7 @@ namespace Retrospector.Data.Repositories
                     TeamUsers = new List<TeamUser>(),
                     CreationDate = DateTime.Now
                 },
-                Url = string.Empty
+                Url = Guid.NewGuid().ToString()
             };
 
             _context.RetroGames.Add(newGame);
