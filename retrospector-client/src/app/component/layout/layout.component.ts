@@ -20,7 +20,6 @@ export class LayoutComponent implements OnInit {
   public ownedTeams: ITeamDetails[] = [];
   public teams: ITeamDetails[] = [];
   public selectedTeam: ITeamDetails;
-
   public selectedTeamId: number;
   private loggedInSubs: Subscription;
   public title: string = 'Retrospector';
@@ -29,7 +28,6 @@ export class LayoutComponent implements OnInit {
   private unsubscribe$ = new Subject<void>();
   public userId: string;
 
-
   constructor(private readonly _router: Router,
               private readonly _teamService: TeamsService,
               private readonly _accountService: AccountsService,
@@ -37,34 +35,42 @@ export class LayoutComponent implements OnInit {
               private readonly _gameService: RetroGamesService) {}
 
   ngOnInit(): void {
+    this.initializeLoginData();
+    this.userId = this._accountService.getLoggedInUserId();
+    this.initializeAppData();
+  }
+
+  initializeLoginData() {
     this.loggedInSubs = this._accountService.loggedIn$.subscribe(
       (loggedIn: boolean) => {
         this.isLoggedIn = loggedIn;
         this.userFirstName = this._accountService.getLoggedInUserFirstName();
       });
+  }
 
-      this.userId = this._accountService.getLoggedInUserId();
-      this._teamService.getTeamData(this.userId)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(res => {
-          this.teams = res.teams;
-          this.selectedTeamId = res.defaultTeam;
-          if (this.selectedTeamId === 0 && this.teams.length > 0) {
-            this.selectedTeamId = this.teams[0].id;
+  initializeAppData() {
+    this._teamService.getTeamData(this.userId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(res => {
+        this.teams = res.teams;
+        this.selectedTeamId = res.defaultTeam;
+        if (this.selectedTeamId === 0 && this.teams.length > 0) {
+          this.selectedTeamId = this.teams[0].id;
+        }
+        
+        this.selectedTeam = this.teams.find(t => t.id == this.selectedTeamId);
+        this.teams.forEach(team => {
+          if (team.ownerId === this.userId) {
+            this.ownedTeams.push(team);
+          } else {
+            this.sharedTeams.push(team);
           }
-          
-          this.selectedTeam = this.teams.find(t => t.id == this.selectedTeamId);
-          this.teams.forEach(team => {
-            if (team.ownerId === this.userId) {
-              this.ownedTeams.push(team);
-            } else {
-              this.sharedTeams.push(team);
-            }
-          });
-
-          this._gameService.getGamesByTeamId(this.selectedTeamId)
-            .subscribe(res => { this.selectedTeam.retroGames = res; });
         });
+
+        this._gameService.getGamesByTeamId(this.selectedTeamId)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(res => { this.selectedTeam.retroGames = res; });
+      });
   }
 
   ngOnDestroy(): void {
@@ -108,12 +114,15 @@ export class LayoutComponent implements OnInit {
       .subscribe();
   }
  
-  newTeamSelected(selectedTeamId) {
+  newTeamSelected(selectedTeamId): void {
     this.selectedTeamId = selectedTeamId;
     this.selectedTeam = this.teams.find(t => t.id == selectedTeamId);
-    this._userService.setSelectedTeam(this.userId, selectedTeamId).subscribe();
+    this._userService.setSelectedTeam(this.userId, selectedTeamId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
     this._gameService.getGamesByTeamId(selectedTeamId)
-    .subscribe(res => { this.selectedTeam.retroGames = res });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(res => { this.selectedTeam.retroGames = res });
   }
 
   trackByFn(index: number, team: ITeamDetails): number {
