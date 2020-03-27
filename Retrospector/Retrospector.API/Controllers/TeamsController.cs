@@ -25,7 +25,7 @@ namespace Retrospector.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTeamAsync([FromBody] CreateTeamModel team)
+        public async Task<IActionResult> CreateTeamAsync([FromBody] TeamModel team)
         {
             if (!ModelState.IsValid)
             {
@@ -38,7 +38,7 @@ namespace Retrospector.Api.Controllers
                 return BadRequest(new { message = result.Message });
             }
 
-            CreateTeamModel viewModel = new CreateTeamModel
+            TeamModel viewModel = new TeamModel
             {
                 Id = result.Data.Id,
                 Name = result.Data.Name,
@@ -71,44 +71,16 @@ namespace Retrospector.Api.Controllers
 
             TeamsDataModel viewModel = new TeamsDataModel();
             viewModel.DefaultTeam = defaultTeam.Data;
-            viewModel.Teams = new List<TeamDetailsModel>();
+            viewModel.Teams = new List<TeamModel>();
             foreach (Team team in teams.Data)
             {
-                TeamDetailsModel teamModel = new TeamDetailsModel
+                TeamModel teamModel = new TeamModel
                 {
                     Id = team.Id,
                     Name = team.Name,
                     CreationDate = team.CreationDate,
                     OwnerId = team.OwnerId
                 };
-
-                foreach (RetroGame game in team.RetroGames)
-                {
-                    RetroGameDetailsModel gameModel = new RetroGameDetailsModel
-                    {
-                        Id = game.Id,
-                        Name = game.Name,
-                        LastModified = game.LastModified,
-                        CreationDate = game.CreationDate,
-                        Url = game.Url
-                    };
-
-                    foreach(Note note in game.Notes)
-                    {
-                        NoteModel noteModel = new NoteModel
-                        {
-                            Id = note.Id,
-                            Rating = note.Rating,
-                            UserId = note.UserId,
-                            RetroGameId = note.RetroGameId,
-                            Text = note.Text
-                        };
-
-                        gameModel.Notes.Add(noteModel);
-                    }
-
-                    teamModel.RetroGames.Add(gameModel);
-                }
 
                 viewModel.Teams.Add(teamModel);
             }

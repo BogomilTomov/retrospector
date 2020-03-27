@@ -17,7 +17,6 @@ namespace Retrospector.Services
         private const string UserDoesntExistMessage = "User with id {0} doesnt't exist!";
         private const string GetTeamsSuccessMessage = "{0}'s teams successfully retrieved!";
         private const string GetDefaultTeamSuccessMessage = "{0}'s default team sucessfully retrieved!";
-        private const string TeamDoesntExistMessage = "Team with id {0} doesnt't exist!";
         
         private readonly UsersRepository _userRepository;
         private readonly TeamsRepository _teamRepository;

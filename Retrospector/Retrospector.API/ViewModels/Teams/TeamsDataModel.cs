@@ -5,7 +5,7 @@ namespace Retrospector.Api.ViewModels.Shared
 {
     public class TeamsDataModel
     {
-        public List<TeamDetailsModel> Teams{ get; set; }
+        public List<TeamModel> Teams{ get; set; }
 
         public int DefaultTeam { get; set; }
     }

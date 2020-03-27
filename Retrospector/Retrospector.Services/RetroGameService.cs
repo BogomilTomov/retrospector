@@ -15,12 +15,15 @@ namespace Retrospector.Services
         private const string RetroGameCreationSuccessMessage = "A retrospective game successful!";
         private const string GetRetroGameSuccessMessage = "Retrospective games retrieved successfully!";
         private const string GetRetroGameFailureMessage = "Retrospective games retrieve failed!";
-
+        private const string TeamDoesntExistMessage = "Team with id {0} doesnt't exist!";
+        
         private readonly RetroGameRepository _retroGameRepository;
+        private readonly TeamsRepository _teamsRepository;
 
-        public RetroGameService(RetroGameRepository retroGameRepository)
+        public RetroGameService(RetroGameRepository retroGameRepository, TeamsRepository teamsRepository)
         {
             _retroGameRepository = retroGameRepository;
+            _teamsRepository = teamsRepository;
         }
 
         public async Task<RetroGame> GetRetroGameByIdAsync(int id)
@@ -51,14 +54,14 @@ namespace Retrospector.Services
             return new ResultData<RetroGame>(message, true, game);
         }
 
-        public async Task<ResultData<IEnumerable<RetroGame>>> GetRetroGamesAsync() {
-            var games = await _retroGameRepository.GetRetroGamesAsync();
-
-            if (games == null)
+        public async Task<ResultData<IEnumerable<RetroGame>>> GetRetroGamesByTeamIdAsync(int teamId) {
+            if (!_teamsRepository.TeamExists(teamId))
             {
-                return new ResultData<IEnumerable<RetroGame>>(GetRetroGameFailureMessage, false);
+                string errorMessage = string.Format(TeamDoesntExistMessage, teamId);
+                return new ResultData<IEnumerable<RetroGame>>(errorMessage, false);
             }
 
+            var games = await _retroGameRepository.GetRetroGamesByTeamIdAsync(teamId);
             string message = GetRetroGameSuccessMessage;
             return new ResultData<IEnumerable<RetroGame>>(message, true, games);
         }

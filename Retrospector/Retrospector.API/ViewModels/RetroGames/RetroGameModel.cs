@@ -4,7 +4,7 @@ using Retrospector.Api.ViewModels.Notes;
 
 namespace Retrospector.Api.ViewModels.RetroGames
 {
-    public class RetroGameDetailsModel
+    public class RetroGameModel
     {
         public int Id { get; set; }
 
@@ -16,6 +16,8 @@ namespace Retrospector.Api.ViewModels.RetroGames
 
         public string Url { get; set; }
 
-        public List<NoteModel> Notes { get; set; } = new List<NoteModel>();
+        public int? NotesCount { get; set; }
+
+        public IEnumerable<NoteModel> Notes { get; set; } = new List<NoteModel>();
     }
 }

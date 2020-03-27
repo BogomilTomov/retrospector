@@ -32,6 +32,6 @@
           <ret-login-page></ret-login-page>
         </section>
         <section *ngIf="isLoggedIn">
-    <ret-dashboard (ownedTeamsChange)="ownedTeamsChange($event)" (sharedTeamsChange)="sharedTeamsChange($event)" (selectedTeamIdChange)="selectedTeamChange($event)" [selectedTeamId]="selectedTeamId"></ret-dashboard>
+        <ret-dashboard [userId]="userId" [selectedTeam]="selectedTeam"></ret-dashboard>
         </section>
     </div>

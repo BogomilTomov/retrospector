@@ -17,6 +17,6 @@ namespace Retrospector.Api.ViewModels.Teams
 
         public string OwnerId { get; set; }
 
-        public List<RetroGameDetailsModel> RetroGames { get; set; } = new List<RetroGameDetailsModel>();
+        public IEnumerable<RetroGameModel> RetroGames { get; set; } = new List<RetroGameModel>();
     }
 }

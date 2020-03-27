@@ -13,8 +13,8 @@ export class RetroGamesService {
 
   constructor(private readonly _http: HttpClient) { }
 
-  public getGames(): Observable<IResultData> {
-    return this._http.get<IResultData>(this._url);
+  public getGamesByTeamId(teamId: number): Observable<IRetroGame[]> {
+    return this._http.get<IRetroGame[]>(`${this._url}/${teamId}`);
   }
 
   public createGame(game: IRetroGame): Observable<IRetroGame> {

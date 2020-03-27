@@ -16,11 +16,6 @@ namespace Retrospector.Data.Repositories
             _context = context;
         }
 
-        public async Task<RetroGame> GetRetroGameByNameAsync(string name)
-        {
-            return await _context.RetroGames.FirstOrDefaultAsync(rg => rg.Name == name);
-        }
-
         public async Task<RetroGame> CreateRetroGameAsync(string name, string template, int teamId)
         {
             var game = await _context.RetroGames.FirstOrDefaultAsync(rg => rg.Name == name);
@@ -53,9 +48,12 @@ namespace Retrospector.Data.Repositories
             return await _context.RetroGames.FindAsync(id);
         }
 
-        public async Task<IEnumerable<RetroGame>> GetRetroGamesAsync() {
-            var games = _context.RetroGames.OrderByDescending(rg => rg.CreationDate).Take(20);
-            return await games.ToListAsync();
+        public async Task<IEnumerable<RetroGame>> GetRetroGamesByTeamIdAsync(int teamId) {
+            return await _context.RetroGames
+                .Where(rg => rg.TeamId == teamId)
+                .Include(rg => rg.Notes)
+                .OrderByDescending(rg => rg.LastModified)
+                .ToListAsync();
         }
     }
 }
