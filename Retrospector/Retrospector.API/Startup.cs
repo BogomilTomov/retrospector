@@ -10,7 +10,6 @@ using Retrospector.Data;
 using Retrospector.Data.DomainModels;
 using Retrospector.Data.Repositories;
 using Retrospector.Services;
-
 namespace Retrospector.Api
 {
     public class Startup
@@ -47,12 +46,11 @@ namespace Retrospector.Api
             services.AddControllers().AddNewtonsoftJson(o =>
                 o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            //Repositories
             services.AddScoped<AccountsRepository>();
-            services.AddScoped<RetroGameRepository>();
             services.AddScoped<TeamsRepository>();
-
-            //Services
+            services.AddScoped<UsersRepository>();
+            services.AddScoped<RetroGameRepository>();
+            services.AddScoped<UsersService>();
             services.AddScoped<AccountsService>();
             services.AddScoped<RetroGameService>();
             services.AddScoped<TeamsService>();

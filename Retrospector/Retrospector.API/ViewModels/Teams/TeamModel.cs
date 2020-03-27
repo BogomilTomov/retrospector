@@ -1,8 +1,4 @@
-﻿using Retrospector.Data.DomainModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Retrospector.Api.ViewModels.Teams
 {
@@ -13,12 +9,6 @@ namespace Retrospector.Api.ViewModels.Teams
         public string Name { get; set; }
 
         public string OwnerId { get; set; }
-
-        public RetrospectorUser Owner { get; set; }
-
-        public IEnumerable<RetroGame> RetroGames { get; set; }
-
-        public IEnumerable<RetrospectorUser> Users { get; set; }
 
         public DateTime CreationDate { get; set; }
     }

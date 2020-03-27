@@ -1,10 +1,8 @@
-﻿using Retrospector.Data.DomainModels;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
+using Retrospector.Data.DomainModels;
 
 namespace Retrospector.Data.Repositories
 {
@@ -29,9 +27,31 @@ namespace Retrospector.Data.Repositories
             return _context.Teams.Any(t => t.Name == name);
         }
 
-        public bool OwnerExists(string userId)
+        public async Task<List<Team>> GetTeamsAsync(string userId)
         {
-            return _context.Users.Any(u => u.Id == userId);
+            return await _context.Teams
+                .Where(t => t.OwnerId == userId || t.TeamUsers.Any(tu => tu.UserId == userId))
+                .OrderBy(t => t.Name)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetDefaultTeamAsync(string userId)
+        {
+            return await _context.Users
+                .Where(u => u.Id == userId)
+                .Select(u => u.SelectedTeam.TeamId)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<Team> GetTeamById(int teamId)
+        {
+            return await _context.Teams
+                .SingleOrDefaultAsync(t => t.Id == teamId);
+        }
+
+        public bool TeamExists(int teamId)
+        {
+            return _context.Teams.Any(t => t.Id == teamId);
         }
     }
 }

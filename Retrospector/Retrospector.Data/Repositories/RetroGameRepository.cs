@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Retrospector.Data.DomainModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Retrospector.Data.DomainModels;
 
 namespace Retrospector.Data.Repositories
 {
@@ -16,12 +16,7 @@ namespace Retrospector.Data.Repositories
             _context = context;
         }
 
-        public async Task<RetroGame> GetRetroGameByNameAsync(string name)
-        {
-            return await _context.RetroGames.FirstOrDefaultAsync(rg => rg.Name == name);
-        }
-
-        public async Task<RetroGame> CreateRetroGameAsync(string name, string template)
+        public async Task<RetroGame> CreateRetroGameAsync(string name, string template, int teamId)
         {
             var game = await _context.RetroGames.FirstOrDefaultAsync(rg => rg.Name == name);
 
@@ -37,26 +32,12 @@ namespace Retrospector.Data.Repositories
                 CreationDate = DateTime.Now,
                 LastModified = DateTime.Now,
                 Notes = new List<Note>(),
-                Team = new Team()
-                {
-                    Name = "Test Team",
-                    Owner = new RetrospectorUser()
-                    {
-                        Notes = new List<Note>(),
-                        TeamUsers = new List<TeamUser>(),
-                        OwnedTeams = new List<Team>()
-                    },
-                    RetroGames = new List<RetroGame>(),
-                    TeamUsers = new List<TeamUser>(),
-                    CreationDate = DateTime.Now
-                },
+                TeamId = teamId,
                 Url = Guid.NewGuid().ToString()
             };
 
             _context.RetroGames.Add(newGame);
-
             await _context.SaveChangesAsync();
-
             return await _context.RetroGames.FirstOrDefaultAsync(rg => rg.Name == name);
         }
 
@@ -65,9 +46,13 @@ namespace Retrospector.Data.Repositories
             return await _context.RetroGames.FindAsync(id);
         }
 
-        public async Task<IEnumerable<RetroGame>> GetRetroGamesAsync() {
-            var games = _context.RetroGames.OrderByDescending(rg => rg.CreationDate).Take(20);
-            return await games.ToListAsync();
+        public async Task<IEnumerable<RetroGame>> GetRetroGamesByTeamIdAsync(int teamId, int gamesCount) {
+            return await _context.RetroGames
+                .Where(rg => rg.TeamId == teamId)
+                .OrderByDescending(rg => rg.LastModified)
+                .Take(gamesCount)
+                .Include(rg => rg.Notes)
+                .ToListAsync();
         }
     }
 }

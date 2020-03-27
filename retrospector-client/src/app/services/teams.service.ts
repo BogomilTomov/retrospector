@@ -1,20 +1,31 @@
 import { Injectable } from '@angular/core';
-import { ITeam } from '../models/team.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { ITeam } from '../models/team.model';
 import { baseUrl } from 'src/environments/environment';
+import { ITeamData } from '../models/teams-data.model';
+import { ITeamDetails } from '../models/team-details.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamsService {
-  public teams: ITeam[] = [];
-  
+  private readonly _url = `${baseUrl}/teams`;
+
   constructor(private readonly _http: HttpClient) { 
   }
 
-  createTeam(team: ITeam): Observable<ITeam> {
-    return this._http.post<ITeam>(baseUrl + '/teams',
+  createTeam(team: ITeam): Observable<ITeamDetails> {
+    return this._http.post<ITeamDetails>(this._url,
     team);
-  }  
+  }
+  
+  getTeamData(userId: string): Observable<ITeamData> {
+    return this._http.get<ITeamData>(`${baseUrl}/users/${userId}/teams`)
+      .pipe(map((data: ITeamData) => {
+          return data;
+      })
+    );
+  }
 }

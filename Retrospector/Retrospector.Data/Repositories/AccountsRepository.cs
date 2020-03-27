@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Retrospector.Data.DomainModels;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Retrospector.Data.Repositories
 {

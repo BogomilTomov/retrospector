@@ -18,6 +18,8 @@ namespace Retrospector.Data
 
         public DbSet<TeamUser> TeamUsers { get; set; }
 
+        public DbSet<UserSelectedTeam> UserSelectedTeams{ get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -59,15 +61,29 @@ namespace Retrospector.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<RetrospectorUser>()
+                .HasOne(ru => ru.SelectedTeam)
+                .WithOne(st => st.User)
+                .HasForeignKey<UserSelectedTeam>(ru => ru.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserSelectedTeam>()
+                .HasOne(usr => usr.Team)
+                .WithMany(t => t.UserSelectedTeams)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<TeamUser>()
                 .HasKey(tu => new { tu.TeamId, tu.UserId });
             
             modelBuilder.Entity<RetroGame>()
                 .Property(rg => rg.Name)
                 .IsRequired();
-
             modelBuilder.Entity<RetroGame>()
                 .Property(rg => rg.Url)
+                .IsRequired();
+
+            modelBuilder.Entity<UserSelectedTeam>()
+                .Property(ust => ust.UserId)
                 .IsRequired();
 
             modelBuilder.Entity<Team>()

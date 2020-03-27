@@ -1,10 +1,9 @@
-﻿using Retrospector.Data.DomainModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Retrospector.Data.DomainModels;
 using Retrospector.Data.Repositories;
 using Retrospector.Services.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Retrospector.Services
 {
@@ -15,12 +14,16 @@ namespace Retrospector.Services
         private const string CreationDateNullMessage = "CreationDate cannot be null or empty!";
         private const string TeamCreateSuccessMessage = "Team with email {0} created successfully!";
         private const string TeamNameExistsMessage = "Team with name {0} already exists!";
-        private const string OwnerDoesntExist = "User with id {0} doesnt't exist!";
-
+        private const string UserDoesntExistMessage = "User with id {0} doesnt't exist!";
+        private const string GetTeamsSuccessMessage = "{0}'s teams successfully retrieved!";
+        private const string GetDefaultTeamSuccessMessage = "{0}'s default team sucessfully retrieved!";
+        
+        private readonly UsersRepository _userRepository;
         private readonly TeamsRepository _teamRepository;
 
-        public TeamsService(TeamsRepository teamRepository)
+        public TeamsService(UsersRepository userRepository, TeamsRepository teamRepository)
         {
+            _userRepository = userRepository;
             _teamRepository = teamRepository;
         }
 
@@ -48,9 +51,9 @@ namespace Retrospector.Services
                 CreationDate = creationDate
             };
 
-            if (!_teamRepository.OwnerExists(ownerId))
+            if (!_userRepository.UserExists(ownerId))
             {
-                string errorMessage = string.Format(OwnerDoesntExist, ownerId);
+                string errorMessage = string.Format(UserDoesntExistMessage, ownerId);
                 return new ResultData<Team>(errorMessage, false, newTeam);
             }
 
@@ -63,6 +66,35 @@ namespace Retrospector.Services
             Team team = await _teamRepository.CreateTeamAsync(newTeam);
             string successMessage = string.Format(TeamCreateSuccessMessage, team.Id);
             return new ResultData<Team>(successMessage, true, team);
+        }
+
+        public async Task<ResultData<IList<Team>>> GetTeamsAsync(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new ResultData<IList<Team>>(OwnerIdNullMessage, false);
+            }
+
+            IList<Team> Teams = await _teamRepository.GetTeamsAsync(userId);
+            string successMessage = string.Format(GetTeamsSuccessMessage, userId);
+            return new ResultData<IList<Team>>(successMessage, true, Teams);
+        }
+
+        public async Task<ResultData<int>> GetDefaultTeamAsync(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new ResultData<int>(OwnerIdNullMessage, false);
+            }
+
+            int defaultTeamId = await _teamRepository.GetDefaultTeamAsync(userId);
+            if (!_teamRepository.TeamExists(defaultTeamId))
+            {
+                defaultTeamId = 0;
+            }
+
+            string successMessage = string.Format(GetDefaultTeamSuccessMessage, userId);
+            return new ResultData<int>(successMessage, true, defaultTeamId);
         }
     }
 }

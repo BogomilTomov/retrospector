@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Retrospector.Data.DomainModels;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Retrospector.Data.DomainModels;
 using Retrospector.Services;
 using Retrospector.Services.Results;
 using Retrospector.Api.ViewModels.Teams;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Retrospector.Api.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
     public class TeamsController : ControllerBase
     {
@@ -20,8 +21,9 @@ namespace Retrospector.Api.Controllers
             _teamService = teamService;
         }
 
+        [Route("api/[controller]")]
         [HttpPost]
-        public async Task<IActionResult> CreateTeam([FromBody] TeamModel team)
+        public async Task<IActionResult> CreateTeamAsync([FromBody] TeamModel team)
         {
             if (!ModelState.IsValid)
             {
@@ -41,6 +43,41 @@ namespace Retrospector.Api.Controllers
                 CreationDate = result.Data.CreationDate,
                 OwnerId = result.Data.OwnerId,
             };
+
+            return Ok(viewModel);
+        }
+
+        [Route("/api/users/{userId}/teams")]
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetTeamsAsync([FromRoute] string userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ResultData<IList<Team>> teams = await _teamService.GetTeamsAsync(userId);
+            if (!teams.Success)
+            {
+                return BadRequest(new { message = teams.Message });
+            }
+
+            ResultData<int> defaultTeam = await _teamService.GetDefaultTeamAsync(userId);
+            if (!defaultTeam.Success)
+            {
+                return BadRequest(new { message = defaultTeam.Message });
+            }
+
+            TeamsDataModel viewModel = new TeamsDataModel();
+            viewModel.DefaultTeam = defaultTeam.Data;
+            viewModel.Teams = teams.Data
+                .Select(team => new TeamModel
+                {
+                    Id = team.Id,
+                    Name = team.Name,
+                    CreationDate = team.CreationDate,
+                    OwnerId = team.OwnerId
+                });
 
             return Ok(viewModel);
         }

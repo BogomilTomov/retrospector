@@ -1,12 +1,12 @@
-import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormsModule, NgForm }   from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ITeam } from '../../models/team.model';
 import * as moment from 'moment';
+import { ITeam } from '../../models/team.model';
 import { TeamsService } from '../../services/teams.service';
 import { AccountsService } from '../../services/accounts.service';
-
+import { ITeamDetails } from 'src/app/models/team-details.model';
 
 @Component({
   selector: 'ret-create-team',
@@ -18,21 +18,27 @@ export class CreateTeamComponent implements OnDestroy {
   public name: string = '';
   public validationErrorExists: boolean = false;
   public validationErrorMessage: string = '';
+  @Output() public teamCreated = new EventEmitter<ITeamDetails>();
+
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private readonly _teamService: TeamsService, private readonly _accountService: AccountsService) { }
+  constructor(private readonly _teamService: TeamsService, 
+              private readonly _accountService: AccountsService) { }
 
-  onSubmit(): void {
+  onSubmit(form): void {
     const newTeam: ITeam = { 
       name: this.name,
       creationDate: moment().add(2, 'h').toDate(),
       ownerId: this._accountService.getLoggedInUserId()
     }; 
 
-    this._teamService.createTeam(newTeam).pipe(takeUntil(this.unsubscribe$))
+    this._teamService.createTeam(newTeam)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
-        (res: ITeam) => {
+        res => {
+          form.reset();
           this.closeModal.nativeElement.click();
+          this.teamCreated.emit(res);
         },
         err => {
           this.validationErrorExists = true;
