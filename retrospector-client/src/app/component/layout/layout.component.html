@@ -15,7 +15,7 @@
                 </optgroup>
               </select>
 
-              <div class="col-auto retro-card-options dropright">
+              <div *ngIf="selectedTeam !== undefined" class="col-auto retro-card-options dropright">
                 <button type="button" class="btn bg-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="verticalElipsisOptions">
                     &#8942;
                 </button>
