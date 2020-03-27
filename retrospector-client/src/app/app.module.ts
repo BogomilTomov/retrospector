@@ -18,6 +18,7 @@ import { RetroGamesService } from './services/retro-games.service';
 import { LayoutComponent } from './component/layout/layout.component';
 import { PlayGameComponent } from './component/play-game/play-game.component';
 import { RetroGameCardComponent } from './component/retro-game-card/retro-game-card.component';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 function provideConfig() {
   return authServiceConfig;
@@ -44,7 +45,8 @@ function provideConfig() {
     AppRoutingModule,
     HttpClientModule,
     SocialLoginModule.initialize(authServiceConfig),
-    FormsModule 
+    FormsModule,
+    NgxSmartModalModule.forRoot()
   ],
   providers: [
     {  provide: HTTP_INTERCEPTORS,

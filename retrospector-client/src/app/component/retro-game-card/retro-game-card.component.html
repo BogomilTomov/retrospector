@@ -12,8 +12,8 @@
                 <button type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="verticalElipsis">
                     &#8942;
                 </button>
-                  <div class="dropdown-menu">
-                      <a class="dropdown-item">Get URL</a>
+                  <div class="dropdown-menu ml-2">
+                      <a class="dropdown-item" type="button" (click)="openUrlModal()">Get URL</a>
                       <a class="dropdown-item">Export to PDF</a>
                       <a class="dropdown-item">Edit Name</a>
                   </div>
@@ -21,3 +21,12 @@
         </div>
     </div>
 </div>
+
+<!--Get Url Pop Up-->
+<ngx-smart-modal #getUrlModal identifier="{{game.id}}">
+    <h1>Game Url:</h1>
+    <p>{{game.url}}</p>
+    <footer class="col-md-12 text-center">
+        <button class="btn btn-secondary" (click)="getUrlModal.close()">Done</button>
+    </footer>
+  </ngx-smart-modal>
