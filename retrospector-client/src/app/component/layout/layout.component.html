@@ -14,6 +14,21 @@
                     <option *ngFor="let sharedTeam of sharedTeams; trackBy: trackByFn" value="{{sharedTeam.id}}">{{sharedTeam.name}}</option>
                 </optgroup>
               </select>
+
+              <div class="col-auto retro-card-options dropright">
+                <button type="button" class="btn bg-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="verticalElipsisOptions">
+                    &#8942;
+                </button>
+                  <div class="dropdown-menu">
+                      <a class="dropdown-item">Add New Team</a>
+                      <div *ngIf="userIsAdminOrOwner()">
+                        <a class="dropdown-item">Edit Team Name</a>
+                        <a class="dropdown-item">Delete a Team</a>
+                        <a class="dropdown-item">Share</a>
+                      </div>
+                  </div>
+            </div>
+
               <ul class="nav navbar-nav ml-auto">
                 <li class="greeting" class="nav-item active mt-1">
                   <span class="greeting font-sz-sm">
