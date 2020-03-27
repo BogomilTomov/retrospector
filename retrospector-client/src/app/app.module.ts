@@ -15,6 +15,7 @@ import { CreateTeamComponent } from './component/create-team/create-team.compone
 import { AuthInterceptor } from './services/auth.interceptor';
 import { TimelineComponent } from './component/timeline/timeline.component';
 import { RetroGamesService } from './services/retro-games.service';
+import { LayoutComponent } from './component/layout/layout.component';
 import { PlayGameComponent } from './component/play-game/play-game.component';
 import { RetroGameCardComponent } from './component/retro-game-card/retro-game-card.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
@@ -28,6 +29,11 @@ function provideConfig() {
     AppComponent,
     LoginPageComponent,
     DashboardComponent,
+    CreateTeamComponent,
+    TimelineComponent,
+    LayoutComponent,
+    RetroGameCardComponent,
+    CreateTeamComponent,
     CreateNewRetrospectiveComponent,
     CreateTeamComponent,
     TimelineComponent,

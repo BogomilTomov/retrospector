@@ -10,5 +10,7 @@ namespace Retrospector.Data.DomainModels
         public IEnumerable<TeamUser> TeamUsers { get; set; }
 
         public IEnumerable<Team> OwnedTeams { get; set; }
+
+        public UserSelectedTeam SelectedTeam { get; set; }
     }
 }

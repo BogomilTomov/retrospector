@@ -6,6 +6,8 @@ export const environment = {
 
 export const baseUrl: string = 'https://localhost:44372/api';
 
+export const gamesLoaded: number = 20;
+
 export const authServiceConfig = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,

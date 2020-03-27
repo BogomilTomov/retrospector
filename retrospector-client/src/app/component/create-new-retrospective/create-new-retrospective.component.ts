@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-
-import { IRetroGame } from 'src/app/models/retro-game.model';
 import { warningMessages } from '../../../environments/literals';
+import { IRetrospective } from 'src/app/models/retrospective.model';
 
 @Component({
     selector: 'ret-create-new-retrospective',
@@ -17,7 +16,7 @@ export class CreateNewRetrospectiveComponent {
     public retroGameOptions: string[] = ['Start/Stop/Continue', 'Mad/Sad/Glad', '4Ls', 'Quick', 'Starfish'];
     @ViewChild('closeModal') public closeModal: ElementRef;
     public dropdownToggle = new EventEmitter();
-    @Output() newRetrospective = new EventEmitter<IRetroGame>();
+    @Output() newRetrospective = new EventEmitter<IRetrospective>();
 
     chooseTemplate(template: string): void {
         this.newRetrospectiveTemplate = template;
@@ -31,17 +30,10 @@ export class CreateNewRetrospectiveComponent {
 
     createNewRetrospective(): void {
         if(this.formIsValid()) {            
-            const game: IRetroGame = {
+            const game: IRetrospective = {
                 name: this.newRetrospectiveName,
                 template: this.newRetrospectiveTemplate,
-                notesCount: null,
-                creationDate: null,
-                lastModified: null,
-                id: null,
-                team: null,
-                teamId: null,
-                notes: null,
-                url: null
+
             };
             
             this.newRetrospective.emit(game);
