@@ -6,9 +6,7 @@ using Retrospector.Data.DomainModels;
 using Retrospector.Services;
 using Retrospector.Services.Results;
 using Retrospector.Api.ViewModels.Teams;
-using Retrospector.Api.ViewModels.RetroGames;
-using Retrospector.Api.ViewModels.Shared;
-using Retrospector.Api.ViewModels.Notes;
+using System.Linq;
 
 namespace Retrospector.Api.Controllers
 {
@@ -49,8 +47,8 @@ namespace Retrospector.Api.Controllers
             return Ok(viewModel);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetTeamsAsync(string userId)
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetTeamsAsync([FromRoute] string userId)
         {
             if (!ModelState.IsValid)
             {
@@ -71,19 +69,14 @@ namespace Retrospector.Api.Controllers
 
             TeamsDataModel viewModel = new TeamsDataModel();
             viewModel.DefaultTeam = defaultTeam.Data;
-            viewModel.Teams = new List<TeamModel>();
-            foreach (Team team in teams.Data)
-            {
-                TeamModel teamModel = new TeamModel
+            viewModel.Teams = teams.Data
+                .Select(team => new TeamModel
                 {
                     Id = team.Id,
                     Name = team.Name,
                     CreationDate = team.CreationDate,
                     OwnerId = team.OwnerId
-                };
-
-                viewModel.Teams.Add(teamModel);
-            }
+                });
 
             return Ok(viewModel);
         }

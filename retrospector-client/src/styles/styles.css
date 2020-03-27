@@ -231,7 +231,7 @@ h2 {
 }
 
 .modal-dialog {
-    height: 580px;
+    height: 480px;
 }
 
 .modal-content {
@@ -245,7 +245,7 @@ h2 {
 }
 
 .modal-title {
-    margin-top: 70px;
+    margin-top: 5px;
 }
 
 .modal-header {

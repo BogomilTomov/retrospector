@@ -7,6 +7,8 @@ import { ITeamDetails } from 'src/app/models/team-details.model';
 import { TeamsService } from 'src/app/services/teams.service';
 import { UsersService } from 'src/app/services/users.service';
 import { RetroGamesService } from 'src/app/services/retro-games.service';
+import { IRetroGame } from 'src/app/models/retro-game.model';
+import { gamesLoaded } from 'src/environments/environment';
 
 @Component({
   selector: 'ret-layout',
@@ -46,12 +48,12 @@ export class LayoutComponent implements OnInit {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(res => {
           this.teams = res.teams;
-          let selectedTeamId = res.defaultTeam;
-          if (selectedTeamId === 0 && this.teams.length > 0) {
-            selectedTeamId = this.teams[0].id;
+          this.selectedTeamId = res.defaultTeam;
+          if (this.selectedTeamId === 0 && this.teams.length > 0) {
+            this.selectedTeamId = this.teams[0].id;
           }
           
-          this.selectedTeam = this.teams.find(t => t.id == selectedTeamId);       
+          this.selectedTeam = this.teams.find(t => t.id == this.selectedTeamId);
           this.teams.forEach(team => {
             if (team.ownerId === this.userId) {
               this.ownedTeams.push(team);
@@ -60,9 +62,8 @@ export class LayoutComponent implements OnInit {
             }
           });
 
-          this._gameService.getGamesByTeamId(selectedTeamId)
-            .subscribe(res => { this.selectedTeam.retroGames = res });
-            console.log(this.selectedTeam.retroGames)
+          this._gameService.getGamesByTeamId(this.selectedTeamId)
+            .subscribe(res => { this.selectedTeam.retroGames = res; });
         });
   }
 
@@ -81,11 +82,38 @@ export class LayoutComponent implements OnInit {
       }
     );
   }
+  
+  createRetroGame(newGame: IRetroGame): void {
+    newGame.notes = []; 
+    newGame.teamId = this.selectedTeamId;
+    this._gameService.createGame(newGame).toPromise().then(res => {
+      if (this.selectedTeam.retroGames.length >= gamesLoaded) {
+        this.selectedTeam.retroGames.pop();
+      }
 
+      this.selectedTeam.retroGames.unshift(res);
+    }).catch(err => console.log(err))
+  }
+
+  createTeam(newTeam: ITeamDetails): void {
+    this.teams.push(newTeam);
+    this.ownedTeams.push(newTeam);
+    this.ownedTeams.sort((a, b) => a.name.localeCompare(b.name));
+    this.selectedTeam = newTeam;
+    console.log(this.selectedTeam)
+    this.selectedTeamId = newTeam.id;
+    this.selectedTeam.retroGames = [];
+    this._userService.setSelectedTeam(this.userId, newTeam.id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
+  }
  
   newTeamSelected(selectedTeamId) {
     this.selectedTeamId = selectedTeamId;
-    this.selectedTeam = this.teams.find(t => t.id === selectedTeamId);
+    this.selectedTeam = this.teams.find(t => t.id == selectedTeamId);
+    this._userService.setSelectedTeam(this.userId, selectedTeamId).subscribe();
+    this._gameService.getGamesByTeamId(selectedTeamId)
+    .subscribe(res => { this.selectedTeam.retroGames = res });
   }
 
   trackByFn(index: number, team: ITeamDetails): number {

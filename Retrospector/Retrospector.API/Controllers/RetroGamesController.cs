@@ -38,18 +38,18 @@ namespace Retrospector.Api.Controllers
                 return Forbid(result.Message);
             }
 
-            return CreatedAtAction("GetRetroGame", result.Data, result.Data);
+            return Ok(result.Data);
         }
 
         [HttpGet("{teamId}")]
-        public async Task<ActionResult<RetroGame[]>> GetRetroGamesAsync([FromRoute] int teamId)
+        public async Task<ActionResult<RetroGame[]>> GetRetroGamesAsync([FromRoute] int teamId, [FromQuery] int gamesCount)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            ResultData<IEnumerable<RetroGame>> result = await _retroGameService.GetRetroGamesByTeamIdAsync(teamId);
+            ResultData<IEnumerable<RetroGame>> result = await _retroGameService.GetRetroGamesByTeamIdAsync(teamId, gamesCount);
 
             if (!result.Success)
             {

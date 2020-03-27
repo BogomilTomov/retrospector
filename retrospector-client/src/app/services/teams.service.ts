@@ -22,9 +22,7 @@ export class TeamsService {
   }
 
   getTeamData(userId: string): Observable<ITeamData> {
-    let params = new HttpParams();
-    params = params.append('userId', userId);
-    return this._http.get<ITeamData>(this._url, {params: params})
+    return this._http.get<ITeamData>(`${this._url}/${userId}`)
       .pipe(map((data: ITeamData) => {
           return data;
       })

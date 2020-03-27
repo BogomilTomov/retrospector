@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Retrospector.Data.DomainModels;
 
 namespace Retrospector.Api.ViewModels.Teams
 {

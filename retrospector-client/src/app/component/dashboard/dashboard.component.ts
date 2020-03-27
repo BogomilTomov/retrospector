@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
 import { ITeamDetails } from 'src/app/models/team-details.model';
-import { IRetroGame } from 'src/app/models/retro-game.model';
+import { IRetrospective } from 'src/app/models/retrospective.model';
 
 @Component({
   selector: 'ret-dashboard',
@@ -11,33 +10,16 @@ import { IRetroGame } from 'src/app/models/retro-game.model';
 export class DashboardComponent {
   @Input() public selectedTeam: ITeamDetails;
   @Input() public userId: string;
+  @Output() retroGameCreatedChange = new EventEmitter<IRetrospective>();
+  @Output() teamCreatedChange = new EventEmitter<ITeamDetails>();
 
   constructor() { }
 
-  teamCreated(newTeam): void {
-    // this.teams.push(newTeam);
-    // this.ownedTeams.push(newTeam);
-    // this.ownedTeams.sort((a, b) => a.name.localeCompare(b.name));
-    // this.selectedTeamIdChange.emit(newTeam.id);
-    // this._userService.setSelectedTeam(this.userId, newTeam.id)
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe();
+  retroGameAdded(newGame: IRetrospective): void {
+    this.retroGameCreatedChange.emit(newGame)
   }
 
-  // ngOnChanges(teamSelectChanges: SimpleChanges) {
-  //   if(!teamSelectChanges.selectedTeamId.isFirstChange()) {
-  //     this.selectedTeamId = teamSelectChanges.selectedTeamId.currentValue;
-  //     this.selectedTeam = this.teams.find(t => t.id == this.selectedTeamId);
-  //     this._userService.setSelectedTeam(this.userId, this.selectedTeamId)
-  //       .pipe(takeUntil(this.unsubscribe$))
-  //       .subscribe();
-  //   }
-  // }
-
-  addRetrospective(newGame: IRetroGame): void { 
-    // newGame.teamId = this.selectedTeamId;
-    // this._gameService.createGame(newGame).toPromise().then(res => {
-    //   this.selectedTeam.retroGames = [res, ...this.selectedTeam.retroGames].slice(0, 20);
-    // }).catch(err => console.log(err))
+  teamAdded(newTeam: ITeamDetails): void {
+    this.teamCreatedChange.emit(newTeam)
   }
 }

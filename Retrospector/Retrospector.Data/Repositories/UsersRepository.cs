@@ -16,6 +16,18 @@ namespace Retrospector.Data.Repositories
 
         public async Task<string> SetSelectedTeamAsync(string userId, int teamId)
         {
+            bool defaultTeamExists = _context.UserSelectedTeams.Any(ust => ust.UserId == userId);
+            if (!defaultTeamExists)
+            {
+                UserSelectedTeam defaultTeam = new UserSelectedTeam
+                {
+                    TeamId = teamId,
+                    UserId = userId
+                };
+
+                await _context.UserSelectedTeams.AddAsync(defaultTeam);
+            }
+
             RetrospectorUser user = await _context.Users
                 .Include(u => u.SelectedTeam)
                 .SingleOrDefaultAsync(u => u.Id == userId);
@@ -25,7 +37,7 @@ namespace Retrospector.Data.Repositories
             return userId;
         }
 
-        public async Task<RetrospectorUser> GetUserById(string userId)
+        public async Task<RetrospectorUser> GetUserByIdAsync(string userId)
         {
             return await _context.Users.SingleOrDefaultAsync(u => u.Id == userId);
         }

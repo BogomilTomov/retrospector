@@ -48,11 +48,12 @@ namespace Retrospector.Data.Repositories
             return await _context.RetroGames.FindAsync(id);
         }
 
-        public async Task<IEnumerable<RetroGame>> GetRetroGamesByTeamIdAsync(int teamId) {
+        public async Task<IEnumerable<RetroGame>> GetRetroGamesByTeamIdAsync(int teamId, int gamesCount) {
             return await _context.RetroGames
                 .Where(rg => rg.TeamId == teamId)
-                .Include(rg => rg.Notes)
                 .OrderByDescending(rg => rg.LastModified)
+                .Take(gamesCount)
+                .Include(rg => rg.Notes)
                 .ToListAsync();
         }
     }

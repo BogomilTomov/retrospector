@@ -54,14 +54,14 @@ namespace Retrospector.Services
             return new ResultData<RetroGame>(message, true, game);
         }
 
-        public async Task<ResultData<IEnumerable<RetroGame>>> GetRetroGamesByTeamIdAsync(int teamId) {
+        public async Task<ResultData<IEnumerable<RetroGame>>> GetRetroGamesByTeamIdAsync(int teamId, int gamesCount) {
             if (!_teamsRepository.TeamExists(teamId))
             {
                 string errorMessage = string.Format(TeamDoesntExistMessage, teamId);
                 return new ResultData<IEnumerable<RetroGame>>(errorMessage, false);
             }
 
-            var games = await _retroGameRepository.GetRetroGamesByTeamIdAsync(teamId);
+            var games = await _retroGameRepository.GetRetroGamesByTeamIdAsync(teamId, gamesCount);
             string message = GetRetroGameSuccessMessage;
             return new ResultData<IEnumerable<RetroGame>>(message, true, games);
         }

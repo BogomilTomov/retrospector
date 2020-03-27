@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using Retrospector.Api.ViewModels.Teams;
-
-namespace Retrospector.Api.ViewModels.Shared
+namespace Retrospector.Api.ViewModels.Teams
 {
     public class TeamsDataModel
     {
-        public List<TeamModel> Teams{ get; set; }
+        public IEnumerable<TeamModel> Teams{ get; set; }
 
         public int DefaultTeam { get; set; }
     }
