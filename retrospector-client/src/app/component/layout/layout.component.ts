@@ -106,7 +106,6 @@ export class LayoutComponent implements OnInit {
     this.ownedTeams.push(newTeam);
     this.ownedTeams.sort((a, b) => a.name.localeCompare(b.name));
     this.selectedTeam = newTeam;
-    console.log(this.selectedTeam)
     this.selectedTeamId = newTeam.id;
     this.selectedTeam.retroGames = [];
     this._userService.setSelectedTeam(this.userId, newTeam.id)

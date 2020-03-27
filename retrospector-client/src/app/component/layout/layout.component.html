@@ -28,10 +28,11 @@
       </div>
     </nav>
     
-        <section *ngIf="!isLoggedIn">
-          <ret-login-page></ret-login-page>
-        </section>
-        <section *ngIf="isLoggedIn">
-        <ret-dashboard [userId]="userId" [selectedTeam]="selectedTeam" (retroGameCreatedChange)="createRetroGame($event)" (teamCreatedChange)="createTeam($event)"></ret-dashboard>
-        </section>
-    </div>
+      <section *ngIf="!isLoggedIn">
+        <ret-login-page></ret-login-page>
+      </section>
+      <section *ngIf="isLoggedIn">
+        
+      <ret-dashboard [userId]="userId" [selectedTeam]="selectedTeam" (retroGameCreatedChange)="createRetroGame($event)" (teamCreatedChange)="createTeam($event)"></ret-dashboard>
+      </section>
+</div>

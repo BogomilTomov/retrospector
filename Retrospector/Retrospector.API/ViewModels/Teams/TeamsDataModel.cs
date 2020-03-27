@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 namespace Retrospector.Api.ViewModels.Teams
 {
     public class TeamsDataModel

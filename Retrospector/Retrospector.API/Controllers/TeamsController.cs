@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Retrospector.Data.DomainModels;
 using Retrospector.Services;
 using Retrospector.Services.Results;
 using Retrospector.Api.ViewModels.Teams;
-using System.Linq;
 
 namespace Retrospector.Api.Controllers
 {

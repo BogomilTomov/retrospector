@@ -33,13 +33,11 @@ namespace Retrospector.Data.Repositories
                 LastModified = DateTime.Now,
                 Notes = new List<Note>(),
                 TeamId = teamId,
-                Url = string.Empty
+                Url = Guid.NewGuid().ToString()
             };
 
             _context.RetroGames.Add(newGame);
-
             await _context.SaveChangesAsync();
-
             return await _context.RetroGames.FirstOrDefaultAsync(rg => rg.Name == name);
         }
 

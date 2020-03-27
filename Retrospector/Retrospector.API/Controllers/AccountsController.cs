@@ -52,13 +52,14 @@ namespace Retrospector.Api.Controllers
             UserModel viewModel = new UserModel
             {
                 Email = result.Data.Email,
-                Id = result.Data.Id,    
+                Id = result.Data.Id,
                 Role = role
             };
 
             return Ok(viewModel);
         }
 
+        [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
