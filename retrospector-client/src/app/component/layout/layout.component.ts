@@ -106,22 +106,23 @@ export class LayoutComponent implements OnInit {
     this.ownedTeams.push(newTeam);
     this.ownedTeams.sort((a, b) => a.name.localeCompare(b.name));
     this.selectedTeam = newTeam;
-    this.selectedTeamId = newTeam.id;
     this.selectedTeam.retroGames = [];
-    this._userService.setSelectedTeam(this.userId, newTeam.id)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe();
+    this.selectTeam(this.selectedTeam);
   }
  
   newTeamSelected(selectedTeamId): void {
-    this.selectedTeamId = selectedTeamId;
     this.selectedTeam = this.teams.find(t => t.id == selectedTeamId);
-    this._userService.setSelectedTeam(this.userId, selectedTeamId)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe();
+    this.selectTeam(this.selectedTeam)
     this._gameService.getGamesByTeamId(selectedTeamId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(res => { this.selectedTeam.retroGames = res });
+  }
+
+  selectTeam(team: ITeamDetails) {
+    this.selectedTeamId = team.id;
+    this._userService.setSelectedTeam(this.userId, team.id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
   }
 
   trackByFn(index: number, team: ITeamDetails): number {

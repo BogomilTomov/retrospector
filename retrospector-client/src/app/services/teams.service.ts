@@ -20,9 +20,9 @@ export class TeamsService {
     return this._http.post<ITeamDetails>(this._url,
     team);
   }
-
+  
   getTeamData(userId: string): Observable<ITeamData> {
-    return this._http.get<ITeamData>(`${this._url}/${userId}`)
+    return this._http.get<ITeamData>(`${baseUrl}/users/${userId}/teams`)
       .pipe(map((data: ITeamData) => {
           return data;
       })

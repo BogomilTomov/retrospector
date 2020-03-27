@@ -11,7 +11,6 @@ using Retrospector.Api.ViewModels.Teams;
 namespace Retrospector.Api.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
     public class TeamsController : ControllerBase
     {
@@ -22,6 +21,7 @@ namespace Retrospector.Api.Controllers
             _teamService = teamService;
         }
 
+        [Route("api/[controller]")]
         [HttpPost]
         public async Task<IActionResult> CreateTeamAsync([FromBody] TeamModel team)
         {
@@ -47,6 +47,7 @@ namespace Retrospector.Api.Controllers
             return Ok(viewModel);
         }
 
+        [Route("/api/users/{userId}/teams")]
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetTeamsAsync([FromRoute] string userId)
         {

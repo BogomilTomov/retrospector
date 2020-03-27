@@ -3,5 +3,23 @@
 }
 
 .modal-dialog {
-    height: 23rem;
+    height: 25rem;
+}
+
+.modal-content {
+    height: 100%;
+}
+
+.modal-footer {
+    border-top: none;
+    border-right: 20px solid #fff;
+    border-bottom: 35px solid #fff;
+}
+
+.modal-title {
+    margin-top: 5px;
+}
+
+.modal-header {
+    border-bottom: none;
 }

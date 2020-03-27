@@ -40,7 +40,19 @@ namespace Retrospector.Services
                 return new ResultData<string>(errorMessage, false, userId);
             }
 
-            await _userRepository.SetSelectedTeamAsync(userId, teamId);
+            RetrospectorUser user = await _userRepository.GetUserByIdAsync(userId);
+            Team team = await _teamsRepository.GetTeamById(teamId);
+            if (user.SelectedTeam == null)
+            {
+                user.SelectedTeam = new UserSelectedTeam()
+                {
+                    UserId = user.Id
+                };
+            }
+
+            user.SelectedTeam.TeamId = teamId;
+            await _userRepository.UpdateAsync(user);
+
             string successMessage = string.Format(SetDefaultTeamSuccessMessage, userId);
             return new ResultData<string>(successMessage, true, userId);
         }
