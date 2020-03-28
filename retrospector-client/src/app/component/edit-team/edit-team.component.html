@@ -22,17 +22,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div [hidden]="name !== initialName || nameInput.pristine" class="mt-2 alert container errorMessage">
-                          <div class="row">
-                              <div class="col-2 d-flex align-items-center">
-                                  <i class="fa fa-exclamation-triangle fa-lg "></i>
-                              </div>
-                              <div class="col-8">
-                                  <div><strong>Error</strong></div>
-                                  <div>Please specify different team name!</div>
-                              </div>
-                          </div>
-                      </div>
                         <div *ngIf="validationErrorExists" class="mt-2 alert container errorMessage">
                             <div class="row">
                                 <div class="col-2 d-flex align-items-center">

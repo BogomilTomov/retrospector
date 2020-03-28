@@ -125,8 +125,8 @@ export class LayoutComponent implements OnInit {
       .subscribe();
   }
 
-  editTeamName(newName: string) {
-    this.selectedTeam.name = newName;
+  editTeamName(selectedTeam: ITeamDetails) {
+    this.selectedTeam = selectedTeam;
   }
 
   trackByFn(index: number, team: ITeamDetails): number {

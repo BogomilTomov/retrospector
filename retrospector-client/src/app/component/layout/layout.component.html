@@ -27,7 +27,7 @@
                         <button class="dropdown-item">Share</button>
                       </div>
                     </div>
-                    <ret-edit-team [selectedTeam]="selectedTeam" (teamNameEdited)="editTeamName($event)"></ret-edit-team>
+                    <ret-edit-team [selectedTeam]="selectedTeam" (selectedTeamChange)="editTeamName($event)"></ret-edit-team>
                 </div>
                 
                 <ul class="nav navbar-nav ml-auto">

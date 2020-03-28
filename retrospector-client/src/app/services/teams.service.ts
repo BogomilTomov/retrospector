@@ -20,6 +20,11 @@ export class TeamsService {
     return this._http.post<ITeamDetails>(this._url,
     team);
   }
+
+  editTeam(team: ITeamDetails): Observable<ITeamDetails> {
+    return this._http.post<ITeamDetails>(`${this._url}/${team.id}`,
+    team);
+  }
   
   getTeamData(userId: string): Observable<ITeamData> {
     return this._http.get<ITeamData>(`${baseUrl}/users/${userId}/teams`)

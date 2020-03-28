@@ -47,6 +47,39 @@ namespace Retrospector.Api.Controllers
             return Ok(viewModel);
         }
 
+        [Route("api/[controller]/{teamId}")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateTeamAsync([FromBody] TeamModel teamModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Team team = new Team
+            {
+                Id = teamModel.Id,
+                Name = teamModel.Name,
+                OwnerId = teamModel.OwnerId,
+            };
+
+            ResultData<Team> result = await _teamService.UpdateTeamAsync(team);
+
+            if (!result.Success)
+            {
+                return BadRequest(new { message = result.Message });
+            }
+
+            TeamModel viewModel = new TeamModel
+            {
+                Id = result.Data.Id,
+                Name = result.Data.Name,
+                OwnerId = result.Data.OwnerId,
+            };
+
+            return Ok(viewModel);
+        }
+
         [Route("/api/users/{userId}/teams")]
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetTeamsAsync([FromRoute] string userId)

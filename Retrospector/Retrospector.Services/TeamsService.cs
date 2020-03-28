@@ -17,7 +17,9 @@ namespace Retrospector.Services
         private const string UserDoesntExistMessage = "User with id {0} doesnt't exist!";
         private const string GetTeamsSuccessMessage = "{0}'s teams successfully retrieved!";
         private const string GetDefaultTeamSuccessMessage = "{0}'s default team sucessfully retrieved!";
-        
+        private const string TeamDoesntExistMessage = "Team with id {0} doesnt't exist!";
+        private const string UpdateTeamSuccessMessage = "Team with id {0} successfully updated!";
+
         private readonly UsersRepository _userRepository;
         private readonly TeamsRepository _teamRepository;
 
@@ -95,6 +97,22 @@ namespace Retrospector.Services
 
             string successMessage = string.Format(GetDefaultTeamSuccessMessage, userId);
             return new ResultData<int>(successMessage, true, defaultTeamId);
+        }
+
+        public async Task<ResultData<Team>> UpdateTeamAsync(Team team)
+        {
+            if (!_teamRepository.TeamExists(team.Id))
+            {
+                string errorMessage = string.Format(TeamDoesntExistMessage, team.Id);
+                return new ResultData<Team>(errorMessage, false, team);
+            }
+
+            Team oldTeam = await _teamRepository.GetTeamById(team.Id);
+            oldTeam.Name = team.Name;
+            oldTeam.OwnerId = team.OwnerId;
+            await _teamRepository.UpdateTeamAsync(oldTeam);
+            string successMessage = string.Format(UpdateTeamSuccessMessage, team);
+            return new ResultData<Team>(successMessage, true, team);
         }
     }
 }
