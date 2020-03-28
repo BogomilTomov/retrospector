@@ -1,15 +1,56 @@
-  <!-- Create New Retrospective modal -->
-  <div class="modal fade" id="editTeam" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="createNewRetrospectiveLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="createNewRetrospectiveLabel">Create a New Retrospective</h2>
-          <button type="button" class="close" data-dismiss="modal" #closeModal aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-        </div>
-      </div>
-    </div>
-  </div>
+
+<div class="modal fade" id="editTeamModal" data-backdrop="true">
+    <form #editTeamForm ="ngForm" (ngSubmit)="onSubmit(editTeamForm)">
+        <div class="modal-dialog"  role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit a team</h5>
+              <button type="button" class="close" data-dismiss="modal" #closeModal (click)="editTeamForm.reset();">&times;</button>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" #nameInput="ngModel" required class="form-control" maxlength="100" [(ngModel)]="name" name="name">
+                        <div [hidden]="nameInput.valid" class="mt-2 alert container errorMessage">
+                            <div class="row">
+                                <div class="col-2 d-flex align-items-center">
+                                    <i class="fa fa-exclamation-triangle fa-lg "></i>
+                                </div>
+                                <div class="col-8">
+                                    <div><strong>Error</strong></div>
+                                    <div>Team name is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div [hidden]="name !== initialName || nameInput.pristine" class="mt-2 alert container errorMessage">
+                          <div class="row">
+                              <div class="col-2 d-flex align-items-center">
+                                  <i class="fa fa-exclamation-triangle fa-lg "></i>
+                              </div>
+                              <div class="col-8">
+                                  <div><strong>Error</strong></div>
+                                  <div>Please specify different team name!</div>
+                              </div>
+                          </div>
+                      </div>
+                        <div *ngIf="validationErrorExists" class="mt-2 alert container errorMessage">
+                            <div class="row">
+                                <div class="col-2 d-flex align-items-center">
+                                    <i class="fa fa-exclamation-triangle fa-lg "></i>
+                                </div>
+                                <div class="col-8">
+                                    <div><strong>Error</strong></div>
+                                    <div>{{validationErrorMessage}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mr-2" data-dismiss="modal" (click)="editTeamForm.reset();">Cancel</button>
+                    <button class="btn btn-primary" type="submit" [disabled]="!editTeamForm.form.valid">Save</button>
+                </div>
+            </div>
+        </div>     
+    </form>
+</div>

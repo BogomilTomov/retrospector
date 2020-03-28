@@ -1,9 +1,9 @@
 
 <button class="btn btn-primary" data-toggle="modal" data-target="#createTeamModal">Create a team</button>
 
-<div class="modal" id="createTeamModal" data-backdrop="true">
+<div class="modal fade" id="createTeamModal" data-backdrop="true">
     <form #form ="ngForm" (ngSubmit)="onSubmit(form)">
-        <div class="modal-dialog">
+        <div class="modal-dialog"  role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Create new team</h5>

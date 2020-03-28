@@ -30,7 +30,7 @@ export class CreateTeamComponent implements OnDestroy {
       name: this.name,
       creationDate: moment().add(2, 'h').toDate(),
       ownerId: this._accountService.getLoggedInUserId()
-    }; 
+    };
 
     this._teamService.createTeam(newTeam)
       .pipe(takeUntil(this.unsubscribe$))
