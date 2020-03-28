@@ -12,29 +12,12 @@
             <div class="modal-body">
                     <div class="form-group">
                         <label for="name">Name of the team</label>
-                        <input type="text" placeholder="Name of the team" #nameInput="ngModel" required class="form-control" maxlength="100" [(ngModel)]="name" name="name">
-                        <div [hidden]="nameInput.valid || nameInput.pristine" class="mt-2 alert container errorMessage">
-                            <div class="row">
-                                <div class="col-2 d-flex align-items-center">
-                                    <i class="fa fa-exclamation-triangle fa-lg "></i>
-                                </div>
-                                <div class="col-8">
-                                    <div><strong>Error</strong></div>
-                                    <div>Team name is required!</div>
-                                </div>
-                            </div>
-
+                        <input type="text" placeholder="Name of the team" #nameInput="ngModel" required class="form-control mt-1" maxlength="100" [(ngModel)]="name" name="name">
+                        <div [hidden]="nameInput.valid || nameInput.pristine" class="mt-3 error-msg">
+                                {{teamNameRequiredErrorMessage}}
                         </div>
-                        <div *ngIf="validationErrorExists" class="mt-2 alert container errorMessage">
-                            <div class="row">
-                                <div class="col-2 d-flex align-items-center">
-                                    <i class="fa fa-exclamation-triangle fa-lg "></i>
-                                </div>
-                                <div class="col-8">
-                                    <div><strong>Error</strong></div>
-                                    <div>{{validationErrorMessage}}</div>
-                                </div>
-                            </div>
+                        <div *ngIf="validationErrorExists" class="mt-3 error-msg">
+                            {{validationErrorMessage}}
                         </div>
                     </div>
                 </div>

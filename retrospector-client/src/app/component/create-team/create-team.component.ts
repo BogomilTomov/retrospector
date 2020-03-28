@@ -18,6 +18,7 @@ export class CreateTeamComponent implements OnDestroy {
   public name: string = '';
   public validationErrorExists: boolean = false;
   public validationErrorMessage: string = '';
+  public teamNameRequiredErrorMessage = "Team name is required."
   @Output() public teamCreated = new EventEmitter<ITeamDetails>();
 
   private unsubscribe$ = new Subject<void>();
