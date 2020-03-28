@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule, NgForm }   from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -37,8 +37,8 @@ export class CreateTeamComponent implements OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         res => {
-          form.reset();
           this.closeModal.nativeElement.click();
+          form.reset();
           this.teamCreated.emit(res);
         },
         err => {

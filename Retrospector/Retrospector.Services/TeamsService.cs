@@ -13,7 +13,7 @@ namespace Retrospector.Services
         private const string OwnerIdNullMessage = "OwnerId cannot be null or empty!";
         private const string CreationDateNullMessage = "CreationDate cannot be null or empty!";
         private const string TeamCreateSuccessMessage = "Team with email {0} created successfully!";
-        private const string TeamNameExistsMessage = "Team with name {0} already exists!";
+        private const string TeamNameExistsMessage = "Team with name {0} already exists.";
         private const string UserDoesntExistMessage = "User with id {0} doesnt't exist!";
         private const string GetTeamsSuccessMessage = "{0}'s teams successfully retrieved!";
         private const string GetDefaultTeamSuccessMessage = "{0}'s default team sucessfully retrieved!";
@@ -104,6 +104,12 @@ namespace Retrospector.Services
             if (!_teamRepository.TeamExists(team.Id))
             {
                 string errorMessage = string.Format(TeamDoesntExistMessage, team.Id);
+                return new ResultData<Team>(errorMessage, false, team);
+            }
+
+            if (_teamRepository.TeamNameAlreadyExists(team.Name))
+            {
+                string errorMessage = string.Format(TeamNameExistsMessage, team.Name);
                 return new ResultData<Team>(errorMessage, false, team);
             }
 

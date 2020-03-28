@@ -16,13 +16,13 @@ export class EditTeamComponent {
   public name: string;
   public validationErrorExists: boolean = false;
   public validationErrorMessage: string = '';
+  public teamNameRequiredErrorMessage = "Team name is required."
   private unsubscribe$ = new Subject<void>();
 
   constructor(private readonly _teamService: TeamsService) { }
 
   ngOnChanges(teamChanges: SimpleChanges): void {
     this.name = teamChanges.selectedTeam.currentValue.name;
-    console.log(teamChanges.selectedTeam.currentValue.name)
   }
 
   onSubmit(form): void {
@@ -31,8 +31,8 @@ export class EditTeamComponent {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         res => {
-          form.reset();
           this.closeModal.nativeElement.click();
+          this.onClose();
           this.selectedTeamChange.emit(this.selectedTeam);
         },
         err => {
@@ -42,5 +42,9 @@ export class EditTeamComponent {
             this.validationErrorExists = false;
           }, 3000)
         });
-    }; 
+  }
+
+  onClose(): void {
+    this.name = this.selectedTeam.name;
+  }
 }
