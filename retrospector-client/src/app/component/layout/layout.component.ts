@@ -69,9 +69,11 @@ export class LayoutComponent implements OnInit {
           }
         });
 
-        this._gameService.getGamesByTeamId(this.selectedTeamId)
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(res => { this.selectedTeam.retroGames = res; });
+        if (this.selectedTeamId !== 0) {
+          this._gameService.getGamesByTeamId(this.selectedTeamId)
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(res => { this.selectedTeam.retroGames = res; });
+        }
       });
   }
 
