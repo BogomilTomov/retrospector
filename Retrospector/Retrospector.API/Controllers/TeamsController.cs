@@ -48,8 +48,8 @@ namespace Retrospector.Api.Controllers
             return Ok(viewModel);
         }
 
-        [Route("api/[controller]/{teamId}")]
-        [HttpPost]
+        [Route("api/[controller]")]
+        [HttpPut]
         public async Task<IActionResult> UpdateTeamAsync([FromBody] TeamModel teamModel)
         {
             if (!ModelState.IsValid)

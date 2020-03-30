@@ -26,14 +26,15 @@ export class EditTeamComponent {
   }
 
   onSubmit(form): void {
-    this.selectedTeam.name = this.name;
-    this._teamService.editTeam(this.selectedTeam)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        res => {
-          this.closeModal.nativeElement.click();
-          this.onClose();
-          this.selectedTeamChange.emit(this.selectedTeam);
+    const newTeam = Object.assign({}, this.selectedTeam);
+    newTeam.name = this.name;
+    this._teamService.editTeam(newTeam)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
+      res => {
+        this.selectedTeam.name = this.name;
+        this.closeModal.nativeElement.click();
+        this.onClose();
         },
         err => {
           this.validationErrorExists = true;
@@ -46,5 +47,10 @@ export class EditTeamComponent {
 
   onClose(): void {
     this.name = this.selectedTeam.name;
+  }
+  
+  ngOnDestroy(){
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

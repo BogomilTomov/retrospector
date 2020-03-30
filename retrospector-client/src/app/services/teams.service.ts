@@ -22,7 +22,7 @@ export class TeamsService {
   }
 
   editTeam(team: ITeamDetails): Observable<ITeamDetails> {
-    return this._http.post<ITeamDetails>(`${this._url}/${team.id}`,
+    return this._http.put<ITeamDetails>(`${this._url}`,
     team);
   }
   

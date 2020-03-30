@@ -28,9 +28,9 @@
                 </div>
               </div>
               <ret-create-team (teamCreated)='createTeam($event)'></ret-create-team>
-              <ret-edit-team [selectedTeam]="selectedTeam" (selectedTeamChange)="editTeamName($event)"></ret-edit-team>
+              <ret-edit-team [(selectedTeam)]="selectedTeam"></ret-edit-team>
         </div>
-            
+        
         <ul class="nav navbar-nav ml-auto">
           <li class="greeting" class="nav-item active mt-1">
             <span class="greeting font-sz-sm">
@@ -40,22 +40,16 @@
           <li class="nav-item active">
             <button class="btn btn-primary btn-small" (click)="logout()">Logout</button>
           </li>
-          </ul>
+        </ul>
       </div>
     </div>
   </nav>
-          
+        
   <section *ngIf="!isLoggedIn">
     <ret-login-page></ret-login-page>
   </section>
   <section *ngIf="isLoggedIn">
-    <div *ngIf="teams.length > 0">
-      <ret-dashboard [userId]="userId" [selectedTeam]="selectedTeam" (retroGameCreatedChange)="createRetroGame($event)"></ret-dashboard>
-    </div>
-    <div *ngIf="teams.length == 0">
-      <button class="btn btn-primary" data-toggle="modal" data-target="#createTeamModal">Create a team</button>
-      <ret-create-team (teamCreated)='createTeam($event)'></ret-create-team>
-    </div>
+    <ret-dashboard [userId]="userId" [selectedTeam]="selectedTeam" (retroGameCreatedChange)="createRetroGame($event)"></ret-dashboard>
   </section>
 </div>
 
