@@ -53,5 +53,12 @@ namespace Retrospector.Data.Repositories
         {
             return _context.Teams.Any(t => t.Id == teamId);
         }
+
+        public async Task<Team> UpdateTeamAsync(Team team)
+        {
+            _context.Teams.Update(team);
+            await _context.SaveChangesAsync();
+            return team;
+        }
     }
 }

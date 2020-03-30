@@ -19,6 +19,7 @@ import { LayoutComponent } from './component/layout/layout.component';
 import { PlayGameComponent } from './component/play-game/play-game.component';
 import { RetroGameCardComponent } from './component/retro-game-card/retro-game-card.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { EditTeamComponent } from './component/edit-team/edit-team.component';
 
 function provideConfig() {
   return authServiceConfig;
@@ -38,7 +39,8 @@ function provideConfig() {
     CreateTeamComponent,
     TimelineComponent,
     PlayGameComponent,
-    RetroGameCardComponent
+    RetroGameCardComponent,
+    EditTeamComponent
   ],
   imports: [
     BrowserModule,
