@@ -38,6 +38,10 @@ export class AccountsService {
     return localStorage.getItem('firstname');
   }
 
+  public getLoggedInUserRole(): string {
+    return localStorage.getItem('role');
+  }
+  
   public getLoggedInUserId(): string {
     return localStorage.getItem('userId');
   }

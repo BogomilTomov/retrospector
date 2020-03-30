@@ -128,4 +128,9 @@ export class LayoutComponent implements OnInit {
   trackByFn(index: number, team: ITeamDetails): number {
     return team.id;
   }
+
+  userIsAdminOrOwner(): boolean {
+    return this._accountService.getLoggedInUserRole() === "Admin" 
+        || this.selectedTeam.ownerId === this.userId;
+  }
 }
