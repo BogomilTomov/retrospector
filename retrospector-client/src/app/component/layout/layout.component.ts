@@ -37,7 +37,9 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
     this.initializeLoginData();
     this.userId = this._accountService.getLoggedInUserId();
-    this.initializeAppData();
+    if (this.userId !== null) {
+      this.initializeAppData();
+    }
   }
 
   initializeLoginData() {

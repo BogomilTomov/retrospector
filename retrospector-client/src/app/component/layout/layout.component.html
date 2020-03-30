@@ -1,56 +1,63 @@
 <div class="container">
-    <nav class="navbar navbar-expand-sm navbar-light bg-light mb-3"  *ngIf="isLoggedIn">
-      <div class="container-fluid">
-          <a class="navbar-brand" href="#">RetroSpector</a>
-          <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-              <select id="teamOptions" class="custom-select w-auto" [(ngModel)]="selectedTeamId" (ngModelChange)="newTeamSelected($event)">
-                <optgroup label="Owned teams">
-                  <option *ngFor="let ownedTeam of ownedTeams; trackBy: trackByFn" value="{{ownedTeam.id}}">{{ownedTeam.name}}</option>
-                </optgroup>
-                <optgroup label="Shared Teams">
-                    <option *ngFor="let sharedTeam of sharedTeams; trackBy: trackByFn" value="{{sharedTeam.id}}">{{sharedTeam.name}}</option>
-                </optgroup>
-              </select>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light mb-3"  *ngIf="isLoggedIn">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">RetroSpector</a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <select id="teamOptions" class="custom-select w-auto" [(ngModel)]="selectedTeamId" (ngModelChange)="newTeamSelected($event)">
+          <optgroup label="Owned teams">
+            <option *ngFor="let ownedTeam of ownedTeams; trackBy: trackByFn" value="{{ownedTeam.id}}">{{ownedTeam.name}}</option>
+          </optgroup>
+          <optgroup label="Shared Teams">
+              <option *ngFor="let sharedTeam of sharedTeams; trackBy: trackByFn" value="{{sharedTeam.id}}">{{sharedTeam.name}}</option>
+          </optgroup>
+        </select>
 
-              <div *ngIf="selectedTeam !== undefined" class="col-auto retro-card-options dropright">
-                <button type="button" class="btn bg-light verticalElipsisOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    &#8942;
-                </button>
-                  <div class="dropdown-menu">
-                      <button class="dropdown-item" data-toggle="modal" data-target="#createTeamModal">Add New Team</button>
-                      <div *ngIf="userIsAdminOrOwner()">
-                        <button class="dropdown-item" data-toggle="modal" data-target="#editTeamModal">Edit Team Name</button>
-                        <button class="dropdown-item">Delete a Team</button>
-                        <button class="dropdown-item">Share</button>
-                      </div>
-                    </div>
-                    <ret-edit-team [selectedTeam]="selectedTeam" (selectedTeamChange)="editTeamName($event)"></ret-edit-team>
+        <div *ngIf="selectedTeam !== undefined" class="col-auto retro-card-options dropright">
+          <button type="button" class="btn bg-light verticalElipsisOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              &#8942;
+          </button>
+            <div class="dropdown-menu">
+                <button class="dropdown-item" data-toggle="modal" data-target="#createTeamModal">Add New Team</button>
+                <div *ngIf="userIsAdminOrOwner()">
+                  <button class="dropdown-item" data-toggle="modal" data-target="#editTeamModal">Edit Team Name</button>
+                  <button class="dropdown-item">Delete a Team</button>
+                  <button class="dropdown-item">Share</button>
                 </div>
-                
-                <ul class="nav navbar-nav ml-auto">
-                  <li class="greeting" class="nav-item active mt-1">
-                    <span class="greeting font-sz-sm">
-                      Hello, {{userFirstName}}! &nbsp;&nbsp;
-                    </span>
-                  </li>
-                  <li class="nav-item active">
-                    <button class="btn btn-primary btn-small" (click)="logout()">Logout</button>
-                  </li>
-                </ul>
               </div>
-            </div>
-          </nav>
-          
-          <section *ngIf="!isLoggedIn">
-            <ret-login-page></ret-login-page>
-          </section>
-          <section *ngIf="isLoggedIn">
-        <ret-dashboard [userId]="userId" [selectedTeam]="selectedTeam" (retroGameCreatedChange)="createRetroGame($event)" (teamCreatedChange)="createTeam($event)"></ret-dashboard>
-      </section>
+              <ret-create-team (teamCreated)='createTeam($event)'></ret-create-team>
+              <ret-edit-team [selectedTeam]="selectedTeam" (selectedTeamChange)="editTeamName($event)"></ret-edit-team>
+        </div>
+            
+        <ul class="nav navbar-nav ml-auto">
+          <li class="greeting" class="nav-item active mt-1">
+            <span class="greeting font-sz-sm">
+              Hello, {{userFirstName}}! &nbsp;&nbsp;
+            </span>
+          </li>
+          <li class="nav-item active">
+            <button class="btn btn-primary btn-small" (click)="logout()">Logout</button>
+          </li>
+          </ul>
+      </div>
     </div>
+  </nav>
+          
+  <section *ngIf="!isLoggedIn">
+    <ret-login-page></ret-login-page>
+  </section>
+  <section *ngIf="isLoggedIn">
+    <div *ngIf="teams.length > 0">
+      <ret-dashboard [userId]="userId" [selectedTeam]="selectedTeam" (retroGameCreatedChange)="createRetroGame($event)"></ret-dashboard>
+    </div>
+    <div *ngIf="teams.length == 0">
+      <button class="btn btn-primary" data-toggle="modal" data-target="#createTeamModal">Create a team</button>
+      <ret-create-team (teamCreated)='createTeam($event)'></ret-create-team>
+    </div>
+  </section>
+</div>
 
     
     
