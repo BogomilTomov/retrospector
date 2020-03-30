@@ -50,7 +50,7 @@ namespace Retrospector.Services
             {
                 Name = name,
                 OwnerId = ownerId,
-                CreationDate = creationDate
+                CreationDate = DateTime.Now
             };
 
             if (!_userRepository.UserExists(ownerId))

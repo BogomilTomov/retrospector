@@ -1,5 +1,5 @@
 export interface ITeam {
     name: string;
-    creationDate: Date;
+    //creationDate: Date;
     ownerId: string;
 }
