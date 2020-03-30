@@ -29,7 +29,6 @@ export class CreateTeamComponent implements OnDestroy {
   onSubmit(form): void {
     const newTeam: ITeam = { 
       name: this.name,
-      //creationDate: moment().add(2, 'h').toDate(),
       ownerId: this._accountService.getLoggedInUserId()
     };
 

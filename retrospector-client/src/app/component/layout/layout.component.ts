@@ -94,15 +94,11 @@ export class LayoutComponent implements OnInit {
   }
   
   createRetroGame(newGame: IRetroGame): void {
-    newGame.notes = []; 
-    newGame.teamId = this.selectedTeamId;
-    this._gameService.createGame(newGame).toPromise().then(res => {
-      if (this.selectedTeam.retroGames.length >= gamesLoaded) {
-        this.selectedTeam.retroGames.pop();
-      }
+    if (this.selectedTeam.retroGames.length >= gamesLoaded) {
+      this.selectedTeam.retroGames.pop();
+    }
 
-      this.selectedTeam.retroGames.unshift(res);
-    }).catch(err => console.log(err))
+    this.selectedTeam.retroGames.unshift(newGame);
   }
 
   createTeam(newTeam: ITeamDetails): void {
