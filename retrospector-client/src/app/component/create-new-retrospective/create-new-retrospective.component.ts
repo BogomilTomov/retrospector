@@ -50,7 +50,6 @@ export class CreateNewRetrospectiveComponent {
             .subscribe(
               res => {
                 this.closeModal.nativeElement.click();
-                //form.reset();
                 this.newRetrospective.emit(res);
               },
               err => {
@@ -60,8 +59,6 @@ export class CreateNewRetrospectiveComponent {
                   this.validationErrorExists = false;
                 }, 3000)
               });
-            // this.newRetrospective.emit(game);
-            // this.closeModal.nativeElement.click();
         }
     }
 

@@ -16,6 +16,7 @@ namespace Retrospector.Services
         private const string GetRetroGameSuccessMessage = "Retrospective games retrieved successfully!";
         private const string GetRetroGameFailureMessage = "Retrospective games retrieve failed!";
         private const string TeamDoesntExistMessage = "Team with id {0} doesnt't exist!";
+        private const string TeamHasGameWithSameNameMessage = "A game with name {0} already exists in that team.";
         
         private readonly RetroGameRepository _retroGameRepository;
         private readonly TeamsRepository _teamsRepository;
@@ -41,6 +42,18 @@ namespace Retrospector.Services
             if (string.IsNullOrEmpty(template))
             {
                 return new ResultData<RetroGame>(InvalidRetroGameTemplateMessage, false);
+            }
+            
+            if (!_teamsRepository.TeamExists(teamId))
+            {
+                string errorMessage = string.Format(TeamDoesntExistMessage, teamId);
+                return new ResultData<RetroGame>(errorMessage, false);
+            }
+
+            if (_teamsRepository.TeamHasGameWithSameName(teamId, name))
+            {
+                string errorMessage = string.Format(TeamHasGameWithSameNameMessage, name);
+                return new ResultData<RetroGame>(errorMessage, false);
             }
 
             RetroGame game = await _retroGameRepository.CreateRetroGameAsync(name, template, teamId);

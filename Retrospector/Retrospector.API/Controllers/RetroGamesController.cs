@@ -35,7 +35,7 @@ namespace Retrospector.Api.Controllers
 
             if (!result.Success)
             {
-                return Forbid(result.Message);
+                return BadRequest(new { message = result.Message });
             }
 
             return Ok(result.Data);
