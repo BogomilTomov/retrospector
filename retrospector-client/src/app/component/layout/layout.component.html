@@ -20,7 +20,7 @@
                     &#8942;
                 </button>
                   <div class="dropdown-menu">
-                      <button class="dropdown-item">Add New Team</button>
+                      <button class="dropdown-item" data-toggle="modal" data-target="#createTeamModal">Add New Team</button>
                       <div *ngIf="userIsAdminOrOwner()">
                         <button class="dropdown-item" data-toggle="modal" data-target="#editTeamModal">Edit Team Name</button>
                         <button class="dropdown-item">Delete a Team</button>
