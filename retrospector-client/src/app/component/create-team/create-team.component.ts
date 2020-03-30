@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule, NgForm }   from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -18,6 +18,7 @@ export class CreateTeamComponent implements OnDestroy {
   public name: string = '';
   public validationErrorExists: boolean = false;
   public validationErrorMessage: string = '';
+  public teamNameRequiredErrorMessage = "Team name is required."
   @Output() public teamCreated = new EventEmitter<ITeamDetails>();
 
   private unsubscribe$ = new Subject<void>();
@@ -30,14 +31,14 @@ export class CreateTeamComponent implements OnDestroy {
       name: this.name,
       creationDate: moment().add(2, 'h').toDate(),
       ownerId: this._accountService.getLoggedInUserId()
-    }; 
+    };
 
     this._teamService.createTeam(newTeam)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         res => {
-          form.reset();
           this.closeModal.nativeElement.click();
+          form.reset();
           this.teamCreated.emit(res);
         },
         err => {

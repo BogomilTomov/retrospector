@@ -33,7 +33,6 @@ export class CreateNewRetrospectiveComponent {
             const game: IRetrospective = {
                 name: this.newRetrospectiveName,
                 template: this.newRetrospectiveTemplate,
-
             };
             
             this.newRetrospective.emit(game);
