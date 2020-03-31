@@ -37,7 +37,9 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
     this.initializeLoginData();
     this.userId = this._accountService.getLoggedInUserId();
-    this.initializeAppData();
+    if (this.userId !== null) {
+      this.initializeAppData();
+    }
   }
 
   initializeLoginData() {
@@ -67,9 +69,11 @@ export class LayoutComponent implements OnInit {
           }
         });
 
-        this._gameService.getGamesByTeamId(this.selectedTeamId)
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(res => { this.selectedTeam.retroGames = res; });
+        if (this.selectedTeamId !== 0) {
+          this._gameService.getGamesByTeamId(this.selectedTeamId)
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(res => { this.selectedTeam.retroGames = res; });
+        }
       });
   }
 
@@ -90,15 +94,11 @@ export class LayoutComponent implements OnInit {
   }
   
   createRetroGame(newGame: IRetroGame): void {
-    newGame.notes = []; 
-    newGame.teamId = this.selectedTeamId;
-    this._gameService.createGame(newGame).toPromise().then(res => {
-      if (this.selectedTeam.retroGames.length >= gamesLoaded) {
-        this.selectedTeam.retroGames.pop();
-      }
+    if (this.selectedTeam.retroGames.length >= gamesLoaded) {
+      this.selectedTeam.retroGames.pop();
+    }
 
-      this.selectedTeam.retroGames.unshift(res);
-    }).catch(err => console.log(err))
+    this.selectedTeam.retroGames.unshift(newGame);
   }
 
   createTeam(newTeam: ITeamDetails): void {

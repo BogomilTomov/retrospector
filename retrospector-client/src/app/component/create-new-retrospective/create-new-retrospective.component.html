@@ -21,10 +21,13 @@
                              required value="newRetrospectiveName">
                       <label class="floating-label">Retrospective name</label>
                       <div class="error-msg mt-2 ml-2" > 
-                          <div >
+                          <div>
                               {{this.nameWarning}}
                           </div>
                       </div>
+                      <div *ngIf="validationErrorExists" class="mt-2 ml-2 error-msg">
+                        {{validationErrorMessage}}
+                    </div>
                     </div>
                   </div>
                   <div class="form-row mg-top-30">
@@ -36,7 +39,7 @@
                         <label class="caret"></label>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" *ngFor="let option of retroGameOptions" #optionRefVariable (click)="chooseTemplate(optionRefVariable.textContent)">{{option}}</a>
-                          <a class="dropdown-item" >Custom</a>
+                          <a class="dropdown-item">Custom</a>
                         </div>
                       </div>
                     </div>
