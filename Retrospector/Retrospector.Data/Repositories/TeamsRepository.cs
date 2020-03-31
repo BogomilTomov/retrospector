@@ -54,16 +54,6 @@ namespace Retrospector.Data.Repositories
             return _context.Teams.Any(t => t.Id == teamId);
         }
 
-        public bool TeamHasGameWithSameName(int teamId, string gameName)
-        {
-            return _context.Teams
-                .Where(t => t.Id == teamId)
-                .Include(t => t.RetroGames)
-                .FirstOrDefault()
-                .RetroGames
-                .Any(g => g.Name == gameName);
-        }
-
         public async Task<Team> UpdateTeamAsync(Team team)
         {
             _context.Teams.Update(team);
