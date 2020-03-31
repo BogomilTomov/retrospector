@@ -18,8 +18,4 @@ export class DashboardComponent {
   retroGameAdded(newGame: IRetrospective): void {
     this.retroGameCreatedChange.emit(newGame)
   }
-
-  teamAdded(newTeam: ITeamDetails): void {
-    this.teamCreatedChange.emit(newTeam)
-  }
 }
