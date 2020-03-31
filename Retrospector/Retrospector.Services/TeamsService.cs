@@ -29,7 +29,7 @@ namespace Retrospector.Services
             _teamRepository = teamRepository;
         }
 
-        public async Task<ResultData<Team>> CreateTeamAsync(string name, string ownerId, DateTime creationDate)
+        public async Task<ResultData<Team>> CreateTeamAsync(string name, string ownerId)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -39,11 +39,6 @@ namespace Retrospector.Services
             if (string.IsNullOrEmpty(ownerId))
             {
                 return new ResultData<Team>(OwnerIdNullMessage, false);
-            }
-
-            if (string.IsNullOrEmpty(creationDate.ToString()))
-            {
-                return new ResultData<Team>(CreationDateNullMessage, false);
             }
 
             Team newTeam = new Team()
