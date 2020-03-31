@@ -22,7 +22,7 @@ namespace Retrospector.Data.Repositories
 
             if (game != null)
             {
-                return game;
+                return null;
             }
 
             var newGame = new RetroGame()
