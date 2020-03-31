@@ -10,13 +10,11 @@ namespace Retrospector.Services
     {
         private const string InvalidRetroGameNameMessage = "Email cannot be null or empty!";
         private const string InvalidRetroGameTemplateMessage = "Invalid retrospective game template!";
-        private const string DuplicateRetroGameNameMessage = "A retrospective game with that name already exists!";
+        private const string DuplicateRetroGameNameMessage = "A retrospective game with that name already exists! in that team.";
         private const string RetroGameCreationFailureMessage = "A retrospective game creation failed!";
         private const string RetroGameCreationSuccessMessage = "A retrospective game successful!";
         private const string GetRetroGameSuccessMessage = "Retrospective games retrieved successfully!";
-        private const string GetRetroGameFailureMessage = "Retrospective games retrieve failed!";
         private const string TeamDoesntExistMessage = "Team with id {0} doesnt't exist!";
-        private const string TeamHasGameWithSameNameMessage = "A game with name {0} already exists in that team.";
         
         private readonly RetroGameRepository _retroGameRepository;
         private readonly TeamsRepository _teamsRepository;
@@ -50,17 +48,11 @@ namespace Retrospector.Services
                 return new ResultData<RetroGame>(errorMessage, false);
             }
 
-            if (_teamsRepository.TeamHasGameWithSameName(teamId, name))
-            {
-                string errorMessage = string.Format(TeamHasGameWithSameNameMessage, name);
-                return new ResultData<RetroGame>(errorMessage, false);
-            }
-
             RetroGame game = await _retroGameRepository.CreateRetroGameAsync(name, template, teamId);
 
             if (game == null)
             {
-                return new ResultData<RetroGame>(RetroGameCreationFailureMessage, false);
+                return new ResultData<RetroGame>(DuplicateRetroGameNameMessage, false);
             }
 
             string message = string.Format(RetroGameCreationSuccessMessage, game.Name);

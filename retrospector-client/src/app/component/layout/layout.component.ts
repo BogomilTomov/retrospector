@@ -125,10 +125,6 @@ export class LayoutComponent implements OnInit {
       .subscribe();
   }
 
-  editTeamName(selectedTeam: ITeamDetails) {
-    this.selectedTeam = selectedTeam;
-  }
-
   trackByFn(index: number, team: ITeamDetails): number {
     return team.id;
   }

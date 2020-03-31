@@ -18,7 +18,7 @@ namespace Retrospector.Data.Repositories
 
         public async Task<RetroGame> CreateRetroGameAsync(string name, string template, int teamId)
         {
-            var game = await _context.RetroGames.FirstOrDefaultAsync(rg => rg.Name == name);
+            RetroGame game = await _context.RetroGames.FirstOrDefaultAsync(rg => rg.Name == name && rg.TeamId == teamId);
 
             if (game != null)
             {

@@ -20,7 +20,6 @@ export class CreateNewRetrospectiveComponent {
     public validationErrorExists: boolean = false;
     public validationErrorMessage: string = '';
     @ViewChild('closeModal') public closeModal: ElementRef;
-    public dropdownToggle = new EventEmitter();
     @Output() newRetrospective = new EventEmitter<IRetrospective>();
     @Input() selectedTeamId: number;
     private unsubscribe$ = new Subject<void>();
