@@ -76,5 +76,30 @@ namespace Retrospector.Api.Controllers
 
             return Ok();
         }
+
+        [Route("/api/teams/{teamId}/users")]
+        [HttpGet]
+        public async Task<IActionResult> GetUsersInTeam([FromRoute] int teamId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ResultData<IEnumerable<RetrospectorUser>> result = await _usersService.GetUsersInTeamAsync(teamId);
+
+            if (!result.Success)
+            {
+                return BadRequest(new { message = result.Message });
+            }
+
+            IEnumerable<UserModel> viewModel = result.Data.Select(ru => new UserModel
+            {
+                Id = ru.Id,
+                Email = ru.Email
+            });
+
+            return Ok(viewModel);
+        }
     }
 }

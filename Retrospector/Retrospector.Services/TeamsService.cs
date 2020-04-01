@@ -61,6 +61,13 @@ namespace Retrospector.Services
             }
 
             Team team = await _teamRepository.CreateTeamAsync(newTeam);
+            TeamUser teamUser = new TeamUser
+            {
+                TeamId = team.Id,
+                UserId = ownerId
+            };
+
+            await _userRepository.AddUserToTeamAsync(teamUser);
             string successMessage = string.Format(TeamCreateSuccessMessage, team.Id);
             return new ResultData<Team>(successMessage, true, team);
         }

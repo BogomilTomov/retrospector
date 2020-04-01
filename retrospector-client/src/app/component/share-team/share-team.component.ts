@@ -53,7 +53,10 @@ export class ShareTeamComponent implements OnInit {
       this._userService.getUserSuggestions(this.email)
         .subscribe(res => this.filteredUsers = res);
     }
-
+  }
   
+  ngOnDestroy(){
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

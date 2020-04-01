@@ -38,7 +38,8 @@ namespace Retrospector.Data.Repositories
         public async Task<IEnumerable<RetrospectorUser>> GetUsersFilteredByEmailAsync(string email)
         {
             return await _context.Users
-                .Where(u => u.Email.StartsWith(email)).ToListAsync();
+                .Where(u => u.Email.StartsWith(email))
+                .ToListAsync();
         }
 
         public async Task<TeamUser> AddUserToTeamAsync(TeamUser teamUser)
@@ -46,6 +47,14 @@ namespace Retrospector.Data.Repositories
             await _context.TeamUsers.AddAsync(teamUser);
             await _context.SaveChangesAsync();
             return teamUser;
+        }
+
+        public async Task<IEnumerable<RetrospectorUser>> GetUsersInTeamAsync(int teamId)
+        {
+            return await _context.Users
+                .Include(u => u.TeamUsers)
+                .Where(u => u.TeamUsers.Any(tu => tu.TeamId == teamId) == true)
+                .ToListAsync();
         }
 
         public bool UserExists(string userId)
