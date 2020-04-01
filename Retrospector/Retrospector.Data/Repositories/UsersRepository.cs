@@ -29,15 +29,33 @@ namespace Retrospector.Data.Repositories
                 .SingleOrDefaultAsync(u => u.Id == userId);
         }
 
+        public async Task<RetrospectorUser> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users
+                .SingleOrDefaultAsync(u => u.Email == email);
+        }
+
         public async Task<IEnumerable<RetrospectorUser>> GetUsersFilteredByEmailAsync(string email)
         {
             return await _context.Users
                 .Where(u => u.Email.StartsWith(email)).ToListAsync();
         }
 
+        public async Task<TeamUser> AddUserToTeamAsync(TeamUser teamUser)
+        {
+            await _context.TeamUsers.AddAsync(teamUser);
+            await _context.SaveChangesAsync();
+            return teamUser;
+        }
+
         public bool UserExists(string userId)
         {
             return _context.Users.Any(u => u.Id == userId);
+        }
+
+        public bool UserEmailExists(string email)
+        {
+            return _context.Users.Any(u => u.Email == email);
         }
     }
 }

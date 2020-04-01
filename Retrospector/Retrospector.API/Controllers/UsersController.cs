@@ -11,7 +11,6 @@ using Retrospector.Services.Results;
 namespace Retrospector.Api.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -22,7 +21,8 @@ namespace Retrospector.Api.Controllers
             _usersService = usersService;
         }
 
-        [HttpPost("{userId}/select-team/{teamId}")]
+        [Route("api/[controller]/{userId}/select-team/{teamId}")]
+        [HttpPost]
         public async Task<IActionResult> SetSelectedTeamAsync([FromRoute] string userId, [FromRoute] int teamId)
         {
             if (!ModelState.IsValid)
@@ -39,6 +39,7 @@ namespace Retrospector.Api.Controllers
             return Ok(result);
         }
 
+        [Route("api/[controller]")]
         [HttpGet]
         public async Task<IActionResult> GetFilteredUsersByEmail([FromQuery] string email)
         {
@@ -55,6 +56,25 @@ namespace Retrospector.Api.Controllers
             });
 
             return Ok(viewModel);
+        }
+
+        [Route("/api/teams/{teamId}/users")]
+        [HttpPost]
+        public async Task<IActionResult> AddUserToTeam([FromBody] AddUserModel model, [FromRoute] int teamId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ResultData<string> result = await _usersService.AddUserToTeamAsync(model.Email, teamId);
+
+            if (!result.Success)
+            {
+                return BadRequest(new { message = result.Message });
+            }
+
+            return Ok();
         }
     }
 }
