@@ -49,6 +49,12 @@ namespace Retrospector.Data.Repositories
                 .SingleOrDefaultAsync(t => t.Id == teamId);
         }
 
+        public async Task<TeamUser> GetTeamUser(string userId, int teamId)
+        {
+            return await _context.TeamUsers
+                .SingleOrDefaultAsync(tu => tu.TeamId == teamId && tu.UserId == userId);
+        }
+
         public bool TeamExists(int teamId)
         {
             return _context.Teams.Any(t => t.Id == teamId);

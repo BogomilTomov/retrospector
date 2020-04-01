@@ -13,8 +13,10 @@ namespace Retrospector.Services
         private const string UserIdDoesntExistMessage = "User with such ID doesnt't exist!";
         private const string UserEmailDoesntExistMessage = "User with such email doesnt't exist!";
         private const string UsersSuccessMessage = "Users successfully retrieved!";
-        private const string UsersAddedToTeamMessage = "Users successfully added to team!";
+        private const string UsersAddedToTeamMessage = "User successfully added to team!";
         private const string OwnerIdNullMessage = "OwnerId cannot be null or empty!";
+        private const string EmailNullMessage = "Email cannot be null or empty!";
+        private const string UserAlreadyInTeamMessage  = "This user is already in this team.";
 
         private readonly UsersRepository _userRepository;
         private readonly TeamsRepository _teamsRepository;
@@ -32,20 +34,19 @@ namespace Retrospector.Services
                 return new ResultData<string>(OwnerIdNullMessage, false);
             }
 
-            if (!_userRepository.UserExists(userId))
-            {
-                string errorMessage = string.Format(UserIdDoesntExistMessage, userId);
-                return new ResultData<string>(errorMessage, false, userId);
-            }
-
-            if (!_teamsRepository.TeamExists(teamId))
-            {
-                string errorMessage = string.Format(TeamDoesntExistMessage, teamId);
-                return new ResultData<string>(errorMessage, false, userId);
-            }
-
             RetrospectorUser user = await _userRepository.GetUserByIdAsync(userId);
             Team team = await _teamsRepository.GetTeamById(teamId);
+
+            if (user == null)
+            {
+                return new ResultData<string>(UserIdDoesntExistMessage, false);
+            }
+
+            if (team == null)
+            {
+                return new ResultData<string>(TeamDoesntExistMessage, false);
+            }
+
             if (user.SelectedTeam == null)
             {
                 user.SelectedTeam = new UserSelectedTeam()
@@ -69,25 +70,38 @@ namespace Retrospector.Services
 
         public async Task<ResultData<string>> AddUserToTeamAsync(string email, int teamId)
         {
-            if (!_userRepository.UserEmailExists(email))
+            if (string.IsNullOrEmpty(email))
+            {
+                return new ResultData<string>(EmailNullMessage, false);
+            }
+
+            RetrospectorUser user = await _userRepository.GetUserByEmailAsync(email);
+            Team team = await _teamsRepository.GetTeamById(teamId);
+            TeamUser teamUser = await _teamsRepository.GetTeamUser(user.Id, teamId);
+
+            if (user == null)
             {
                 return new ResultData<string>(UserEmailDoesntExistMessage, false);
             }
             
-            if (!_teamsRepository.TeamExists(teamId))
+            if (team == null)
             {
                 return new ResultData<string>(TeamDoesntExistMessage, false);
             }
 
-            RetrospectorUser user = await _userRepository.GetUserByEmailAsync(email);
-            TeamUser teamUser = new TeamUser
+            if (teamUser != null)
+            {
+                return new ResultData<string>(UserAlreadyInTeamMessage, false);
+            }
+
+            teamUser = new TeamUser
             {
                 TeamId = teamId,
                 UserId = user.Id
             };
 
             await _userRepository.AddUserToTeamAsync(teamUser);
-            return new ResultData<string>(UsersSuccessMessage, true);
+            return new ResultData<string>(UsersAddedToTeamMessage, true);
         }
     }
 }
