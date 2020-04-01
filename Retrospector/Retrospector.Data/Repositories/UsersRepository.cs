@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Retrospector.Data.DomainModels;
@@ -26,6 +27,12 @@ namespace Retrospector.Data.Repositories
             return await _context.Users
                 .Include(u => u.SelectedTeam)
                 .SingleOrDefaultAsync(u => u.Id == userId);
+        }
+
+        public async Task<IEnumerable<RetrospectorUser>> GetUsersFilteredByEmailAsync(string email)
+        {
+            return await _context.Users
+                .Where(u => u.Email.StartsWith(email)).ToListAsync();
         }
 
         public bool UserExists(string userId)

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Retrospector.Data.DomainModels;
 using Retrospector.Data.Repositories;
 using Retrospector.Services.Results;
@@ -10,6 +11,7 @@ namespace Retrospector.Services
         private const string SetDefaultTeamSuccessMessage = "{0}'s default team sucessfully set!";
         private const string TeamDoesntExistMessage = "Team with id {0} doesnt't exist!";
         private const string UserDoesntExistMessage = "User with id {0} doesnt't exist!";
+        private const string UsersSuccessMessage = "Users successfully retrieved!";
         private const string OwnerIdNullMessage = "OwnerId cannot be null or empty!";
 
         private readonly UsersRepository _userRepository;
@@ -55,6 +57,13 @@ namespace Retrospector.Services
 
             string successMessage = string.Format(SetDefaultTeamSuccessMessage, userId);
             return new ResultData<string>(successMessage, true, userId);
+        }
+
+        public async Task<ResultData<IEnumerable<RetrospectorUser>>> GetUsersFilteredBtEmailAsync(string email)
+        {
+            IEnumerable<RetrospectorUser> users = await _userRepository.GetUsersFilteredByEmailAsync(email);
+            string successMessage = string.Format(UsersSuccessMessage, users);
+            return new ResultData<IEnumerable<RetrospectorUser>>(successMessage, true, users);
         }
     }
 }

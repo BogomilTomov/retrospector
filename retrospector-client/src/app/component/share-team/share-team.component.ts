@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { UsersService } from 'src/app/services/users.service';
+import { IUser } from 'src/app/models/user.model';
 
 @Component({
   selector: 'ret-share-team',
@@ -9,8 +11,9 @@ export class ShareTeamComponent implements OnInit {
   @ViewChild('closeModal') public closeModal: ElementRef;
   public email: string = '';
   public users: string[] = ["a", "ab", "ac", "abc"];
-  public filteredUsers: string[] = [];
-  constructor() { }
+  public filteredUsers: IUser[] = [];
+
+  constructor(private _userService: UsersService) { }
 
   ngOnInit(): void {
   }
@@ -19,12 +22,14 @@ export class ShareTeamComponent implements OnInit {
     console.log(x)
   }
 
-  getSuggestions(): void {
-    if (this.email.length > 0) {
-      this.filteredUsers = this.users.filter(u => u.includes(this.email));
-    } else {
-      this.filteredUsers = [];
+  getSuggestions(key: any): void {
+    if (key.code !== 'ArrowDown' && key.code !== 'ArrowUp' 
+     && key.code !== 'ArrowLeft' && key.code !== 'ArrowRight' 
+     && key.code !== 'Enter') {
+      this._userService.getUserSuggestions(this.email)
+        .subscribe(res => this.filteredUsers = res);
     }
-    console.log(this.filteredUsers)
+
+    
   }
 }

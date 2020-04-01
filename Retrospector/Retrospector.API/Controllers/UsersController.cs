@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Retrospector.Api.ViewModels.Users;
+using Retrospector.Data.DomainModels;
 using Retrospector.Services;
 using Retrospector.Services.Results;
 
@@ -33,6 +37,24 @@ namespace Retrospector.Api.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetFilteredUsersByEmail([FromQuery] string email)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ResultData<IEnumerable<RetrospectorUser>> result = await _usersService.GetUsersFilteredBtEmailAsync(email);
+            IEnumerable<UserModel> viewModel = result.Data.Select(ru => new UserModel
+            {
+                Id = ru.Id,
+                Email = ru.Email
+            });
+
+            return Ok(viewModel);
         }
     }
 }
