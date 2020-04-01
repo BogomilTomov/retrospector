@@ -1,7 +1,7 @@
 import { Component, Input, ElementRef, ViewChild, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import { ITeamDetails } from 'src/app/models/team-details.model';
 import { TeamsService } from 'src/app/services/teams.service';
-import { pipe, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

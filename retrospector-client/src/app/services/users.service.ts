@@ -19,5 +19,14 @@ export class UsersService {
   getUserSuggestions(email: string): Observable<IUser[]> {
     const params = { email: email };
     return this._http.get<IUser[]>(this._url, {params: params});
-  } 
+  }
+  
+  getUsersInTeam(teamId: number): Observable<IUser[]> {
+    const params = { id: teamId.toString() };
+    return this._http.get<IUser[]>(`${baseUrl}/teams/${teamId}/users`, {params: params});
+  }
+
+  addUserToTeam(email: string, teamId: number): Observable<IUser> {
+    return this._http.post<IUser>(`${baseUrl}/teams/${teamId}/users`, email);
+  }
 }
