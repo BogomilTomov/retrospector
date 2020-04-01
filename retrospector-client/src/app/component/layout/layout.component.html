@@ -24,10 +24,11 @@
               <div *ngIf="userIsAdminOrOwner()">
                 <button class="dropdown-item" data-toggle="modal" data-target="#editTeamModal">Edit Team Name</button>
                 <button class="dropdown-item">Delete a Team</button>
-                <button class="dropdown-item">Share</button>
+                <button class="dropdown-item" data-toggle="modal" data-target="#shareTeamModal">Share</button>
               </div>
           </div>
           <ret-edit-team [(selectedTeam)]="selectedTeam"></ret-edit-team>
+          <ret-share-team></ret-share-team>
         </div>
         
         <ul class="nav navbar-nav ml-auto">

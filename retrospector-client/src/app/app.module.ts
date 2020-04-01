@@ -20,6 +20,7 @@ import { PlayGameComponent } from './component/play-game/play-game.component';
 import { RetroGameCardComponent } from './component/retro-game-card/retro-game-card.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { EditTeamComponent } from './component/edit-team/edit-team.component';
+import { ShareTeamComponent } from './component/share-team/share-team.component';
 
 function provideConfig() {
   return authServiceConfig;
@@ -40,7 +41,8 @@ function provideConfig() {
     TimelineComponent,
     PlayGameComponent,
     RetroGameCardComponent,
-    EditTeamComponent
+    EditTeamComponent,
+    ShareTeamComponent
   ],
   imports: [
     BrowserModule,
