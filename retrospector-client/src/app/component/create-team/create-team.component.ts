@@ -2,7 +2,6 @@ import { Component, OnDestroy, Output, EventEmitter, ViewChild, ElementRef } fro
 import { FormsModule, NgForm }   from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import * as moment from 'moment';
 import { ITeam } from '../../models/team.model';
 import { TeamsService } from '../../services/teams.service';
 import { AccountsService } from '../../services/accounts.service';
