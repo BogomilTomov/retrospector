@@ -12,8 +12,8 @@
                     <input type="text" #emailInput="ngModel" required class="form-control" [(ngModel)]="email" name="email" (keyup)="getSuggestions($event)" list="usersIds" autocomplete="off">
 
                     <datalist id="usersIds">
-                        <option *ngFor="let user of filteredUsers">  
-                            {{user.email}} 
+                        <option *ngFor="let suggestion of filteredUsers">  
+                            {{suggestion.email}} 
                         </option>
                     </datalist>
 
@@ -23,6 +23,11 @@
                     <div *ngIf="validationErrorExists" class="mt-3 error-msg">
                         {{validationErrorMessage}}
                     </div>
+                </div>
+                <hr>
+                <p>Users in this team:</p>
+                <div *ngFor="let user of usersInTeam">
+                    {{user.email}}
                 </div>
             </div>
                 <div class="modal-footer">

@@ -13,16 +13,19 @@ export class ShareTeamComponent implements OnInit {
   @ViewChild('closeModal') public closeModal: ElementRef;
   @Input() public selectedTeamId: number;
   public email: string = '';
-  public users: string[] = ["a", "ab", "ac", "abc"];
+  public usersInTeam: IUser[] = [];
   public filteredUsers: IUser[] = [];
-  private unsubscribe$ = new Subject<void>();
   public validationErrorExists: boolean = false;
   public validationErrorMessage: string = '';
   public emailRequiredErrorMessage = "Email is required."
-
+  private unsubscribe$ = new Subject<void>();
+  
   constructor(private _userService: UsersService) { }
 
   ngOnInit(): void {
+    this._userService.getUsersInTeam(this.selectedTeamId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(res => { this.usersInTeam = res });
   }
 
   onSubmit(form): void {
@@ -51,6 +54,6 @@ export class ShareTeamComponent implements OnInit {
         .subscribe(res => this.filteredUsers = res);
     }
 
-    
+  
   }
 }
