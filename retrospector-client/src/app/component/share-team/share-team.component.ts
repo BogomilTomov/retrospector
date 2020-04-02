@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, SimpleChanges } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { IUser } from 'src/app/models/user.model';
 import { takeUntil } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
   templateUrl: './share-team.component.html',
   styleUrls: ['./share-team.component.css']
 })
-export class ShareTeamComponent implements OnInit {
+export class ShareTeamComponent {
   @ViewChild('closeModal') public closeModal: ElementRef;
   @Input() public selectedTeamId: number;
   public email: string = '';
@@ -22,14 +22,13 @@ export class ShareTeamComponent implements OnInit {
   
   constructor(private _userService: UsersService) { }
 
-  ngOnInit(): void {
+  ngOnChanges(teamChange: SimpleChanges) {
     this._userService.getUsersInTeam(this.selectedTeamId)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(res => { this.usersInTeam = res });
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(res => { this.usersInTeam = res });
   }
 
   onSubmit(form): void {
-    console.log(this.email, this.selectedTeamId)
     this._userService.addUserToTeam(this.email, this.selectedTeamId)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
