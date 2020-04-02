@@ -1,10 +1,9 @@
-import { Component, ViewChild, ElementRef, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/services/users.service';
 import { IUser } from 'src/app/models/user.model';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { ITeamDetails } from 'src/app/models/team-details.model';
-import { AccountsService } from 'src/app/services/accounts.service';
 
 @Component({
   selector: 'ret-share-team',
@@ -12,7 +11,6 @@ import { AccountsService } from 'src/app/services/accounts.service';
   styleUrls: ['./share-team.component.css']
 })
 export class ShareTeamComponent {
-  @ViewChild('closeModal') public closeModal: ElementRef;
   @Input() public selectedTeam: ITeamDetails;
   @Output() public ownershipTransfered = new EventEmitter<string>();
   @Output() public userRemoved  = new EventEmitter<string>();
@@ -60,6 +58,7 @@ export class ShareTeamComponent {
      && key.code !== 'ArrowLeft' && key.code !== 'ArrowRight' 
      && key.code !== 'Enter') {
       this._userService.getUserSuggestions(this.email)
+        .pipe(takeUntil(this.unsubscribe$))
         .subscribe(res => this.filteredUsers = res);
     }
   }
@@ -74,7 +73,7 @@ export class ShareTeamComponent {
     this.ownerId = this.clickedUserId;
   }
   
-  getUserId(e) {
+  setUserId(e) {
     this.clickedUserId = e.target.id;
   }
 

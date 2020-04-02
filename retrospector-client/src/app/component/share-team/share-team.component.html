@@ -41,7 +41,7 @@
                         </div>
                         <div *ngIf="user.id != ownerId">
                             <div class="col" class="dropright">
-                                <button type="button" class="btn bg-light verticalElipsisShareTeam" id={{user.id}} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="getUserId($event)">
+                                <button type="button" class="btn bg-light verticalElipsisShareTeam" id={{user.id}} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="setUserId($event)">
                                     &#8942;
                                 </button>
                                 <div class="dropdown-menu">

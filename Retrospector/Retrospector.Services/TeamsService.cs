@@ -11,7 +11,6 @@ namespace Retrospector.Services
     {
         private const string TeamNullMessage = "Team cannot be null or empty!";
         private const string OwnerIdNullMessage = "OwnerId cannot be null or empty!";
-        private const string CreationDateNullMessage = "CreationDate cannot be null or empty!";
         private const string TeamCreateSuccessMessage = "Team with email {0} created successfully!";
         private const string TeamNameExistsMessage = "Team with name {0} already exists.";
         private const string UserDoesntExistMessage = "User with id {0} doesnt't exist!";
