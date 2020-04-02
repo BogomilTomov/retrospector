@@ -129,8 +129,20 @@ export class LayoutComponent implements OnInit {
     const newTeam = {... this.selectedTeam};
     newTeam.ownerId = userId;
     this._teamService.editTeam(newTeam)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe();
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
+
+    if (this.ownedTeams.some(t => t.id == newTeam.id)) {
+      this.sharedTeams.push(newTeam);
+      this.ownedTeams = this.ownedTeams.filter(t => t.id != newTeam.id)
+      this.sharedTeams.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      this.ownedTeams.push(newTeam);
+      this.sharedTeams = this.sharedTeams.filter(t => t.id != newTeam.id)
+      this.ownedTeams.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    this.selectedTeam.ownerId = userId;
   }
 
   trackByFn(index: number, team: ITeamDetails): number {

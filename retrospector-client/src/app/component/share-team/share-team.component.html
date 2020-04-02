@@ -35,7 +35,7 @@
                 <p>Users in this team:</p>
                 <div class="row container" *ngFor="let user of usersInTeam">
                     <div class="col overflow-auto">{{user.email}}</div>
-                    <div class="col-auto"><span class="ml-2" *ngIf="user.id == selectedTeam.ownerId"><em>Owner</em></span></div>
+                    <div class="col-auto"><span class="ml-2" *ngIf="user.id == ownerId"><em>Owner</em></span></div>
                     <div class="col" class="dropright">
                         <button type="button" class="btn bg-light verticalElipsisOptions" id={{user.id}} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="getUserId($event)">
                             &#8942;

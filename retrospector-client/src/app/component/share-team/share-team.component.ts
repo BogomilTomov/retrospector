@@ -15,6 +15,7 @@ export class ShareTeamComponent {
   @ViewChild('closeModal') public closeModal: ElementRef;
   @Input() public selectedTeam: ITeamDetails;
   @Output() public ownershipTransfered = new EventEmitter<string>();
+  public ownerId: string;
   public clickedUserId: string;
   public email: string = '';
   public usersInTeam: IUser[] = [];
@@ -29,6 +30,7 @@ export class ShareTeamComponent {
   constructor(private readonly _userService: UsersService) { }
 
   ngOnChanges(teamChange: SimpleChanges) {
+    this.ownerId = teamChange.selectedTeam.currentValue.ownerId;
     this._userService.getUsersInTeam(this.selectedTeam.id)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(res => { this.usersInTeam = res; });
@@ -68,6 +70,7 @@ export class ShareTeamComponent {
 
   onSubmitTransferOwnership() {
     this.ownershipTransfered.emit(this.clickedUserId)
+    this.ownerId = this.clickedUserId;
   }
   
   getUserId(e) {
