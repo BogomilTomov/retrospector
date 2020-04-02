@@ -15,7 +15,7 @@
           </optgroup>
         </select>
 
-        <div *ngIf="selectedTeam !== undefined" class="col-auto retro-card-options dropright">
+        <div *ngIf="selectedTeam !== undefined" class="col-auto dropright">
           <button type="button" class="btn bg-light verticalElipsisOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               &#8942;
           </button>
@@ -28,7 +28,7 @@
               </div>
           </div>
           <ret-edit-team [(selectedTeam)]="selectedTeam"></ret-edit-team>
-          <ret-share-team [selectedTeam]="selectedTeam"></ret-share-team>
+          <ret-share-team [selectedTeam]="selectedTeam" [isAdminOrOwner]="isAdminOrOwner"></ret-share-team>
         </div>
         
         <ul class="nav navbar-nav ml-auto">

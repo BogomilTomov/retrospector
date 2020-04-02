@@ -1,5 +1,5 @@
 <div class="modal fade" id="shareTeamModal" data-backdrop="true">
-    <form #shareTeamForm="ngForm" (ngSubmit)="onSubmit(shareTeamForm)">
+    <form #shareTeamForm="ngForm" (ngSubmit)="onSubmitAddUser(shareTeamForm)">
         <div class="modal-dialog"  role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -28,9 +28,18 @@
                 </div>
                 <hr>
                 <p>Users in this team:</p>
-                <div *ngFor="let user of usersInTeam">
-                    {{user.email}}
-                    <span class="ml-2" *ngIf="user.id == selectedTeam.ownerId"><em>Owner</em></span>
+                <div class="row container" *ngFor="let user of usersInTeam">
+                    <div class="col overflow-auto">{{user.email}}</div>
+                    <div class="col-auto"><span class="ml-2" *ngIf="user.id == selectedTeam.ownerId"><em>Owner</em></span></div>
+                    <div class="col" *ngIf="isAdminOrOwner" class="dropright">
+                        <button type="button" class="btn bg-light verticalElipsisOptions" id={{user.id}} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="getUserId($event)">
+                            &#8942;
+                        </button>
+                        <div class="dropdown-menu">
+                            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#removeUserModal">Remove</button>
+                            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#">Transfer Ownership</button>
+                        </div>
+                    </div>
                 </div>
             </div>
                 <div class="modal-footer">
@@ -40,4 +49,18 @@
             </div>
         </div>
     </form>
+</div>
+
+<div class="modal fade" id="removeUserModal" data-backdrop="true">
+    <div class="modal-dialog"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Are you sure you want to remove this user?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary mr-2" data-dismiss="modal">No</button>
+                <button class="btn btn-primary" type="button" data-dismiss="modal" (click)="onSubmitRemoveUser()">Yes</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -27,6 +27,7 @@ export class LayoutComponent implements OnInit {
   public userFirstName: string;
   private unsubscribe$ = new Subject<void>();
   public userId: string;
+  public isAdminOrOwner: boolean;
 
   constructor(private readonly _router: Router,
               private readonly _teamService: TeamsService,
@@ -61,6 +62,7 @@ export class LayoutComponent implements OnInit {
         }
         
         this.selectedTeam = this.teams.find(t => t.id == this.selectedTeamId);
+        this.isAdminOrOwner = this.userIsAdminOrOwner();
         this.teams.forEach(team => {
           if (team.ownerId === this.userId) {
             this.ownedTeams.push(team);
@@ -120,6 +122,7 @@ export class LayoutComponent implements OnInit {
 
   selectTeam(team: ITeamDetails) {
     this.selectedTeamId = team.id;
+    this.isAdminOrOwner = this.userIsAdminOrOwner();
     this._userService.setSelectedTeam(this.userId, team.id)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe();
