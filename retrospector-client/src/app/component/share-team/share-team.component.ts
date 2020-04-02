@@ -33,6 +33,7 @@ export class ShareTeamComponent {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       res => {
+        this.usersInTeam.push(res);
         this.closeModal.nativeElement.click();
         form.reset();
         },

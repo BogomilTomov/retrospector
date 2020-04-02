@@ -67,14 +67,20 @@ namespace Retrospector.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            ResultData<string> result = await _usersService.AddUserToTeamAsync(model.Email, teamId);
+            ResultData<RetrospectorUser> result = await _usersService.AddUserToTeamAsync(model.Email, teamId);
 
             if (!result.Success)
             {
                 return BadRequest(new { message = result.Message });
             }
 
-            return Ok();
+            UserModel viewModel = new UserModel
+            {
+                Id = result.Data.Id,
+                Email = result.Data.Email
+            };
+
+            return Ok(viewModel);
         }
 
         [Route("/api/teams/{teamId}/users")]

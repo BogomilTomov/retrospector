@@ -26,8 +26,8 @@ export class UsersService {
     return this._http.get<IUser[]>(`${baseUrl}/teams/${teamId}/users`, {params: params});
   }
 
-  addUserToTeam(email: string, teamId: number): Observable<void> {
+  addUserToTeam(email: string, teamId: number): Observable<IUser> {
     const data = {'email': email}; 
-    return this._http.post<void>(`${baseUrl}/teams/${teamId}/users`, data);
+    return this._http.post<IUser>(`${baseUrl}/teams/${teamId}/users`, data);
   }
 }
