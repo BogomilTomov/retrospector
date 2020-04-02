@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Input, SimpleChanges } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { IUser } from 'src/app/models/user.model';
 import { takeUntil } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { AccountsService } from 'src/app/services/accounts.service';
 export class ShareTeamComponent {
   @ViewChild('closeModal') public closeModal: ElementRef;
   @Input() public selectedTeam: ITeamDetails;
-  @Input() public isAdminOrOwner: boolean;
+  @Output() public ownershipTransfered = new EventEmitter<string>();
   public clickedUserId: string;
   public email: string = '';
   public usersInTeam: IUser[] = [];
@@ -62,7 +62,12 @@ export class ShareTeamComponent {
   }
   
   onSubmitRemoveUser() {
+    this.usersInTeam = this.usersInTeam.filter(u => u.id != this.clickedUserId);
     this._userService.removeUserFromTeam(this.clickedUserId, this.selectedTeam.id).subscribe();
+  }
+
+  onSubmitTransferOwnership() {
+    this.ownershipTransfered.emit(this.clickedUserId)
   }
   
   getUserId(e) {
