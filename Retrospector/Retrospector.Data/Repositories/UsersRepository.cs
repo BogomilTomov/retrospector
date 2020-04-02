@@ -29,6 +29,13 @@ namespace Retrospector.Data.Repositories
                 .SingleOrDefaultAsync(u => u.Id == userId);
         }
 
+        public async Task<RetrospectorUser> GetUserWithTeamUsersAsync(string userId)
+        {
+            return await _context.Users
+                .Include(u => u.TeamUsers)
+                .SingleOrDefaultAsync(u => u.Id == userId);
+        }
+
         public async Task<RetrospectorUser> GetUserByEmailAsync(string email)
         {
             return await _context.Users

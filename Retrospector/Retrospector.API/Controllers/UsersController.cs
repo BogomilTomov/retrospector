@@ -107,5 +107,30 @@ namespace Retrospector.Api.Controllers
 
             return Ok(viewModel);
         }
+
+        [Route("/api/teams/{teamId}/users")]
+        [HttpDelete]
+        public async Task<IActionResult> RemoveUserFromTeam([FromBody] AddUserModel user, [FromRoute] int teamId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ResultData<RetrospectorUser> result = await _usersService.RemoveUserFromTeamAsync(user.Id, teamId);
+
+            if (!result.Success)
+            {
+                return BadRequest(new { message = result.Message });
+            }
+
+            UserModel viewModel = new UserModel
+            {
+                Id = result.Data.Id,
+                Email = result.Data.Email
+            };
+
+            return Ok(viewModel);
+        }
     }
 }

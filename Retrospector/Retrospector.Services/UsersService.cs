@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Retrospector.Data.DomainModels;
 using Retrospector.Data.Repositories;
@@ -16,7 +17,9 @@ namespace Retrospector.Services
         private const string UsersAddedToTeamMessage = "User successfully added to team!";
         private const string OwnerIdNullMessage = "OwnerId cannot be null or empty!";
         private const string EmailNullMessage = "Email cannot be null or empty!";
+        private const string UserIdNullMessage = "User Id cannot be null or empty!";
         private const string UserAlreadyInTeamMessage  = "This user is already in this team.";
+        private const string UserNotInTeamMessage = "This user is not in this team.";
 
         private readonly UsersRepository _userRepository;
         private readonly TeamsRepository _teamsRepository;
@@ -116,6 +119,38 @@ namespace Retrospector.Services
 
             IEnumerable<RetrospectorUser> users = await _userRepository.GetUsersInTeamAsync(teamId);
             return new ResultData<IEnumerable<RetrospectorUser>>(UsersAddedToTeamMessage, true, users);
+        }
+
+        public async Task<ResultData<RetrospectorUser>> RemoveUserFromTeamAsync(string userId, int teamId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new ResultData<RetrospectorUser>(UserIdNullMessage, false);
+            }
+
+            RetrospectorUser user = await _userRepository.GetUserWithTeamUsersAsync(userId);
+            Team team = await _teamsRepository.GetTeamById(teamId);
+
+            if (user == null)
+            {
+                return new ResultData<RetrospectorUser>(UserEmailDoesntExistMessage, false);
+            }
+
+            if (team == null)
+            {
+                return new ResultData<RetrospectorUser>(TeamDoesntExistMessage, false);
+            }
+
+            TeamUser teamUser = await _teamsRepository.GetTeamUser(user.Id, teamId);
+
+            if (teamUser == null)
+            {
+                return new ResultData<RetrospectorUser>(UserNotInTeamMessage, false);
+            }
+
+            user.TeamUsers = user.TeamUsers.Where(tu => tu.TeamId != teamId).ToList();
+            await _userRepository.UpdateAsync(user);
+            return new ResultData<RetrospectorUser>(UsersAddedToTeamMessage, true, user);
         }
     }
 }

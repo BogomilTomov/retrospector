@@ -59,6 +59,7 @@ namespace Retrospector.Api.Controllers
             return Ok(viewModel);
         }
 
+        [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
