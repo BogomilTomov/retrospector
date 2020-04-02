@@ -3,6 +3,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { IUser } from 'src/app/models/user.model';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { ITeamDetails } from 'src/app/models/team-details.model';
 
 @Component({
   selector: 'ret-share-team',
@@ -11,7 +12,7 @@ import { Subject } from 'rxjs';
 })
 export class ShareTeamComponent {
   @ViewChild('closeModal') public closeModal: ElementRef;
-  @Input() public selectedTeamId: number;
+  @Input() public selectedTeam: ITeamDetails;
   public email: string = '';
   public usersInTeam: IUser[] = [];
   public filteredUsers: IUser[] = [];
@@ -25,14 +26,14 @@ export class ShareTeamComponent {
   constructor(private _userService: UsersService) { }
 
   ngOnChanges(teamChange: SimpleChanges) {
-    this._userService.getUsersInTeam(this.selectedTeamId)
+    this._userService.getUsersInTeam(this.selectedTeam.id)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(res => { this.usersInTeam = res });
   }
 
   onSubmit(form): void {
     this.submitted = true;
-    this._userService.addUserToTeam(this.email, this.selectedTeamId)
+    this._userService.addUserToTeam(this.email, this.selectedTeam.id)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       res => {

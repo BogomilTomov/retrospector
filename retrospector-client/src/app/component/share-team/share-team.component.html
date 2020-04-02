@@ -16,7 +16,7 @@
                             {{suggestion.email}} 
                         </option>
                     </datalist>
-                    
+
                     <div *ngIf="submitted" class="mt-3 error-msg">
                         <div [hidden]="emailInput.valid || emailInput.pristine" class="mt-3 error-msg">
                             {{emailRequiredErrorMessage}}
@@ -30,6 +30,7 @@
                 <p>Users in this team:</p>
                 <div *ngFor="let user of usersInTeam">
                     {{user.email}}
+                    <span class="ml-2" *ngIf="user.id == selectedTeam.ownerId"><em>Owner</em></span>
                 </div>
             </div>
                 <div class="modal-footer">
