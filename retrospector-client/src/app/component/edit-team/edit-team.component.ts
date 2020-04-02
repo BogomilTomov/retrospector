@@ -28,6 +28,7 @@ export class EditTeamComponent {
   onSubmit(form): void {
     const newTeam = Object.assign({}, this.selectedTeam);
     newTeam.name = this.name;
+    newTeam.ownerId = null;
     this._teamService.editTeam(newTeam)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(

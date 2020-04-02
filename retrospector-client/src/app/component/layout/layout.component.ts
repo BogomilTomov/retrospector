@@ -134,6 +134,7 @@ export class LayoutComponent implements OnInit {
   transferOwnership(userId: string) {
     const newTeam = {... this.selectedTeam};
     newTeam.ownerId = userId;
+    newTeam.name = null;
     this._teamService.editTeam(newTeam)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe();

@@ -111,14 +111,27 @@ namespace Retrospector.Services
 
             Team oldTeam = await _teamRepository.GetTeamById(team.Id);
             
-            if (_teamRepository.TeamNameAlreadyExists(team.Name) && team.OwnerId == oldTeam.OwnerId)
+            if (team.OwnerId == null)
             {
-                string errorMessage = string.Format(TeamNameExistsMessage, team.Name);
-                return new ResultData<Team>(errorMessage, false, team);
+                if (_teamRepository.TeamNameAlreadyExists(team.Name))
+                {
+                    string errorMessage = string.Format(TeamNameExistsMessage, team.Name);
+                    return new ResultData<Team>(errorMessage, false, team);
+                }
+            
+                oldTeam.Name = team.Name;
             }
             
-            oldTeam.Name = team.Name;
-            oldTeam.OwnerId = team.OwnerId;
+            if (team.Name == null)
+            {
+                if (!_userRepository.UserExists(team.OwnerId))
+                {
+                    string errorMessage = string.Format(UserDoesntExistMessage, team.OwnerId);
+                    return new ResultData<Team>(errorMessage, false, team);
+                }
+
+                oldTeam.OwnerId = team.OwnerId;
+            }
             
             await _teamRepository.UpdateTeamAsync(oldTeam);
             string successMessage = string.Format(UpdateTeamSuccessMessage, team);
