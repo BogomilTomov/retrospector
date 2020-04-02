@@ -62,7 +62,7 @@ export class ShareTeamComponent {
   }
   
   onSubmitRemoveUser() {
-    
+    this._userService.removeUserFromTeam(this.clickedUserId, this.selectedTeam.id).subscribe();
   }
   
   getUserId(e) {

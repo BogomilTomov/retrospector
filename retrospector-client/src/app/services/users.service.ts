@@ -30,4 +30,14 @@ export class UsersService {
     const data = {'email': email}; 
     return this._http.post<IUser>(`${baseUrl}/teams/${teamId}/users`, data);
   }
+
+  removeUserFromTeam(userId: string, teamId: number): Observable<IUser> {
+    const options = {
+      body: {
+        id: userId
+      }
+    };
+
+    return this._http.request<IUser>('delete', `${baseUrl}/teams/${teamId}/users`, options)
+  }
 }
