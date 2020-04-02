@@ -35,14 +35,20 @@
                 <p>Users in this team:</p>
                 <div class="row container" *ngFor="let user of usersInTeam">
                     <div class="col overflow-auto">{{user.email}}</div>
-                    <div class="col-auto"><span class="ml-2" *ngIf="user.id == ownerId"><em>Owner</em></span></div>
-                    <div class="col" class="dropright">
-                        <button type="button" class="btn bg-light verticalElipsisOptions" id={{user.id}} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="getUserId($event)">
-                            &#8942;
-                        </button>
-                        <div class="dropdown-menu">
-                            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#removeUserModal">Remove</button>
-                            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#transferOwnershipModal">Transfer Ownership</button>
+                    <div class="col-auto">
+                        <div *ngIf="user.id == ownerId">
+                            <span class="ml-2 font-italic">Owner</span>
+                        </div>
+                        <div *ngIf="user.id != ownerId">
+                            <div class="col" class="dropright">
+                                <button type="button" class="btn bg-light verticalElipsisShareTeam" id={{user.id}} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="getUserId($event)">
+                                    &#8942;
+                                </button>
+                                <div class="dropdown-menu">
+                                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#removeUserModal">Remove</button>
+                                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#transferOwnershipModal">Transfer Ownership</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

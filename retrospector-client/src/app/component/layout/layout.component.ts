@@ -125,6 +125,12 @@ export class LayoutComponent implements OnInit {
       .subscribe();
   }
 
+  removeUser(userId: string) {
+    this._userService.removeUserFromTeam(userId, this.selectedTeam.id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
+  }
+
   transferOwnership(userId: string) {
     const newTeam = {... this.selectedTeam};
     newTeam.ownerId = userId;

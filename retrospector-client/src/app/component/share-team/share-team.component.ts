@@ -15,6 +15,7 @@ export class ShareTeamComponent {
   @ViewChild('closeModal') public closeModal: ElementRef;
   @Input() public selectedTeam: ITeamDetails;
   @Output() public ownershipTransfered = new EventEmitter<string>();
+  @Output() public userRemoved  = new EventEmitter<string>();
   public ownerId: string;
   public clickedUserId: string;
   public email: string = '';
@@ -65,7 +66,7 @@ export class ShareTeamComponent {
   
   onSubmitRemoveUser() {
     this.usersInTeam = this.usersInTeam.filter(u => u.id != this.clickedUserId);
-    this._userService.removeUserFromTeam(this.clickedUserId, this.selectedTeam.id).subscribe();
+    this.userRemoved.emit(this.clickedUserId)
   }
 
   onSubmitTransferOwnership() {
