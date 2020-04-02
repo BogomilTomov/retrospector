@@ -9,19 +9,21 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="email">User Email</label>
-                    <input type="text" #emailInput="ngModel" required class="form-control" [(ngModel)]="email" name="email" (keyup)="getSuggestions($event)" list="usersIds" autocomplete="off">
+                    <input type="text" #emailInput="ngModel" required class="form-control" [pattern]="emailPattern" [(ngModel)]="email" name="email" (keyup)="getSuggestions($event)" list="usersIds" autocomplete="off">
 
                     <datalist id="usersIds">
                         <option *ngFor="let suggestion of filteredUsers">  
                             {{suggestion.email}} 
                         </option>
                     </datalist>
-
-                    <div [hidden]="emailInput.valid || emailInput.pristine" class="mt-3 error-msg">
-                        {{emailRequiredErrorMessage}}
-                    </div>
-                    <div *ngIf="validationErrorExists" class="mt-3 error-msg">
-                        {{validationErrorMessage}}
+                    
+                    <div *ngIf="submitted" class="mt-3 error-msg">
+                        <div [hidden]="emailInput.valid || emailInput.pristine" class="mt-3 error-msg">
+                            {{emailRequiredErrorMessage}}
+                        </div>
+                        <div *ngIf="validationErrorExists" class="mt-3 error-msg">
+                            {{validationErrorMessage}}
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -35,6 +37,6 @@
                     <button class="btn btn-primary" type="submit" [disabled]="!shareTeamForm.form.valid">Add</button>
                 </div>
             </div>
-        </div>     
+        </div>
     </form>
 </div>

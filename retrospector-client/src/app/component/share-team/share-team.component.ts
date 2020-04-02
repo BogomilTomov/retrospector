@@ -16,6 +16,8 @@ export class ShareTeamComponent {
   public usersInTeam: IUser[] = [];
   public filteredUsers: IUser[] = [];
   public validationErrorExists: boolean = false;
+  public submitted: boolean = false;
+  public emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   public validationErrorMessage: string = '';
   public emailRequiredErrorMessage = "Email is required."
   private unsubscribe$ = new Subject<void>();
@@ -29,12 +31,12 @@ export class ShareTeamComponent {
   }
 
   onSubmit(form): void {
+    this.submitted = true;
     this._userService.addUserToTeam(this.email, this.selectedTeamId)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       res => {
         this.usersInTeam.push(res);
-        this.closeModal.nativeElement.click();
         form.reset();
         },
         err => {
