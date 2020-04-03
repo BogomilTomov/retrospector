@@ -53,7 +53,10 @@
       <ret-dashboard [userId]="userId" [selectedTeam]="selectedTeam" (retroGameCreatedChange)="createRetroGame($event)"></ret-dashboard>
     </div>
     <div *ngIf="teams.length==0">
-      <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#createTeamModal">
+      <h5>
+        You are not part of any teams yet.
+      </h5>
+      <button type="button" class="btn btn-primary ml-2 mt-2" data-toggle="modal" data-target="#createTeamModal">
         Create New Team
       </button>
     </div>

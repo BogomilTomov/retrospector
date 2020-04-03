@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, SimpleChanges, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/services/users.service';
@@ -11,6 +11,7 @@ import { ITeamDetails } from 'src/app/models/team-details.model';
   styleUrls: ['./share-team.component.css']
 })
 export class ShareTeamComponent {
+  @ViewChild('closeModal') public closeModal: ElementRef;
   @Input() public selectedTeam: ITeamDetails;
   @Output() public ownershipTransfered = new EventEmitter<string>();
   @Output() public userRemoved  = new EventEmitter<string>();
@@ -42,6 +43,7 @@ export class ShareTeamComponent {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         res => {
+          this.submitted = false;
           this.usersInTeam.push(res);
           form.reset();
           },
@@ -54,13 +56,14 @@ export class ShareTeamComponent {
 
   getSuggestions(key: any): void {
     if (key.code !== 'ArrowDown' && key.code !== 'ArrowUp' 
-    && key.code !== 'ArrowLeft' && key.code !== 'ArrowRight' 
-    && key.code !== 'Enter') {
-      this.submitted = false;
-      this.backEndValidationErrorExists = false; 
+      && key.code !== 'ArrowLeft' && key.code !== 'ArrowRight' 
+      && key.code !== 'Enter') {
       this._userService.getUserSuggestions(this.email)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(res => this.filteredUsers = res);
+      
+      this.submitted = false;
+      this.backEndValidationErrorExists = false;
     }
   }
   
@@ -72,6 +75,7 @@ export class ShareTeamComponent {
   onSubmitTransferOwnership() {
     this.ownershipTransfered.emit(this.clickedUserId)
     this.ownerId = this.clickedUserId;
+    this.closeModal.nativeElement.click();
   }
   
   setUserId(e) {

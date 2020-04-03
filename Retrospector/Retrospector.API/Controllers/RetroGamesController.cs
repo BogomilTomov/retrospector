@@ -22,8 +22,7 @@ namespace Retrospector.Api.Controllers
             _retroGameService = retroGameService;
         }
 
-        [Route("api/[controller]")]
-        [HttpPost]
+        [HttpPost("api/[controller]")]
         public async Task<ActionResult<RetroGame>> PostRetroGameAsync(RetroGameInputModel game)
         {
             if (!ModelState.IsValid)
@@ -41,8 +40,7 @@ namespace Retrospector.Api.Controllers
             return Ok(result.Data);
         }
 
-        [HttpGet]
-        [Route("api/teams/{teamId}/retroGames")]
+        [HttpGet("api/teams/{teamId}/retroGames")]
         public async Task<ActionResult<RetroGame[]>> GetRetroGamesAsync([FromRoute] int teamId, [FromQuery] int gamesCount)
         {
             if (!ModelState.IsValid)

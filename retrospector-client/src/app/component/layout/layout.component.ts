@@ -141,16 +141,9 @@ export class LayoutComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe();
 
-    if (this.ownedTeams.some(t => t.id == this.selectedTeam.id)) {
-      this.sharedTeams.push(this.selectedTeam);
-      this.ownedTeams = this.ownedTeams.filter(t => t.id != this.selectedTeam.id)
-      this.sharedTeams.sort((a, b) => a.name.localeCompare(b.name));
-    } else {
-      this.ownedTeams.push(this.selectedTeam);
-      this.sharedTeams = this.sharedTeams.filter(t => t.id != this.selectedTeam.id)
-      this.ownedTeams.sort((a, b) => a.name.localeCompare(b.name));
-    }
-
+    this.sharedTeams.push(this.selectedTeam);
+    this.ownedTeams = this.ownedTeams.filter(t => t.id != this.selectedTeam.id)
+    this.sharedTeams.sort((a, b) => a.name.localeCompare(b.name));
     this.selectedTeam.ownerId = userId;
   }
 

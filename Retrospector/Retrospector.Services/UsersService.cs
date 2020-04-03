@@ -38,7 +38,7 @@ namespace Retrospector.Services
             }
 
             RetrospectorUser user = await _userRepository.GetUserByIdAsync(userId);
-            Team team = await _teamsRepository.GetTeamById(teamId);
+            Team team = await _teamsRepository.GetTeamByIdAsync(teamId);
 
             if (user == null)
             {
@@ -64,7 +64,7 @@ namespace Retrospector.Services
             return new ResultData<string>(successMessage, true, userId);
         }
 
-        public async Task<ResultData<IEnumerable<RetrospectorUser>>> GetUsersFilteredBtEmailAsync(string email)
+        public async Task<ResultData<IEnumerable<RetrospectorUser>>> GetUsersFilteredByEmailAsync(string email)
         {
             IEnumerable<RetrospectorUser> users = await _userRepository.GetUsersFilteredByEmailAsync(email);
             string successMessage = string.Format(UsersSuccessMessage, users);
@@ -79,19 +79,20 @@ namespace Retrospector.Services
             }
 
             RetrospectorUser user = await _userRepository.GetUserByEmailAsync(email);
-            Team team = await _teamsRepository.GetTeamById(teamId);
 
             if (user == null)
             {
                 return new ResultData<RetrospectorUser>(UserEmailDoesntExistMessage, false);
             }
+
+            Team team = await _teamsRepository.GetTeamByIdAsync(teamId);
             
             if (team == null)
             {
                 return new ResultData<RetrospectorUser>(TeamDoesntExistMessage, false);
             }
             
-            TeamUser teamUser = await _teamsRepository.GetTeamUser(user.Id, teamId);
+            TeamUser teamUser = await _teamsRepository.GetTeamUserAsync(user.Id, teamId);
 
             if (teamUser != null)
             {
@@ -110,7 +111,7 @@ namespace Retrospector.Services
 
         public async Task<ResultData<IEnumerable<RetrospectorUser>>> GetUsersInTeamAsync(int teamId)
         {
-            Team team = await _teamsRepository.GetTeamById(teamId);
+            Team team = await _teamsRepository.GetTeamByIdAsync(teamId);
 
             if (team == null)
             {
@@ -129,19 +130,20 @@ namespace Retrospector.Services
             }
 
             RetrospectorUser user = await _userRepository.GetUserWithTeamUsersAsync(userId);
-            Team team = await _teamsRepository.GetTeamById(teamId);
 
             if (user == null)
             {
                 return new ResultData<RetrospectorUser>(UserEmailDoesntExistMessage, false);
             }
 
+            Team team = await _teamsRepository.GetTeamByIdAsync(teamId);
+
             if (team == null)
             {
                 return new ResultData<RetrospectorUser>(TeamDoesntExistMessage, false);
             }
 
-            TeamUser teamUser = await _teamsRepository.GetTeamUser(user.Id, teamId);
+            TeamUser teamUser = await _teamsRepository.GetTeamUserAsync(user.Id, teamId);
 
             if (teamUser == null)
             {

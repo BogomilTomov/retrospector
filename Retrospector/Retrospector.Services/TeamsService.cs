@@ -108,7 +108,7 @@ namespace Retrospector.Services
                 return new ResultData<Team>(errorMessage, false, team);
             }
 
-            Team oldTeam = await _teamRepository.GetTeamById(team.Id);
+            Team oldTeam = await _teamRepository.GetTeamByIdAsync(team.Id);
             
             if (team.OwnerId == null)
             {

@@ -21,8 +21,7 @@ namespace Retrospector.Api.Controllers
             _usersService = usersService;
         }
 
-        [Route("api/[controller]/{userId}/select-team/{teamId}")]
-        [HttpPost]
+        [HttpPost("api/[controller]/{userId}/select-team/{teamId}")]
         public async Task<IActionResult> SetSelectedTeamAsync([FromRoute] string userId, [FromRoute] int teamId)
         {
             if (!ModelState.IsValid)
@@ -39,16 +38,15 @@ namespace Retrospector.Api.Controllers
             return Ok(result);
         }
 
-        [Route("api/[controller]")]
-        [HttpGet]
-        public async Task<IActionResult> GetFilteredUsersByEmail([FromQuery] string email)
+        [HttpGet("api/[controller]")]
+        public async Task<IActionResult> GetFilteredUsersByEmailAsync([FromQuery] string email)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            ResultData<IEnumerable<RetrospectorUser>> result = await _usersService.GetUsersFilteredBtEmailAsync(email);
+            ResultData<IEnumerable<RetrospectorUser>> result = await _usersService.GetUsersFilteredByEmailAsync(email);
             IEnumerable<UserModel> viewModel = result.Data.Select(ru => new UserModel
             {
                 Id = ru.Id,
@@ -58,9 +56,8 @@ namespace Retrospector.Api.Controllers
             return Ok(viewModel);
         }
 
-        [Route("/api/teams/{teamId}/users")]
-        [HttpPost]
-        public async Task<IActionResult> AddUserToTeam([FromBody] AddUserModel model, [FromRoute] int teamId)
+        [HttpPost("/api/teams/{teamId}/users")]
+        public async Task<IActionResult> AddUserToTeamAsync([FromBody] AddUserModel model, [FromRoute] int teamId)
         {
             if (!ModelState.IsValid)
             {
@@ -83,9 +80,8 @@ namespace Retrospector.Api.Controllers
             return Ok(viewModel);
         }
 
-        [Route("/api/teams/{teamId}/users")]
-        [HttpGet]
-        public async Task<IActionResult> GetUsersInTeam([FromRoute] int teamId)
+        [HttpGet("/api/teams/{teamId}/users")]
+        public async Task<IActionResult> GetUsersInTeamAsync([FromRoute] int teamId)
         {
             if (!ModelState.IsValid)
             {
@@ -108,9 +104,8 @@ namespace Retrospector.Api.Controllers
             return Ok(viewModel);
         }
 
-        [Route("/api/teams/{teamId}/users")]
-        [HttpDelete]
-        public async Task<IActionResult> RemoveUserFromTeam([FromBody] AddUserModel user, [FromRoute] int teamId)
+        [HttpDelete("/api/teams/{teamId}/users")]
+        public async Task<IActionResult> RemoveUserFromTeamAsync([FromBody] AddUserModel user, [FromRoute] int teamId)
         {
             if (!ModelState.IsValid)
             {

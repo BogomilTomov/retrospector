@@ -21,8 +21,7 @@ namespace Retrospector.Api.Controllers
             _teamService = teamService;
         }
 
-        [Route("api/[controller]")]
-        [HttpPost]
+        [HttpPost("api/[controller]")]
         public async Task<IActionResult> CreateTeamAsync([FromBody] TeamModel team)
         {
             if (!ModelState.IsValid)
@@ -48,8 +47,7 @@ namespace Retrospector.Api.Controllers
             return Ok(viewModel);
         }
 
-        [Route("api/[controller]")]
-        [HttpPut]
+        [HttpPut("api/[controller]")]
         public async Task<IActionResult> UpdateTeamAsync([FromBody] TeamModel teamModel)
         {
             if (!ModelState.IsValid)
@@ -81,8 +79,7 @@ namespace Retrospector.Api.Controllers
             return Ok(viewModel);
         }
 
-        [Route("/api/users/{userId}/teams")]
-        [HttpGet("{userId}")]
+        [HttpGet("/api/users/{userId}/teams")]
         public async Task<IActionResult> GetTeamsAsync([FromRoute] string userId)
         {
             if (!ModelState.IsValid)

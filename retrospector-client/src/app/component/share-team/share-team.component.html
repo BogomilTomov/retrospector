@@ -3,13 +3,18 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Share a team</h5>
-                    <button type="button" class="close" data-dismiss="modal" #closeModal
-                        (click)="shareTeamForm.reset();">&times;</button>
+                    <h5 class="modal-title">
+                        Share a team
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" #closeModal (click)="shareTeamForm.reset();">
+                        &times;
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="email">User Email</label>
+                        <label for="email">
+                            User Email
+                        </label>
                         <div class="row">
                             <div class="col">
                                 <input type="text" #emailInput="ngModel" required class="form-control"
@@ -17,7 +22,9 @@
                                     (keyup)="getSuggestions($event)" list="usersIds" autocomplete="off">
                             </div>
                             <div class="col-auto">
-                                <button class="btn btn-primary" type="submit">Add</button>
+                                <button class="btn btn-primary" type="submit">
+                                    Add
+                                </button>
                             </div>
                         </div>
                         <datalist id="usersIds">
@@ -39,23 +46,30 @@
                         Users in this team:
                     </p>
                     <div class="row container" *ngFor="let user of usersInTeam">
-                        <div class="col overflow-auto">{{user.email}}</div>
+                        <div class="col overflow-auto">
+                            {{user.email}}
+                        </div>
                         <div class="col-auto">
                             <div *ngIf="user.id == ownerId">
-                                <span class="ml-2 font-italic">Owner</span>
+                                <span class="ml-2 font-italic">
+                                    Owner
+                                </span>
                             </div>
                             <div *ngIf="user.id != ownerId">
                                 <div class="col" class="dropright">
                                     <button type="button" class="btn bg-light verticalElipsisShareTeam" id={{user.id}}
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                        (click)="setUserId($event)">
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="setUserId($event)">
                                         &#8942;
                                     </button>
                                     <div class="dropdown-menu">
                                         <button type="button" class="dropdown-item" data-toggle="modal"
-                                            data-target="#removeUserModal">Remove</button>
-                                        <button type="button" class="dropdown-item" data-toggle="modal"
-                                            data-target="#transferOwnershipModal">Transfer Ownership</button>
+                                            data-target="#removeUserModal">
+                                            Remove
+                                        </button>
+                                        <button type="button" class="dropdown-item" data-toggle="modal" 
+                                            data-target="#transferOwnershipModal">
+                                            Transfer Ownership
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -63,8 +77,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mr-2" data-dismiss="modal"
-                        (click)="shareTeamForm.reset()">Cancel</button>
+                    <button type="button" class="btn btn-primary mr-2" data-dismiss="modal" (click)="shareTeamForm.reset()">
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>
