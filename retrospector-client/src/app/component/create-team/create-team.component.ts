@@ -23,7 +23,7 @@ export class CreateTeamComponent implements OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private readonly _teamService: TeamsService, 
+  constructor(private readonly _teamService: TeamsService,
               private readonly _accountService: AccountsService) { }
 
   onSubmit(form): void {
@@ -52,7 +52,7 @@ export class CreateTeamComponent implements OnDestroy {
     this.backEndValidationErrorExists = false;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy(): void{
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

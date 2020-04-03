@@ -29,7 +29,7 @@ export class ShareTeamComponent {
   
   constructor(private readonly _userService: UsersService) { }
 
-  ngOnChanges(teamChange: SimpleChanges) {
+  ngOnChanges(teamChange: SimpleChanges): void {
     this.ownerId = teamChange.selectedTeam.currentValue.ownerId;
     this._userService.getUsersInTeam(this.selectedTeam.id)
     .pipe(takeUntil(this.unsubscribe$))
@@ -67,22 +67,22 @@ export class ShareTeamComponent {
     }
   }
   
-  onSubmitRemoveUser() {
+  onSubmitRemoveUser(): void {
     this.usersInTeam = this.usersInTeam.filter(u => u.id != this.clickedUserId);
     this.userRemoved.emit(this.clickedUserId)
   }
 
-  onSubmitTransferOwnership() {
+  onSubmitTransferOwnership(): void {
     this.ownershipTransfered.emit(this.clickedUserId)
     this.ownerId = this.clickedUserId;
     this.closeModal.nativeElement.click();
   }
   
-  setUserId(e) {
+  setUserId(e): void {
     this.clickedUserId = e.target.id;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

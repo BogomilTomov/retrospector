@@ -23,8 +23,9 @@ export class EditTeamComponent implements OnInit{
 
   constructor(private readonly _teamService: TeamsService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initialName = this.selectedTeam.name;
+    console.log(this.initialName)
   }
 
   ngOnChanges(teamChanges: SimpleChanges): void {
@@ -33,9 +34,9 @@ export class EditTeamComponent implements OnInit{
 
   onSubmit(form): void {
     this.submitted = true;
-    
+
     if (form.valid) {
-      if (this.name != this.initialName) {
+      if (this.name != this.selectedTeam.name) {
         const newTeam = {... this.selectedTeam};
         newTeam.name = this.name;
         newTeam.ownerId = null;
@@ -67,12 +68,12 @@ export class EditTeamComponent implements OnInit{
     this.clearErrors();
   }
   
-  clearErrors() {
+  clearErrors(): void {
     this.submitted = false;
     this.backEndValidationErrorExists = false;
   }
   
-  ngOnDestroy(){
+  ngOnDestroy(): void{
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
