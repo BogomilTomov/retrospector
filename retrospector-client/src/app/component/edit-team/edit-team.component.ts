@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, ViewChild, EventEmitter, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, EventEmitter, Output, SimpleChanges, OnInit } from '@angular/core';
 import { ITeamDetails } from 'src/app/models/team-details.model';
 import { TeamsService } from 'src/app/services/teams.service';
 import { Subject } from 'rxjs';
@@ -9,11 +9,12 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './edit-team.component.html',
   styleUrls: ['./edit-team.component.css']
 })
-export class EditTeamComponent {
+export class EditTeamComponent implements OnInit{
   @ViewChild('closeModal') public closeModal: ElementRef;
   @Input() public selectedTeam: ITeamDetails;
   @Output() public selectedTeamChange = new EventEmitter<ITeamDetails>();
   public submitted: boolean = false;
+  public initialName: string;
   public name: string;
   public backEndValidationErrorExists: boolean = false;
   public backEndValidationErrorMessage: string = '';
@@ -22,28 +23,38 @@ export class EditTeamComponent {
 
   constructor(private readonly _teamService: TeamsService) { }
 
+  ngOnInit() {
+    this.initialName = this.selectedTeam.name;
+  }
+
   ngOnChanges(teamChanges: SimpleChanges): void {
     this.name = teamChanges.selectedTeam.currentValue.name;
   }
 
   onSubmit(form): void {
     this.submitted = true;
+    
     if (form.valid) {
-      const newTeam = {... this.selectedTeam};
-      newTeam.name = this.name;
-      newTeam.ownerId = null;
-      this._teamService.editTeam(newTeam)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(
-          res => {
-            this.selectedTeam.name = this.name;
-            this.closeModal.nativeElement.click();
-            this.onClose();
-            },
-            err => {
-              this.backEndValidationErrorExists = true;
-              this.backEndValidationErrorMessage = err.error.message;
-            });
+      if (this.name != this.initialName) {
+        const newTeam = {... this.selectedTeam};
+        newTeam.name = this.name;
+        newTeam.ownerId = null;
+
+        this._teamService.editTeam(newTeam)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(
+            res => {
+              this.selectedTeam.name = this.name;
+              this.closeModal.nativeElement.click();
+              this.onClose();
+              },
+              err => {
+                this.backEndValidationErrorExists = true;
+                this.backEndValidationErrorMessage = err.error.message;
+              });
+      } else {
+        this.closeModal.nativeElement.click();
+      }
     }
   }
 
