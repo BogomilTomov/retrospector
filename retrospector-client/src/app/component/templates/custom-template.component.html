@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row"><h1>{{teamName}}</h1></div>
+    <div class="row"><h2>{{retrospectiveName}}</h2></div>
+    <div class="row row-cols-3">
+        <div class="col" *ngFor="let section of sections">
+            <ret-game-section [sectionName]="section.name" [username]="username" [teamOwnerId]="teamOwnerId" (sectionToRemove)="removeSection($event)"></ret-game-section>
+        </div>
+    </div>
+    <div class="row add-section-row">
+        <button type="button" class="btn btn-primary add-section-btn" data-toggle="modal" data-target="#newSectionNameModal" (click)="resetFields()">
+            Add Section
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" #newSectionNameModal id="newSectionNameModal" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="addSectionLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addSectionLabel">Choose a section name.</h2>
+                <button type="button" class="close" data-dismiss="modal" #closeModal aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="needs-validation" novalidate autocomplete="off">
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <input type="text" class="form-control input-text" name="newSectionName"
+                                    ngModel maxlength="10" [(ngModel)]="newSectionName" [ngModelOptions]="{standalone: true}"
+                                    required value="newSectionName" (change)="validateForm()" #sectionNameInput>
+                            <label class="floating-label">Section name</label>
+                            <div class="error-msg mt-2 ml-2">
+                                <div *ngIf="sectionNameWarning">
+                                    {{sectionNameWarning}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" (click)="addSection()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>

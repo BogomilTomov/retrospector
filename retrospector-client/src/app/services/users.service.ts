@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { baseUrl } from 'src/environments/environment';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,7 @@ export class UsersService {
 
   constructor(private readonly _http: HttpClient) { }
   
-  setSelectedTeam(userId: string, teamId: number): Observable<string> {
-    return this._http.post<string>(`${this._url}/${userId}/select-team/${teamId}`, {});
+  setSelectedTeam(userId: string, teamId: number): void {
+    this._http.post<string>(`${this._url}/${userId}/select-team/${teamId}`, {}).toPromise().then(res => console.log(res));
   }
 }

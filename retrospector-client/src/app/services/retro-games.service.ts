@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IRetroGame } from '../models/retro-game.model';
 import { baseUrl, gamesLoaded } from 'src/environments/environment';
-import { IResultData } from '../models/result-data.model';
 import { IRetrospective } from '../models/retrospective.model';
 
 @Injectable({
@@ -16,10 +15,10 @@ export class RetroGamesService {
 
   public getGamesByTeamId(teamId: number): Observable<IRetroGame[]> {
     const params = { gamesCount: gamesLoaded.toString() };
-    return this._http.get<IRetroGame[]>(`${baseUrl}/teams/${teamId}/retroGames`, {params: params});
+    return this._http.get<IRetroGame[]>(`${baseUrl}/teams/${teamId}/retroGames`, { params: params });
   }
 
-  public createGame(game: IRetrospective): Observable<IRetroGame> {
-      return this._http.post<IRetroGame>(this._url, game);
+  public createGame(game: IRetrospective): Promise<IRetroGame> {
+    return this._http.post<IRetroGame>(this._url, game).toPromise();
   }
 }

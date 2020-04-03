@@ -1,0 +1,17 @@
+.row {
+    margin: 0;
+}
+
+.remove-section {
+    position: absolute;
+    left: 91%;
+}
+
+.mg-t-b-9 {
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+
+.btn-secondary {
+    margin-right: 9px;
+}

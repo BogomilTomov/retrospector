@@ -1,0 +1,23 @@
+.btn-secondary {
+    margin-right: 8px;
+}
+
+label {
+    margin-bottom: 0px;
+    padding-left: 3px;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
+}
+
+.floating-label {
+    padding-left: 0px;
+}
+
+.modal-dialog {
+    height: 350px;
+}
+
+.col-md-12 {
+    text-align: left;
+}

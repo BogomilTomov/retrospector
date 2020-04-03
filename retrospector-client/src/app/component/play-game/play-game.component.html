@@ -1,4 +1,6 @@
-<div class="modal fade show" data-keyboard="false" #nicknameModal id="nicknameModal" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="nicknameModalLabel" aria-hidden="false">
+<ret-custom-template [username]="username" [teamName]="teamName" [teamOwnerId]="teamOwnerId"></ret-custom-template>
+
+<div class="modal fade show modal-blur" data-keyboard="false" #nicknameModal id="nicknameModal" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="nicknameModalLabel" aria-hidden="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -12,11 +14,13 @@
               <div class="form-row">
                 <div class="col-md-12 mb-3">
                   <input type="text" class="form-control input-text" name="name"
-                          ngModel maxlength="100" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"
-                          required value="name" #nameInput>
+                          ngModel maxlength="100" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"
+                          required value="username" #nameInput (change)="formIsValid()">
                   <label class="floating-label">Display name</label>
                   <div class="error-msg mt-2 ml-2">
-                      {{this.nameWarning}}
+                    <div *ngIf="nameWarning">
+                      {{nameWarning}}
+                    </div>
                   </div>
                 </div>
               </div>
