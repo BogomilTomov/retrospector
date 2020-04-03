@@ -15,8 +15,9 @@ import { ITeamDetails } from 'src/app/models/team-details.model';
 export class CreateTeamComponent implements OnDestroy {
   @ViewChild('closeModal') public closeModal: ElementRef;
   public name: string = '';
-  public validationErrorExists: boolean = false;
-  public validationErrorMessage: string = '';
+  public backEndValidationErrorExists: boolean = false;
+  public backEndValidationErrorMessage: string = '';
+  public submitted: boolean = false;
   public teamNameRequiredErrorMessage = "Team name is required."
   @Output() public teamCreated = new EventEmitter<ITeamDetails>();
 
@@ -26,6 +27,7 @@ export class CreateTeamComponent implements OnDestroy {
               private readonly _accountService: AccountsService) { }
 
   onSubmit(form): void {
+    this.submitted = true;
     const newTeam: ITeam = { 
       name: this.name,
       ownerId: this._accountService.getLoggedInUserId()
@@ -40,12 +42,14 @@ export class CreateTeamComponent implements OnDestroy {
           this.teamCreated.emit(res);
         },
         err => {
-          this.validationErrorExists = true;
-          this.validationErrorMessage = err.error.message;
-          setTimeout (() => {
-            this.validationErrorExists = false;
-          }, 3000)
+          this.backEndValidationErrorExists = true;
+          this.backEndValidationErrorMessage = err.error.message;
         });
+  }
+  
+  inputChange(): void {
+    this.submitted = false;
+    this.backEndValidationErrorExists = false;
   }
 
   ngOnDestroy(){
