@@ -1,5 +1,5 @@
 export interface INote {
     author: string | null;
     content: string | null;
-    date: Date | null;
+    date: Date | string | null;
 }

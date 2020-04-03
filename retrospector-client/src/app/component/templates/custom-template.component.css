@@ -1,0 +1,14 @@
+.col {
+    height: 600px;
+    text-align: center;
+    padding: 9px;
+}
+
+.add-section-btn {
+    width: 100%;
+}
+
+.add-section-row {
+    padding-left: 5px;
+    padding-right: 5px;
+}

@@ -1,5 +1,5 @@
 <div class="modal fade" id="editTeamModal" data-backdrop="true">
-    <form #editTeamForm ="ngForm" (ngSubmit)="onSubmit(editTeamForm)">
+    <form #editTeamForm ="ngForm" autocomplete="off">
         <div class="modal-dialog"  role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -19,8 +19,8 @@
                 </div>
             </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary mr-2" data-dismiss="modal" (click)="onClose()">Cancel</button>
-                    <button class="btn btn-primary" type="submit" [disabled]="!editTeamForm.form.valid">Save</button>
+                    <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal" (click)="onClose()">Cancel</button>
+                    <button class="btn btn-primary" type="submit" [disabled]="!editTeamForm.form.valid" (click)="editTeam()">Save</button>
                 </div>
             </div>
         </div>     
