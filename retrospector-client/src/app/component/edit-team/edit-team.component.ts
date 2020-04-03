@@ -13,9 +13,10 @@ export class EditTeamComponent {
   @ViewChild('closeModal') public closeModal: ElementRef;
   @Input() public selectedTeam: ITeamDetails;
   @Output() public selectedTeamChange = new EventEmitter<ITeamDetails>();
+  public submitted: boolean = false;
   public name: string;
-  public validationErrorExists: boolean = false;
-  public validationErrorMessage: string = '';
+  public backEndValidationErrorExists: boolean = false;
+  public backEndValidationErrorMessage: string = '';
   public teamNameRequiredErrorMessage = "Team name is required."
   private unsubscribe$ = new Subject<void>();
 
@@ -26,28 +27,38 @@ export class EditTeamComponent {
   }
 
   onSubmit(form): void {
-    const newTeam = {... this.selectedTeam};
-    newTeam.name = this.name;
-    newTeam.ownerId = null;
-    this._teamService.editTeam(newTeam)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      res => {
-        this.selectedTeam.name = this.name;
-        this.closeModal.nativeElement.click();
-        this.onClose();
-        },
-        err => {
-          this.validationErrorExists = true;
-          this.validationErrorMessage = err.error.message;
-          setTimeout (() => {
-            this.validationErrorExists = false;
-          }, 3000)
-        });
+    this.submitted = true;
+    if (form.valid) {
+      const newTeam = {... this.selectedTeam};
+      newTeam.name = this.name;
+      newTeam.ownerId = null;
+      this._teamService.editTeam(newTeam)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          res => {
+            this.selectedTeam.name = this.name;
+            this.closeModal.nativeElement.click();
+            this.onClose();
+            },
+            err => {
+              this.backEndValidationErrorExists = true;
+              this.backEndValidationErrorMessage = err.error.message;
+            });
+    }
   }
 
   onClose(): void {
     this.name = this.selectedTeam.name;
+    this.clearErrors();
+  }
+  
+  inputChange(): void {
+    this.clearErrors();
+  }
+  
+  clearErrors() {
+    this.submitted = false;
+    this.backEndValidationErrorExists = false;
   }
   
   ngOnDestroy(){
