@@ -19,11 +19,11 @@ export class ShareTeamComponent {
   public email: string = '';
   public usersInTeam: IUser[] = [];
   public filteredUsers: IUser[] = [];
-  public validationErrorExists: boolean = false;
   public submitted: boolean = false;
-  public emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
-  public validationErrorMessage: string = '';
-  public emailRequiredErrorMessage = "Email is required."
+  public emailPattern: string = "[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}";
+  public backEndValidationErrorExists: boolean = false;
+  public backEndValidationErrorMessage: string = '';
+  public emailValidErrorMessage = "Please enter a valid email address."
   private unsubscribe$ = new Subject<void>();
   
   constructor(private readonly _userService: UsersService) { }
@@ -37,26 +37,27 @@ export class ShareTeamComponent {
 
   onSubmitAddUser(form): void {
     this.submitted = true;
-    this._userService.addUserToTeam(this.email, this.selectedTeam.id)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      res => {
-        this.usersInTeam.push(res);
-        form.reset();
-        },
-        err => {
-          this.validationErrorExists = true;
-          this.validationErrorMessage = err.error.message;
-          setTimeout (() => {
-            this.validationErrorExists = false;
-          }, 3000)
-        });
+    if (form.valid) {
+      this._userService.addUserToTeam(this.email, this.selectedTeam.id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        res => {
+          this.usersInTeam.push(res);
+          form.reset();
+          },
+          err => {
+            this.backEndValidationErrorExists = true;
+            this.backEndValidationErrorMessage = err.error.message;
+          });
+    }
   }
 
   getSuggestions(key: any): void {
     if (key.code !== 'ArrowDown' && key.code !== 'ArrowUp' 
-     && key.code !== 'ArrowLeft' && key.code !== 'ArrowRight' 
-     && key.code !== 'Enter') {
+    && key.code !== 'ArrowLeft' && key.code !== 'ArrowRight' 
+    && key.code !== 'Enter') {
+      this.submitted = false;
+      this.backEndValidationErrorExists = false; 
       this._userService.getUserSuggestions(this.email)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(res => this.filteredUsers = res);
