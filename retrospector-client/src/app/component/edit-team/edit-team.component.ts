@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, ViewChild, EventEmitter, Output, SimpleChanges, OnInit } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import { ITeamDetails } from 'src/app/models/team-details.model';
 import { TeamsService } from 'src/app/services/teams.service';
 import { Subject } from 'rxjs';
@@ -9,12 +9,11 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './edit-team.component.html',
   styleUrls: ['./edit-team.component.css']
 })
-export class EditTeamComponent implements OnInit{
+export class EditTeamComponent {
   @ViewChild('closeModal') public closeModal: ElementRef;
   @Input() public selectedTeam: ITeamDetails;
   @Output() public selectedTeamChange = new EventEmitter<ITeamDetails>();
   public submitted: boolean = false;
-  public initialName: string;
   public name: string;
   public backEndValidationErrorExists: boolean = false;
   public backEndValidationErrorMessage: string = '';
@@ -22,11 +21,6 @@ export class EditTeamComponent implements OnInit{
   private unsubscribe$ = new Subject<void>();
 
   constructor(private readonly _teamService: TeamsService) { }
-
-  ngOnInit(): void {
-    this.initialName = this.selectedTeam.name;
-    console.log(this.initialName)
-  }
 
   ngOnChanges(teamChanges: SimpleChanges): void {
     this.name = teamChanges.selectedTeam.currentValue.name;

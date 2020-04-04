@@ -17,7 +17,7 @@
                             <div [hidden]="nameInput.valid || nameInput.pristine" class="mt-3 error-msg">
                                 {{teamNameRequiredErrorMessage}}
                             </div>
-                            <div [hidden]="backEndValidationErrorExists" class="mt-3 error-msg">
+                            <div [hidden]="!backEndValidationErrorExists" class="mt-3 error-msg">
                                 {{backEndValidationErrorMessage}}
                             </div>
                         </div>
