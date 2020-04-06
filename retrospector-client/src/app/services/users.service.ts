@@ -12,8 +12,8 @@ export class UsersService {
 
   constructor(private readonly _http: HttpClient) { }
   
-  setSelectedTeam(userId: string, teamId: number): Observable<string> {
-    return this._http.post<string>(`${this._url}/${userId}/select-team/${teamId}`, {});
+  setSelectedTeam(userId: string, teamId: number): void {
+    this._http.post<string>(`${this._url}/${userId}/select-team/${teamId}`, {}).toPromise().then(res => console.log(res));
   }
 
   getUserSuggestions(email: string): Observable<IUser[]> {

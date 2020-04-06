@@ -18,7 +18,12 @@ import { RetroGamesService } from './services/retro-games.service';
 import { LayoutComponent } from './component/layout/layout.component';
 import { PlayGameComponent } from './component/play-game/play-game.component';
 import { RetroGameCardComponent } from './component/retro-game-card/retro-game-card.component';
+import { AddNoteComponent } from './component/add-note/add-note.component';
+import { CustomTemplateComponent } from './component/templates/custom-template.component';
+import { GameSectionComponent } from './component/game-section/game-section.component';
+import { NoteComponent } from './component/note/note.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { NavbarComponent } from './component/navbar/navbar.component';
 import { EditTeamComponent } from './component/edit-team/edit-team.component';
 import { ShareTeamComponent } from './component/share-team/share-team.component';
 
@@ -41,6 +46,11 @@ function provideConfig() {
     TimelineComponent,
     PlayGameComponent,
     RetroGameCardComponent,
+    AddNoteComponent,
+    CustomTemplateComponent,
+    GameSectionComponent,
+    NoteComponent,
+    NavbarComponent,
     EditTeamComponent,
     ShareTeamComponent
   ],

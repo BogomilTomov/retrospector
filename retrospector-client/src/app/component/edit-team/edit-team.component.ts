@@ -1,52 +1,54 @@
-import { Component, Input, ElementRef, ViewChild, EventEmitter, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, ViewChild, EventEmitter, Output, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
 import { ITeamDetails } from 'src/app/models/team-details.model';
 import { TeamsService } from 'src/app/services/teams.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 
 @Component({
   selector: 'ret-edit-team',
   templateUrl: './edit-team.component.html',
   styleUrls: ['./edit-team.component.css']
 })
-export class EditTeamComponent {
-  @ViewChild('closeModal') public closeModal: ElementRef;
-  @Input() public selectedTeam: ITeamDetails;
-  @Output() public selectedTeamChange = new EventEmitter<ITeamDetails>();
-  public submitted: boolean = false;
+export class EditTeamComponent implements OnInit, OnDestroy {
+  public selectedTeam: ITeamDetails;
   public name: string;
-  public backEndValidationErrorExists: boolean = false;
-  public backEndValidationErrorMessage: string = '';
-  public teamNameRequiredErrorMessage = "Team name is required."
-  private unsubscribe$ = new Subject<void>();
+  public validationErrorExists: boolean = false;
+  public submitted: boolean = false;
+  public validationErrorMessage: string = '';
+  public teamNameRequiredErrorMessage = "Team name is required.";
+  @ViewChild('closeModal') public closeModal: ElementRef;
+  private _unsubscribe$ = new Subject<void>();
 
   constructor(private readonly _teamService: TeamsService) { }
+
+  ngOnInit(): void {
+    this._teamService.selectedTeam$.pipe(takeUntil(this._unsubscribe$)).subscribe(res => {
+      this.selectedTeam = res;
+      this.name = this.selectedTeam.name;
+    });    
+  }
 
   ngOnChanges(teamChanges: SimpleChanges): void {
     this.name = teamChanges.selectedTeam.currentValue.name;
   }
 
-  onSubmit(form): void {
+  editTeam(form): void {
     this.submitted = true;
 
     if (form.valid) {
       if (this.name != this.selectedTeam.name) {
-        const newTeam = {... this.selectedTeam};
-        newTeam.name = this.name;
-        newTeam.ownerId = null;
+        const newTeam: ITeamDetails = {
+        ...this.selectedTeam,
+        name: this.name,
+        ownerId: null
+    };
 
-        this._teamService.editTeam(newTeam)
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(
-            res => {
-              this.selectedTeam.name = this.name;
-              this.closeModal.nativeElement.click();
-              this.onClose();
-              },
-              err => {
-                this.backEndValidationErrorExists = true;
-                this.backEndValidationErrorMessage = err.error.message;
-              });
+    this._teamService.editTeam(newTeam)
+                     .then(res => this.closeModal.nativeElement.click())
+                     .catch(err => {
+                        this.validationErrorExists = true;
+                        this.validationErrorMessage = err.error.message;
+                     });
       } else {
         this.closeModal.nativeElement.click();
       }
@@ -54,7 +56,7 @@ export class EditTeamComponent {
   }
 
   onClose(): void {
-    this.name = this.selectedTeam.name;
+    this._teamService.selectedTeam$.pipe(take(1)).subscribe(res => this.name = res.name);
     this.clearErrors();
   }
   
@@ -64,11 +66,11 @@ export class EditTeamComponent {
   
   clearErrors(): void {
     this.submitted = false;
-    this.backEndValidationErrorExists = false;
+    this.validationErrorExists = false;
   }
   
   ngOnDestroy(): void{
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 }

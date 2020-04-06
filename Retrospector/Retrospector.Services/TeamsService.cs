@@ -133,8 +133,8 @@ namespace Retrospector.Services
             }
             
             await _teamRepository.UpdateTeamAsync(oldTeam);
-            string successMessage = string.Format(UpdateTeamSuccessMessage, team);
-            return new ResultData<Team>(successMessage, true, team);
+            string successMessage = string.Format(UpdateTeamSuccessMessage, oldTeam);
+            return new ResultData<Team>(successMessage, true, oldTeam);
         }
     }
 }

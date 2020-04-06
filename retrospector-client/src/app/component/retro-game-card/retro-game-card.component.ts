@@ -8,8 +8,7 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
   styleUrls: ['./retro-game-card.component.css']
 })
 export class RetroGameCardComponent {
-  @Input()
-  public game: IRetroGame;
+  @Input() public game: IRetroGame;
 
   private get gameId(): string {
     return this.game.id.toString()

@@ -1,6 +1,9 @@
 <h3>Dashboard</h3>
 <hr>
-<div *ngIf="selectedTeam !== undefined">
-    <ret-create-new-retrospective (newRetrospective)="retroGameAdded($event)" [selectedTeamId]="selectedTeam.id"></ret-create-new-retrospective>
-    <ret-timeline [games]="selectedTeam.retroGames"></ret-timeline>
+<div *ngIf="!hasTeams">
+    <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#createTeamModal">
+      Create New Team
+    </button>
 </div>
+<ret-create-new-retrospective *ngIf="hasTeams" (newRetrospective)="createNewRetrospective($event)" [selectedTeamId]="selectedTeamId"></ret-create-new-retrospective>
+<ret-timeline [games]="games"></ret-timeline>

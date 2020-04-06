@@ -1,20 +1,19 @@
-import { Component, Input, SimpleChanges, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, SimpleChanges, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/services/users.service';
 import { IUser } from 'src/app/models/user.model';
 import { ITeamDetails } from 'src/app/models/team-details.model';
+import { TeamsService } from 'src/app/services/teams.service';
 
 @Component({
   selector: 'ret-share-team',
   templateUrl: './share-team.component.html',
   styleUrls: ['./share-team.component.css']
 })
-export class ShareTeamComponent {
+export class ShareTeamComponent implements OnInit {
   @ViewChild('closeModal') public closeModal: ElementRef;
-  @Input() public selectedTeam: ITeamDetails;
-  @Output() public ownershipTransfered = new EventEmitter<string>();
-  @Output() public userRemoved  = new EventEmitter<string>();
+  public selectedTeam: ITeamDetails;
   public ownerId: string;
   public clickedUserId: string;
   public email: string = '';
@@ -25,32 +24,37 @@ export class ShareTeamComponent {
   public backEndValidationErrorExists: boolean = false;
   public backEndValidationErrorMessage: string = '';
   public emailValidErrorMessage = "Please enter a valid email address."
-  private unsubscribe$ = new Subject<void>();
+  private _unsubscribe$ = new Subject<void>();
   
-  constructor(private readonly _userService: UsersService) { }
+  constructor(private readonly _userService: UsersService,
+              private readonly _teamService: TeamsService) { }
 
-  ngOnChanges(teamChange: SimpleChanges): void {
-    this.ownerId = teamChange.selectedTeam.currentValue.ownerId;
-    this._userService.getUsersInTeam(this.selectedTeam.id)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(res => { this.usersInTeam = res; });
+  ngOnInit(): void {
+    this._teamService.selectedTeam$.pipe(takeUntil(this._unsubscribe$)).subscribe(res => {
+      this.selectedTeam = res;
+      this.ownerId = this.selectedTeam.ownerId;
+      this._userService.getUsersInTeam(this.selectedTeam.id)
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe(res => { this.usersInTeam = res; });
+    });
   }
 
   onSubmitAddUser(form): void {
     this.submitted = true;
+    
     if (form.valid) {
       this._userService.addUserToTeam(this.email, this.selectedTeam.id)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        res => {
-          this.submitted = false;
-          this.usersInTeam.push(res);
-          form.reset();
-          },
-          err => {
-            this.backEndValidationErrorExists = true;
-            this.backEndValidationErrorMessage = err.error.message;
-          });
+        .pipe(takeUntil(this._unsubscribe$))
+        .subscribe(
+          res => {
+            this.submitted = false;
+            this.usersInTeam.push(res);
+            form.reset();
+            },
+            err => {
+              this.backEndValidationErrorExists = true;
+              this.backEndValidationErrorMessage = err.error.message;
+            });
     }
   }
 
@@ -59,7 +63,7 @@ export class ShareTeamComponent {
       && key.code !== 'ArrowLeft' && key.code !== 'ArrowRight' 
       && key.code !== 'Enter') {
       this._userService.getUserSuggestions(this.email)
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe(takeUntil(this._unsubscribe$))
         .subscribe(res => this.filteredUsers = res);
       
       this.submitted = false;
@@ -69,13 +73,21 @@ export class ShareTeamComponent {
   
   onSubmitRemoveUser(): void {
     this.usersInTeam = this.usersInTeam.filter(u => u.id != this.clickedUserId);
-    this.userRemoved.emit(this.clickedUserId)
+    this._userService.removeUserFromTeam(this.clickedUserId, this.selectedTeam.id)
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe();
   }
 
   onSubmitTransferOwnership(): void {
-    this.ownershipTransfered.emit(this.clickedUserId)
-    this.ownerId = this.clickedUserId;
-    this.closeModal.nativeElement.click();
+    const newTeam = {
+      ...this.selectedTeam,
+      ownerId: this.clickedUserId,
+      name: null
+    };
+    
+    this._teamService.editTeam(newTeam).then(res => {
+      this.closeModal.nativeElement.click();
+    });
   }
   
   setUserId(e): void {
@@ -83,7 +95,7 @@ export class ShareTeamComponent {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this._unsubscribe$.next();
+    this._unsubscribe$.complete();
   }
 }
